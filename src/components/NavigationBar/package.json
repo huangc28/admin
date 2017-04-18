@@ -1,0 +1,6 @@
+{
+  "name": "NavigationBar",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./NavigationBar.jsx"
+}

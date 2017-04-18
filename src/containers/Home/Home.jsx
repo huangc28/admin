@@ -1,12 +1,11 @@
-import React, { Component } from 'react'
-import Title from '../../components/Title'
-import styles from './Home.css'
+import React from 'react'
 
 const Home = () => (
-	<div>
-		Start writing some react!
-		<i className="fa fa-smile-o" aria-hidden="true"></i>
-	</div>
+  <div className="page-content">
+    <button className="mdl-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+      Button
+    </button>
+  </div>
 )
 
 export default Home

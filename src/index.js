@@ -1,19 +1,21 @@
 import React from 'react'
 import { Router, browserHistory } from 'react-router'
+import { syncHistoryWithStore } from 'react-router-redux'
 import { Provider } from 'react-redux'
 import ReactDOM from 'react-dom'
+
 import configureStore from './store/configureStore'
 import rootReducer from './reducers'
-
 import routes from './routes'
 
 const initialState = window.__INITIAL_STATE__
-
 const store = configureStore(rootReducer, initialState)
+
+const history = syncHistoryWithStore(browserHistory, store)
 
 const App = () => (
   <Provider store={store}>
-    <Router routes={routes} history={browserHistory} />
+    <Router routes={routes} history={history} />
   </Provider>
 )
 

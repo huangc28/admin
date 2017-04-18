@@ -1,15 +1,22 @@
-import React, { Component, PropTypes } from 'react'
-import styles from './App.css'
+import React, { PropTypes } from 'react'
 
-class App extends Component {
-	render () {
-		return (
-			<div className={styles.root}>
-    		{this.props.children}
-  		</div>
-		)
-	}
-}
+import Header from '../../components/Header'
+import NavigationBar from '../../components/NavigationBar'
+
+const App = ({ children }) => (
+  <div className="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+    {/* navigation bar */}
+    <NavigationBar />
+
+    {/* header */}
+    <Header />
+
+    {/* Content */}
+    <main className="mdl-layout__content">
+      {children}
+    </main>
+  </div>
+)
 
 App.propTypes = {
   children: PropTypes.node,
