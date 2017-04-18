@@ -1,3 +1,5 @@
+/* global __CLIENT__ */
+
 import React from 'react'
 import { Router, browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
@@ -13,13 +15,19 @@ const store = configureStore(rootReducer, initialState)
 
 const history = syncHistoryWithStore(browserHistory, store)
 
-const App = () => (
-  <Provider store={store}>
-    <Router routes={routes} history={history} />
-  </Provider>
-)
+if (module.hot) {
+  module.hot.accept()
+}
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('app')
-)
+if (__CLIENT__) {
+  const App = () => (
+    <Provider store={store}>
+      <Router routes={routes} history={history} />
+    </Provider>
+  )
+
+  ReactDOM.render(
+    <App />,
+    document.getElementById('app')
+  )
+}
