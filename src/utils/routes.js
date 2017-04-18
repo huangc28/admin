@@ -1,0 +1,1 @@
+export const getLocation = () => (window && window.location && window.location.pathname) || ''
