@@ -9,18 +9,22 @@
 
 /* Black */
 @value outerspace: #263238;
+@value limedspruce: #37474F;
 
 /* Grey */
 @value greyCharcoal: #333;
 @value greyChateau: #999;
 @value grey: #ccc;
 @value daveysGrey: #555;
+@value silverchalice: #a9a9a9;
+
 
 /* Light Grey */
 @value lightGrey: #ebece7;
 @value lightGrey50: #fafafa;
 @value lightGrey100: #f5f5f5;
 @value lightGrey200: #ededed;
+@value alto: #dcdcdc;
 
 /* Steel */
 @value lightSteel: #ededed;
@@ -69,6 +73,7 @@
 @value pelorous: #2b9eb3;
 @value deepOcean: #2791a4;
 @value seafoam: #8aebe7;
+@value eggblue: #00BCD4;
 
 /* Accent color: Bermuda */
 @value bermudaPrimary: #6dcbc4;

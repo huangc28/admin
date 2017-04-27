@@ -262,6 +262,12 @@ The dependencies that are causing this warning are:
 
 Config has changed slightly since webpack 1. We have to manually specify compression config for each image type, png, jpg / jpeg, svg... [Here](https://github.com/tcoopman/image-webpack-loader/issues/68) is the consent for the config.
 
+## Page layout related
+
+### Login page
+
+1. [Login Page](https://codepen.io/tutsplus/pen/avbNMM)
+
 ## References
 
 1. [babel node server example](https://github.com/babel/example-node-server)

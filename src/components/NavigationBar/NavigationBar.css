@@ -1,4 +1,5 @@
-@value outerspace, lightGrey from '../../styles/colors.css';
+@value outerspace, lightGrey, limedspruce, silverchalice, alto, eggblue from '../../styles/colors.css';
+@value size24 from '../../styles/font.css';
 
 .header {
   background-color: outerspace;
@@ -15,7 +16,33 @@
   color: lightGrey;
 }
 
+.navigation {
+  padding: 0;
+  height: 100vh;
+  background-color: #37474f;
+}
+
+.menu {
+  padding: 0;
+  background-color: limedspruce;
+}
+
+.menuItem {
+  composes: size24;
+  color: alto !important;
+}
+
+.menuItem:hover {
+  background-color: eggblue !important;
+}
+
 .subMenu {
   padding: 0;
   text-align: center;
+  background-color: silverchalice;
+}
+
+.subMenuLink {
+  text-decoration: none;
+  color: white;
 }
