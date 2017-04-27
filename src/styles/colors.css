@@ -7,6 +7,9 @@
 @value black: black;
 @value white: white;
 
+/* Black */
+@value outerspace: #263238;
+
 /* Grey */
 @value greyCharcoal: #333;
 @value greyChateau: #999;

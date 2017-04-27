@@ -11,10 +11,20 @@ import styles from './NavigationBar.css'
 
 const NavigationBar = () => (
   <div className="mdl-layout__drawer">
-    <span className="mdl-layout-title">Title</span>
+    {/* header */}
+    <header className={styles.header}>
+      {/* name */}
+      <div>
+        Bryan Huang
+      </div>
+
+      {/* status */}
+      <div>
+        system status: admin
+      </div>
+    </header>
     <nav className="mdl-navigation">
       <ul className={styles.subMenu}>
-
         {/* Procurement submenu */}
         <li className="mdl-navigation__link"> Procurement </li>
         {/* Procurement list */}
