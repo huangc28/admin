@@ -1,0 +1,41 @@
+.bold {
+  font-weight: 700;
+}
+
+.normal {
+  font-weight: 400;
+}
+
+.light {
+  font-weight: 300;
+}
+
+.size12 {
+  font-size: 12px;
+  font-size: 0.75rem;
+}
+
+.size14 {
+  font-size: 14px;
+  font-size: 0.875rem;
+}
+
+.size16 {
+  font-size: 16px;
+  font-size: 1rem;
+}
+
+.size20 {
+  font-size: 20px;
+  font-size: 1.25rem;
+}
+
+.size24 {
+  font-size: 24px;
+  font-size: 1.5rem;
+}
+
+.size28 {
+  font-size: 28px;
+  font-size: 1.75rem;
+}

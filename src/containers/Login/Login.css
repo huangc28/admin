@@ -1,0 +1,19 @@
+@value size12 from '../../styles/font.css';
+@value solar, lightGrey200 from '../../styles/colors.css';
+
+.root {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  background-color: lightGrey200;
+}
+
+.card {
+  margin: 0 auto;
+}
+
+.error {
+  composes: size12;
+  color: solar;
+}

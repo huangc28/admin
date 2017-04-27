@@ -1,0 +1,86 @@
+/*
+  These shared styles will eventually move into their own repo
+  so we can share them across projects
+*/
+
+/* Black & White */
+@value black: black;
+@value white: white;
+
+/* Grey */
+@value greyCharcoal: #333;
+@value greyChateau: #999;
+@value grey: #ccc;
+@value daveysGrey: #555;
+
+/* Light Grey */
+@value lightGrey: #ebece7;
+@value lightGrey50: #fafafa;
+@value lightGrey100: #f5f5f5;
+@value lightGrey200: #ededed;
+
+/* Steel */
+@value lightSteel: #ededed;
+@value steel: #e5e5e5;
+@value darkGrey: #333;
+
+/* Yellows */
+@value lightGold: #ffd15e;
+@value mikadoYellow: #fb1;
+@value squash: #e8a90e;
+
+/* Reds */
+@value salmon: #ff8374;
+@value solar: #f8503c;
+@value paleRed: #dd4533;
+
+/* Maroons */
+@value darkRose: #b14666;
+@value berry: #8b1e3f;
+@value grapePurple: #711934;
+
+/* Purples */
+@value grape: #683266;
+@value darkPurple: #3c153b;
+@value eggplant: #2b0d2a;
+
+/* Dark Greens */
+@value lightishGreen: #81e787;
+@value mantis: #5fca65;
+@value green: #51b757;
+
+/* Greens */
+@value lightGreen: #aef08e;
+@value bermuda500: #6dcbc4;
+@value paleOliveGreen: #96de73;
+@value apple: #7fcc59;
+
+/* Turquise */
+@value lightTeal: #84e5de;
+@value bermuda: #6dcbc4; /* Primary Action Colour */
+@value bermudaHover: #57a29c;
+@value greyBlue: #66b6b0;
+
+/* Blues */
+@value tealish: #3fb9cf;
+@value pelorous: #2b9eb3;
+@value deepOcean: #2791a4;
+@value seafoam: #8aebe7;
+
+/* Accent color: Bermuda */
+@value bermudaPrimary: #6dcbc4;
+@value bermuda10: #f7f9f8;
+@value bermuda100: #cbf2f0;
+@value bermuda400: #8bd9d4;
+@value bermuda600: #54bfb8;
+@value bermuda700: #3bada6;
+
+/* Secondary functional colors */
+@value warning: #f8503c;
+@value success: #5fca65;
+@value support: #2b9eb3;
+
+/* Icon color */
+@value facebook: #3b5998;
+@value twitter: #55acee;
+@value like: #f8503c;

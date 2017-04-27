@@ -1,3 +1,6 @@
+@value lightGrey200 from '../../styles/colors.css';
+
 html, body {
   font-family: 'Roboto', 'Helvetica', sans-serif;
+  background-color: lightGrey200;
 }
