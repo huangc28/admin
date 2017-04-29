@@ -1,0 +1,6 @@
+{
+  "name": "CreateIdea",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./CreateIdea.jsx"
+}

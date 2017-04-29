@@ -9,7 +9,10 @@ import {
   TableRowColumn,
 } from 'material-ui/Table'
 import { Tabs, Tab } from 'material-ui/Tabs'
+import RaisedButton from 'material-ui/RaisedButton'
+import { browserHistory } from 'react-router'
 
+import styles from './ideas.css'
 import { sortIdeasByType, getIdeas } from '../../actions/ideas'
 import {
   SORT_BY_ALL,
@@ -76,6 +79,10 @@ class Ideas extends Component {
     this.props.getIdeas()
   }
 
+  onTapCreate = () => {
+    browserHistory.push('/erp/procurement/ideas/create')
+  }
+
   renderIdeaData = idea => (
     ideaDataHeaders.map((header, index) => ( // eslint-disable-line no-confusing-arrow
       index === 0
@@ -103,8 +110,17 @@ class Ideas extends Component {
               />
             ))
           }
-          <Tab label="Item One" />
         </Tabs>
+
+        {/* control button bar */}
+        <div className={styles.btnBar}>
+
+          {/* create button */}
+          <RaisedButton
+            label="Create" default
+            onTouchTap={this.onTapCreate}
+          />
+        </div>
 
         <Table>
           {/* data header */}

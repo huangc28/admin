@@ -9,3 +9,10 @@
 .table th {
   text-align: left;
 }
+
+.btnBar {
+  margin: 0.5rem 0;
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 1rem;
+}

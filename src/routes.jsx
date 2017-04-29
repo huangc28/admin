@@ -7,6 +7,7 @@ import DashBoard from './containers/DashBoard'
 
 /* procurement routes */
 import Ideas from './containers/Ideas'
+import CreateIdea from './containers/CreateIdea'
 
 export default (
   <Route path="/" >
@@ -20,6 +21,7 @@ export default (
       <Route path="procurement">
         <IndexRoute component={Ideas} />
         <Route path="ideas" component={Ideas} />
+        <Route path="ideas/create" component={CreateIdea} />
       </Route>
     </Route>
   </Route>

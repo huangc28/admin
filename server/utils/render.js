@@ -22,6 +22,7 @@ export function renderFullPage (html, initialState) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
         ${cssBundle}
       </head>
+      <!-- reason of adding the margin https://github.com/callemall/material-ui/issues/5029 -->
       <body style="margin: 0;">
         <div id='app'><div>${html}</div></div>
         <script>
