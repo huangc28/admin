@@ -15,18 +15,14 @@ export function renderFullPage (html, initialState) {
     <html>
       <head>
         <title>Universal App</title>
-        <script src="https://use.fontawesome.com/47e3b099c4.js"></script>
         <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-        <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="Next Deal Shop ERP system">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
         ${cssBundle}
       </head>
-      <body>
+      <body style="margin: 0;">
         <div id='app'><div>${html}</div></div>
         <script>
           window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}

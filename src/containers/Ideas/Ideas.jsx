@@ -1,8 +1,15 @@
 import React, { Component, PropTypes } from 'react'
-import classNames from 'classnames'
 import { connect } from 'react-redux'
+import {
+  Table,
+  TableBody,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn,
+} from 'material-ui/Table'
+import { Tabs, Tab } from 'material-ui/Tabs'
 
-import styles from './Ideas.css'
 import { sortIdeasByType, getIdeas } from '../../actions/ideas'
 import {
   SORT_BY_ALL,
@@ -69,48 +76,15 @@ class Ideas extends Component {
     this.props.getIdeas()
   }
 
-  renderTab = (tab, key) => {
-    const { title, sortby } = tab
-
-    return (
-      <a
-        href="#stub-panel"
-        key={key}
-        className={`mdl-tabs__tab${key === 0 ? ' is-active' : ''}`}
-        onClick={evt => {
-          // @TODO write a helper for preventDefault.
-          evt.preventDefault()
-          evt.stopPropagation()
-
-          this.props.sortIdeasByType(sortby)
-        }}
-      >
-        { title }
-      </a>
-    )
-  }
-
-  renderIdeaDataHeader = () => (
-    ideaDataHeaders.map((header, index) => // eslint-disable-line no-confusing-arrow
-      index === 0
-        ? (
-          <th key={index} className="mdl-data-table__cell--non-numeric">
-            { header.title }
-          </th>
-        )
-        : <th key={index}> {header.title} </th>
-    )
-  )
-
   renderIdeaData = idea => (
     ideaDataHeaders.map((header, index) => ( // eslint-disable-line no-confusing-arrow
       index === 0
         ? (
-          <td className="mdl-data-table__cell--non-numeric" key={index}>
+          <TableRowColumn key={index}>
             { idea[header.field] }
-          </td>
+          </TableRowColumn>
         )
-        : <td key={index}> { idea[header.field] } </td>
+        : <TableRowColumn key={index}> { idea[header.field] } </TableRowColumn>
     ))
   )
 
@@ -118,43 +92,47 @@ class Ideas extends Component {
     const { ideas } = this.props
 
     return (
-      <div className="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
-        <div className="mdl-tabs__tab-bar">
+      <div>
+        <Tabs>
           {
-            sortingTabs.map((tab, index) => this.renderTab(tab, index))
+            sortingTabs.map((tab, index) => (
+              <Tab
+                key={index}
+                onClick={() => this.props.sortIdeasByType(tab.sortby)}
+                label={tab.title}
+              />
+            ))
           }
-        </div>
+          <Tab label="Item One" />
+        </Tabs>
 
-        <div id="stub-panel" className={classNames('mdl-tabs__panel', styles.content)}>
-          <table
-            className={classNames(
-              'classmdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp',
-              styles.table
-            )}
-          >
-            {/* data header */}
-            <thead>
-              <tr>
-                {
-                  this.renderIdeaDataHeader()
-                }
-              </tr>
-            </thead>
-
-            {/* data body */}
-            <tbody>
+        <Table>
+          {/* data header */}
+          <TableHeader>
+            <TableRow>
               {
-                ideas.map((idea, index) => (
-                  <tr key={index}>
-                    {
-                      this.renderIdeaData(idea)
-                    }
-                  </tr>
+                ideaDataHeaders.map((header, index) => (
+                  <TableHeaderColumn key={index}>
+                    { header.title }
+                  </TableHeaderColumn>
                 ))
               }
-            </tbody>
-          </table>
-        </div>
+            </TableRow>
+          </TableHeader>
+
+          {/* data body */}
+          <TableBody>
+            {
+              ideas.map((idea, index) => (
+                <TableRow key={index}>
+                  {
+                    this.renderIdeaData(idea)
+                  }
+                </TableRow>
+              ))
+            }
+          </TableBody>
+        </Table>
       </div>
     )
   }
@@ -166,11 +144,9 @@ Ideas.propTypes = {
   sortIdeasByType: PropTypes.func,
 }
 
-const mapStateToProps = state => {
-  return {
-    ideas: state.ideas.data,
-  }
-}
+const mapStateToProps = state => ({
+  ideas: state.ideas.data,
+})
 
 export default connect(mapStateToProps, {
   getIdeas,

@@ -1,6 +1,7 @@
-import React, { Component } from 'react'
-import classNames from 'classnames'
+import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
+import Drawer from 'material-ui/Drawer'
+import MenuItem from 'material-ui/MenuItem'
 
 import styles from './NavigationBar.css'
 
@@ -65,13 +66,11 @@ class NavigationBar extends Component {
     // If submenu open status equals to false, hide submenu.
 
     return (
-      <div
+      <MenuItem
         key={index}
-        onClick={ evt => this.showSubmenu(evt, menuItem.title)}
+        onTouchTap={evt => this.showSubmenu(evt, title)}
       >
-        <li className={classNames(styles.menuItem, 'mdl-navigation__link')}>
-          {title}
-        </li>
+        {title}
 
         {
           subMenuOpenState[selectedName]
@@ -84,7 +83,7 @@ class NavigationBar extends Component {
             )
             : ''
         }
-      </div>
+      </MenuItem>
     )
   }
 
@@ -92,20 +91,30 @@ class NavigationBar extends Component {
     const { link, title } = submenuItem
 
     return (
-      <li className="mdl-list__item" key={index}>
+      <MenuItem key={index}>
         <Link
           to={link}
           className={styles.subMenuLink}
         >
           {title}
         </Link>
-      </li>
+      </MenuItem>
     )
   }
 
   render () {
+    const {
+      open,
+      onClose,
+    } = this.props
+
     return (
-      <div className="mdl-layout__drawer">
+      <Drawer
+        open={open}
+        width={200}
+        docked={false}
+        onRequestChange={onClose}
+      >
         {/* header */}
         <header className={styles.header}>
           {/* name */}
@@ -119,17 +128,21 @@ class NavigationBar extends Component {
           </div>
         </header>
 
-        {/* Menu */}
-        <nav className={classNames('mdl-navigation', styles.navigation)}>
-          <ul className={styles.menu}>
-            {
-              menuList.map((menuItem, index) => this.renderMenuItem(menuItem, index))
-            }
-          </ul>
-        </nav>
-      </div>
+        {
+          menuList.map((menuItem, index) => this.renderMenuItem(menuItem, index))
+        }
+      </Drawer>
     )
   }
+}
+
+NavigationBar.defaultProps = {
+  open: false,
+}
+
+NavigationBar.propTypes = {
+  open: PropTypes.bool,
+  onClose: PropTypes.func,
 }
 
 export default NavigationBar

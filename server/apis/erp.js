@@ -7,10 +7,10 @@ const router = express.Router()
  * @param {number} code
  * @param {string} message
  */
-const errorObjFormatter = (code, message) => ({
-  code,
-  message,
-})
+// const errorObjFormatter = (code, message) => ({
+//   code,
+//   message,
+// })
 
 // @TODO this is the base URL of ERP for testing purposes
 const ERP_BASE_URL = 'http://localhost:3002'
