@@ -1,0 +1,21 @@
+.form {
+  width: 37.5rem;
+  margin: 0 auto;
+}
+
+.fieldContainer {
+  margin: 10px 5px;
+}
+
+.btns {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btns div {
+  margin-right: 0.25rem;
+}
+
+.btns div:last-of-type {
+  margin-left: 0.25rem;
+}
