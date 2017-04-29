@@ -14,6 +14,7 @@ import webpackDevMiddleware from 'webpack-dev-middleware'
 import webpackHotMiddleware from 'webpack-hot-middleware'
 import fs from 'fs'
 
+import apis from './apis/erp'
 import { renderFullPage, staticify, publicPath } from './utils/render'
 import configureStore from '../src/store/configureStore'
 import routes from '../src/routes'
@@ -87,6 +88,7 @@ function handleRender (req, res, next) {
   })
 }
 
+app.use('/api', apis)
 app.use(handleRender)
 
 app.listen(3005, () => {

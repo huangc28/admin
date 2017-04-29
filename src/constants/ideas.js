@@ -1,0 +1,6 @@
+export const SORT_BY_ALL = 'SORT_BY_ALL'
+export const SORT_BY_NEW = 'SORT_BY_NEW'
+export const SORT_BY_APPROVE = 'SORT_BY_APPROVE'
+export const SORT_BY_REWORK = 'SORT_BY_REWORK'
+export const SORT_BY_REJECT = 'SORT_BY_REJECT'
+export const SORT_BY_PENDING = 'SORT_BY_PENDING'

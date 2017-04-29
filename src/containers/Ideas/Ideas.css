@@ -1,0 +1,11 @@
+.content {
+  padding: 0.75rem;
+}
+
+.table {
+  width: 100%;
+}
+
+.table th {
+  text-align: left;
+}

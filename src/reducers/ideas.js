@@ -1,0 +1,27 @@
+import * as loadingStatus from '../constants/loadingState'
+import * as actionTypes from '../actions/ideas'
+
+const INIT_STATE = {
+  status: null,
+  data: [],
+  errorMessage: null,
+  loading: loadingStatus.EMPTY,
+}
+
+export default function ideasReducer (state = INIT_STATE, action) {
+  switch (action.type) {
+    case actionTypes.GET_IDEAS:
+      return {
+        ...state,
+        loading: loadingStatus.LOADING,
+      }
+    case actionTypes.STORE_IDEAS:
+      return {
+        ...state,
+        data: action.payload.ideas,
+        loading: loadingStatus.READY,
+      }
+    default:
+      return state
+  }
+}

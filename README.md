@@ -24,6 +24,10 @@ Implementing a server side rendering app with **React** + **Redux** + **Redux-sa
 
 `npm run start:local`. request `localhost:3005` in your browser.
 
+### Fake data
+
+[json-server](https://github.com/typicode/json-server) use this to serve fake data to frontend. It host's a node server with basic RESTful routes.
+
 ## Progress
 
 [x] setup webpack compilation environment.

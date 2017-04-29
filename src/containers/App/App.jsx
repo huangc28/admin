@@ -6,6 +6,7 @@ import NavigationBar from '../../components/NavigationBar'
 
 const routeMap = {
   '/home': 'HOME',
+  '/ideas': 'IDEAS',
 }
 
 const App = ({ children, pathname }) => {

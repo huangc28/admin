@@ -7,11 +7,11 @@ import styles from './NavigationBar.css'
 const procurementListSubmenu = [
   {
     title: 'ideas',
-    link: '/procurement/ideas',
+    link: '/erp/procurement/ideas',
   },
   {
     title: 'purchase order',
-    link: '/procurement/purchase-order',
+    link: '/erp/procurement/purchase-order',
   },
 ]
 
