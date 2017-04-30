@@ -25,3 +25,15 @@ export default function ideasReducer (state = INIT_STATE, action) {
       return state
   }
 }
+
+/**
+ * @param {object} state
+ * @param {number} id
+ * @returns {object}
+ */
+export const ideaSelector = (state, id) => (
+  (
+    state.ideas.data &&
+    state.ideas.data.find(idea => idea.id && idea.id === id)
+  ) || null
+)

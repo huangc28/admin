@@ -1,16 +1,43 @@
-import React, { Component } from 'react'
-import CreateIdeaForm from '../../components/forms/CreateIdeaForm'
+import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
+import { submit } from 'redux-form/immutable'
+import RaisedButton from 'material-ui/RaisedButton'
+
+import styles from './CreateIdea.css'
+import IdeaForm from '../../components/forms/IdeaForm'
 
 class CreateIdea extends Component {
-  onSubmit = data => {
-    console.log(data)
+  onSubmit = values => {
+    console.log('BRYAN: CREATEIDEA', values)
   }
 
   render () {
+    const {
+      submit,
+    } = this.props
+
     return (
-      <CreateIdeaForm onSubmit={this.onSubmit} />
+      <div>
+        <IdeaForm onSubmitCallback={this.onSubmit} />
+        <div className={styles.btns}>
+          <div>
+            <RaisedButton
+              label="submit"
+              type="submit"
+              onTouchTap={() => submit('ideaForm')}
+              primary
+            />
+          </div>
+        </div>
+      </div>
     )
   }
 }
 
-export default CreateIdea
+CreateIdea.propTypes = {
+  submit: PropTypes.func,
+}
+
+export default connect(null, {
+  submit,
+})(CreateIdea)

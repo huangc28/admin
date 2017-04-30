@@ -1,0 +1,6 @@
+{
+  "name": "IdeaForm",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./IdeaForm.jsx"
+}

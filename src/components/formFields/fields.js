@@ -1,7 +1,10 @@
 /**
- * This is simple wrapper of redux-form on material-ui.
+ * This is a simple wrapper of material-ui for redux-form .
  * redux-form: http://redux-form.com/
  * material-ui: http://www.material-ui.com/
+ *
+ * Be aware that DO NOT pass in attributes that material-ui components
+ * can't recongnize. For example: "meta".
  */
 
 import React, { PropTypes } from 'react'
@@ -32,17 +35,20 @@ renderTextField.propTypes = {
 export const renderCheckBoxField = ({
   input,
   label,
-  ...custom
+  labelPosition,
+  disabled,
 }) => (
   <Checkbox
     label={label}
-    input={input.value}
-    onCheck={input.onChange}
-    {...custom}
+    labelPosition={labelPosition}
+    disabled={disabled}
+    {...input}
   />
 )
 
 renderCheckBoxField.propTypes = {
+  disabled: PropTypes.bool,
   input: PropTypes.object,
   label: PropTypes.string,
+  labelPosition: PropTypes.string,
 }
