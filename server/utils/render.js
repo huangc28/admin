@@ -23,7 +23,7 @@ export function renderFullPage (html, initialState) {
         ${cssBundle}
       </head>
       <!-- reason of adding the margin https://github.com/callemall/material-ui/issues/5029 -->
-      <body style="margin: 0;">
+      <body>
         <div id='app'><div>${html}</div></div>
         <script>
           window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}

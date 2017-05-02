@@ -1,10 +1,15 @@
 import { takeLatest } from 'redux-saga'
-import { call, put } from 'redux-saga/effects'
+import { call, put, select } from 'redux-saga/effects'
 
 import * as APIS from '../apis/ideas'
 import * as actions from '../actions/ideas'
+import { storeInitFormData } from '../actions/initFormData'
+import { getAllIdeas } from '../reducers/ideas'
 
-function * watchGetIdeasFlow (action) {
+/**
+ * Fetch ideas from server
+ */
+export function * watchGetIdeasFlow (action) {
   try {
     const ideas = yield call(APIS.getIdeas)
 
@@ -14,12 +19,52 @@ function * watchGetIdeasFlow (action) {
 
     yield put(actions.storeIdeas(ideas.data))
   } catch (err) {
-    console.log('BRYAN: error', err.getMessage())
+    console.log('BRYAN: error', err.message)
+  }
+}
+
+/**
+ * Load specific idea from server.
+ */
+export function * watchGetIdeaFlow (action) {
+  const { id } = action.payload
+
+  try {
+    const idea = yield call(APIS.getIdea, id)
+
+    if (idea.error) {
+      throw Error(idea.error.message)
+    }
+
+    yield put(storeInitFormData(idea))
+  } catch (e) {
+    console.log('BRYAN', e.message)
+  }
+}
+
+/**
+ * Load idea from the current state tree
+ */
+export function * watchLoadIdeaFlow (action) {
+  // pull the data based on the id
+  const ideas = yield select(getAllIdeas)
+
+  // find the idea object that matches action.payload.id
+  const initFormData = ideas.find(idea => idea.id === action.payload.id)
+
+  if (initFormData) {
+    // dispatch an action for reinitialising form data.
+    yield put(storeInitFormData(initFormData))
+  } else {
+    // if not found in current state tree, request it from the api.
+    yield put(actions.getIdea(action.payload.id))
   }
 }
 
 export default function * ideasFlow () {
   yield [
     takeLatest(actions.GET_IDEAS, watchGetIdeasFlow),
+    takeLatest(actions.GET_IDEA, watchGetIdeaFlow),
+    takeLatest(actions.LOAD_IDEA, watchLoadIdeaFlow),
   ]
 }

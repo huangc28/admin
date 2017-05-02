@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { submit } from 'redux-form/immutable'
+import { submit, reset } from 'redux-form/immutable'
 import RaisedButton from 'material-ui/RaisedButton'
 
 import styles from './CreateIdea.css'
@@ -14,6 +14,7 @@ class CreateIdea extends Component {
   render () {
     const {
       submit,
+      reset,
     } = this.props
 
     return (
@@ -28,6 +29,14 @@ class CreateIdea extends Component {
               primary
             />
           </div>
+          <div>
+            <RaisedButton
+              label="reset"
+              type="button"
+              onTouchTap={() => reset('ideaForm')}
+              default
+            />
+          </div>
         </div>
       </div>
     )
@@ -35,9 +44,11 @@ class CreateIdea extends Component {
 }
 
 CreateIdea.propTypes = {
+  reset: PropTypes.func,
   submit: PropTypes.func,
 }
 
 export default connect(null, {
   submit,
+  reset,
 })(CreateIdea)

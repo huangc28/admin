@@ -27,6 +27,13 @@ export default function ideasReducer (state = INIT_STATE, action) {
 }
 
 /**
+ * Get all ideas
+ *
+ * @param {object} state
+ */
+export const getAllIdeas = state => state.ideas.data
+
+/**
  * @param {object} state
  * @param {number} id
  * @returns {object}
