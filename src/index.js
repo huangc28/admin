@@ -35,7 +35,13 @@ if (__CLIENT__) {
     </Provider>
   )
 
-  injectTapEventPlugin()
+  const {
+    hasHotReloaded,
+  } = store.getState().hotReloaded
+
+  if (!hasHotReloaded) {
+    injectTapEventPlugin()
+  }
 
   ReactDOM.render(
     <App />,
