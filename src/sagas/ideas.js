@@ -1,5 +1,6 @@
 import { takeLatest } from 'redux-saga'
 import { call, put, select } from 'redux-saga/effects'
+import { browserHistory } from 'react-router'
 
 import * as APIS from '../apis/ideas'
 import * as actions from '../actions/ideas'
@@ -81,11 +82,56 @@ export function * watchDeleteIdeaFlow (action) {
   }
 }
 
+/**
+ * Save Idea Flow.
+ */
+export function * watchSaveIdeaFlow (action) {
+  const { formData } = action.payload
+
+  try {
+    // submit idea
+    const result = yield call(APIS.saveIdea, formData)
+
+    if (result.error) {
+      throw new Error(result.error.message)
+    }
+
+    yield put(actions.saveIdeaSuccess(formData))
+
+    // redirect to list page
+    browserHistory.push('/erp/procurement/ideas')
+  } catch (err) {
+    yield put(actions.saveIdeaFailed())
+  }
+}
+
+export function * watchSaveIdeaAndSubmitFlow (action) {
+  const { formData } = action.payload
+
+  try {
+    // submit idea
+    const result = yield call(APIS.saveAndSubmitIdea, formData)
+
+    if (result.error) {
+      throw new Error(result.error.message)
+    }
+
+    yield put(actions.saveAndSubmitIdeaSuccess(formData))
+
+    // redirect to list page
+    browserHistory.push('/erp/procurement/ideas')
+  } catch (err) {
+    yield put(actions.saveAndSubmitIdeaFailed())
+  }
+}
+
 export default function * ideasFlow () {
   yield [
     takeLatest(actions.GET_IDEAS, watchGetIdeasFlow),
     takeLatest(actions.GET_IDEA, watchGetIdeaFlow),
     takeLatest(actions.LOAD_IDEA, watchLoadIdeaFlow),
     takeLatest(actions.DELETE_IDEA, watchDeleteIdeaFlow),
+    takeLatest(actions.SAVE_IDEA, watchSaveIdeaFlow),
+    takeLatest(actions.SAVE_AND_SUBMIT_IDEA, watchSaveIdeaAndSubmitFlow),
   ]
 }

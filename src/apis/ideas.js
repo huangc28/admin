@@ -38,3 +38,18 @@ export const deleteIdea = id => (
   })
   .then(res => res.json())
 )
+
+/**
+ * @param {object} formData
+ * @returns {object}
+ */
+export const saveIdea = formData => (
+  fetch(`${BASE_URL}/idea/save`, {
+    method: 'POST',
+    body: JSON.stringify(formData),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+  .then(res => res.json())
+)

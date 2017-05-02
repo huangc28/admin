@@ -1,8 +1,15 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
+import RaisedButton from 'material-ui/RaisedButton'
+import { submit } from 'redux-form/immutable'
 
+import styles from './EditIdea.css'
+import { SAVE, SAVE_AND_SUBMIT } from '../../constants/generic'
+import {
+  saveIdea,
+  saveAndSubmitIdea,
+} from '../../actions/ideas'
 import IdeaFrom from '../../components/forms/IdeaForm'
-import { ideaSelector } from '../../reducers/ideas'
 
 /**
  * - get id from url query.
@@ -10,30 +17,94 @@ import { ideaSelector } from '../../reducers/ideas'
  * - pass in idea as form data into idea form.
  */
 class EditIdea extends Component {
+  constructor () {
+    super()
+
+    this.state = {
+      submitType: SAVE,
+    }
+  }
+
   onSubmit = value => {
-    console.log('BRYAN: value', value)
+    const {
+      submitType,
+    } = this.state
+
+    const {
+      saveIdea,
+      saveAndSubmitIdea,
+    } = this.props
+
+    if (submitType === SAVE) {
+      saveIdea(value)
+
+      return
+    }
+
+    saveAndSubmitIdea(value)
+  }
+
+  onTouchTapSave = () => {
+    const { submit } = this.props
+
+    this.setState({ submitType: SAVE })
+    submit('ideaForm')
+  }
+
+  onTouchTapSaveAndSubmit = () => {
+    const { submit } = this.props
+
+    this.setState({ submitType: SAVE_AND_SUBMIT })
+    submit('ideaForm')
   }
 
   render () {
-    const {
-      idea,
-    } = this.props
+    const { ideaId } = this.props
 
     return (
-      <IdeaFrom
-        formData={idea}
-        onSubmitCallback={this.onSubmit}
-      />
+      <div>
+        <IdeaFrom
+          onSubmitCallback={this.onSubmit}
+          refId={ideaId}
+        />
+
+        {/* buttons */}
+        <div className={styles.btns}>
+          <div>
+            <RaisedButton
+              label="Save"
+              type="submit"
+              onTouchTap={this.onTouchTapSave}
+              primary
+            />
+          </div>
+          <div>
+            <RaisedButton
+              label="Save & Submit"
+              type="button"
+              onTouchTap={this.onTouchTapSaveAndSubmit}
+              default
+            />
+          </div>
+        </div>
+      </div>
     )
   }
 }
 
 EditIdea.propTypes = {
-  idea: PropTypes.object,
+  ideaId: PropTypes.string,
+  saveAndSubmitIdea: PropTypes.func,
+  saveIdea: PropTypes.func,
+  submit: PropTypes.func,
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  idea: ideaSelector(ownProps.params.id),
+  ideaId: ownProps.params.id,
 })
 
-export default connect(mapStateToProps, null)(EditIdea)
+export default connect(mapStateToProps, {
+  saveIdea,
+  saveAndSubmitIdea,
+  submit,
+})(EditIdea)

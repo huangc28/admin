@@ -5,6 +5,12 @@ export const GET_IDEA = 'GET_IDEA'
 export const DELETE_IDEA = 'DELETE_IDEA'
 export const DELETE_IDEA_SUCCESS = 'DELETE_IDEA_SUCCESS'
 export const DELETE_IDEA_FAILED = 'DELETE_IDEA_FAILED'
+export const SAVE_IDEA = 'SAVE_IDEA'
+export const SAVE_AND_SUBMIT_IDEA = 'SAVE_AND_SUBMIT_IDEA'
+export const SAVE_AND_SUBMIT_IDEA_SUCCESS = 'SAVE_AND_SUBMIT_IDEA_SUCCESS'
+export const SAVE_AND_SUBMIT_IDEA_FAILED = 'SAVE_AND_SUBMIT_IDEA_FAILED'
+export const SAVE_IDEA_SUCCESS = 'SAVE_IDEA_SUCCESS'
+export const SAVE_IDEA_FAILED = 'SAVE_IDEA_FAILED'
 
 export const LOAD_IDEA = 'LOAD_IDEA'
 
@@ -29,12 +35,77 @@ export const getIdeas = () => ({ type: GET_IDEAS })
 /**
  * @param {string} id
  * @returns {object}
- *
  */
 export const getIdea = id => ({
   type: GET_IDEA,
   payload: {
     id,
+  },
+})
+
+/**
+ * @param {object} formData
+ * @returns {object}
+ */
+export const saveIdea = formData => ({
+  type: SAVE_IDEA,
+  payload: {
+    formData,
+  },
+})
+
+/**
+ * @param {object} formData
+ * @returns {object}
+ */
+export const saveIdeaSuccess = formData => ({
+  type: SAVE_IDEA_SUCCESS,
+  payload: {
+    formData,
+  },
+})
+
+/**
+ * @param {string} errorMessage
+ * @returns {object}
+ */
+export const saveIdeaFailed = errorMessage => ({
+  type: SAVE_IDEA_FAILED,
+  payload: {
+    errorMessage,
+  },
+})
+
+/**
+ * @param {object} formData
+ * @returns {object}
+ */
+export const saveAndSubmitIdea = formData => ({
+  type: SAVE_AND_SUBMIT_IDEA,
+  payload: {
+    formData,
+  },
+})
+
+/**
+ * @param {object} formData
+ * @returns {object}
+ */
+export const saveAndSubmitIdeaSuccess = formData => ({
+  type: SAVE_AND_SUBMIT_IDEA_SUCCESS,
+  payload: {
+    formData,
+  },
+})
+
+/**
+ * @param {object} formData
+ * @returns {object}
+ */
+export const saveAndSubmitIdeaFailed = errorMessage => ({
+  type: SAVE_AND_SUBMIT_IDEA_FAILED,
+  payload: {
+    errorMessage,
   },
 })
 

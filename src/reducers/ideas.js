@@ -21,6 +21,17 @@ export default function ideasReducer (state = INIT_STATE, action) {
         data: action.payload.ideas,
         loading: loadingStatus.READY,
       }
+    case actionTypes.DELETE_IDEA_SUCCESS:
+      // remove the idea that matches the specified id.
+      return {
+        ...state,
+        data: state.data.filter(idea => idea.id !== action.payload.id),
+      }
+    case actionTypes.DELETE_IDEA_FAILED:
+      return {
+        ...state,
+        errorMessage: action.payload.errorMessage,
+      }
     default:
       return state
   }
