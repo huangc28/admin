@@ -25,3 +25,16 @@ export const getIdea = id => (
   })
   .then(res => res.json())
 )
+
+export const deleteIdea = id => (
+  fetch(`${BASE_URL}/idea`, {
+    method: 'POST',
+    body: JSON.stringify({
+      id,
+    }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+  .then(res => res.json())
+)

@@ -12,7 +12,7 @@ describe('reinitialising form data', () => {
 
     // found data[0]
     const action = {
-      type: actions.LOAD_IDEA,
+      type: actions.STORE_INIT_FORM_DATA,
       payload: {
         formData: mockedDB.ideas.data[0]
       }

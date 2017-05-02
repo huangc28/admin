@@ -61,10 +61,31 @@ export function * watchLoadIdeaFlow (action) {
   }
 }
 
+/**
+ * Delete idea flow
+ */
+export function * watchDeleteIdeaFlow (action) {
+  const { id } = action.payload
+
+  try {
+    const response = yield call(APIS.deleteIdea, id)
+
+    if (response.error) {
+      throw new Error(response.error.message)
+    }
+
+    // here we remove the specific idea from redux store
+    yield put(actions.deleteIdeaSuccess(id))
+  } catch (err) {
+    yield put(actions.deleteIdeaFailed(err.message))
+  }
+}
+
 export default function * ideasFlow () {
   yield [
     takeLatest(actions.GET_IDEAS, watchGetIdeasFlow),
     takeLatest(actions.GET_IDEA, watchGetIdeaFlow),
     takeLatest(actions.LOAD_IDEA, watchLoadIdeaFlow),
+    takeLatest(actions.DELETE_IDEA, watchDeleteIdeaFlow),
   ]
 }
