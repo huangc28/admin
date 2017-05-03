@@ -97,3 +97,29 @@ describe("delete idea flow", () => {
   })
 })
 
+describe("save idea flow", () => {
+  test("save idea success", () => {
+    const mockedFormData = mockedDB.ideas.data[0]
+
+    const action = {
+      type: actions.SAVE_IDEA,
+      payload: {
+        formData: mockedFormData
+      }
+    }
+
+    const expectedResponse = {
+      status: 200,
+      data: mockedFormData,
+    }
+
+    const gen = sagas.watchSaveIdeaFlow(action)
+
+    expect(gen.next().value)
+      .toEqual(call(APIS.saveIdea, action.payload.formData))
+
+    expect(gen.next(expectedResponse).value)
+      .toEqual(put(actions.saveIdeaSuccess(expectedResponse.data)))
+  })
+})
+

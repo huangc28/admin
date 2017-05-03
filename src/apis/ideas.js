@@ -53,3 +53,18 @@ export const saveIdea = formData => (
   })
   .then(res => res.json())
 )
+
+/**
+ * @param {object} formData
+ * @returns {object}
+ */
+export const editIdea = formData => (
+  fetch(`${BASE_URL}/idea/edit`, {
+    method: 'POST',
+    body: JSON.stringify(formData),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+  .then(res => res.json())
+)

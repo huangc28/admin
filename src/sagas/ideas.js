@@ -83,6 +83,27 @@ export function * watchDeleteIdeaFlow (action) {
 }
 
 /**
+ * Edit idea flow.
+ */
+export function * watchEditIdeaFlow (action) {
+  const {
+    formData,
+  } = action.payload
+
+  try {
+    const response = yield call(APIS.editIdea, formData)
+
+    if (response.error) {
+      throw new Error(response.error.message)
+    }
+
+    yield put(actions.editIdeaSuccess(response.data))
+  } catch (err) {
+    yield put(actions.editIdeaFailed(err.message))
+  }
+}
+
+/**
  * Save Idea Flow.
  */
 export function * watchSaveIdeaFlow (action) {
@@ -96,9 +117,10 @@ export function * watchSaveIdeaFlow (action) {
       throw new Error(result.error.message)
     }
 
+    // insert into idea list.
     yield put(actions.saveIdeaSuccess(formData))
 
-    // redirect to list page
+    // redirect to list page.
     browserHistory.push('/erp/procurement/ideas')
   } catch (err) {
     yield put(actions.saveIdeaFailed())
@@ -133,5 +155,6 @@ export default function * ideasFlow () {
     takeLatest(actions.DELETE_IDEA, watchDeleteIdeaFlow),
     takeLatest(actions.SAVE_IDEA, watchSaveIdeaFlow),
     takeLatest(actions.SAVE_AND_SUBMIT_IDEA, watchSaveIdeaAndSubmitFlow),
+    takeLatest(actions.EDIT_IDEA, watchEditIdeaFlow),
   ]
 }

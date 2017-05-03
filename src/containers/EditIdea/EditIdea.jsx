@@ -6,7 +6,7 @@ import { submit } from 'redux-form/immutable'
 import styles from './EditIdea.css'
 import { SAVE, SAVE_AND_SUBMIT } from '../../constants/generic'
 import {
-  saveIdea,
+  editIdea,
   saveAndSubmitIdea,
 } from '../../actions/ideas'
 import IdeaFrom from '../../components/forms/IdeaForm'
@@ -31,12 +31,14 @@ class EditIdea extends Component {
     } = this.state
 
     const {
-      saveIdea,
+      editIdea,
       saveAndSubmitIdea,
     } = this.props
 
+    console.log('BRYAN: edit idea', editIdea)
+
     if (submitType === SAVE) {
-      saveIdea(value)
+      editIdea(value)
 
       return
     }
@@ -93,9 +95,9 @@ class EditIdea extends Component {
 }
 
 EditIdea.propTypes = {
+  editIdea: PropTypes.func,
   ideaId: PropTypes.string,
   saveAndSubmitIdea: PropTypes.func,
-  saveIdea: PropTypes.func,
   submit: PropTypes.func,
 }
 
@@ -104,7 +106,7 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 export default connect(mapStateToProps, {
-  saveIdea,
+  editIdea,
   saveAndSubmitIdea,
   submit,
 })(EditIdea)

@@ -32,6 +32,11 @@ export default function ideasReducer (state = INIT_STATE, action) {
         ...state,
         errorMessage: action.payload.errorMessage,
       }
+    case actionTypes.SAVE_IDEA_SUCCESS:
+      return {
+        ...state,
+        data: state.data.unshift(action.payload.formData),
+      }
     default:
       return state
   }
