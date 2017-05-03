@@ -2,9 +2,12 @@ import React, { Component, PropTypes } from 'react'
 import AppBar from 'material-ui/AppBar'
 import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
+import injectTapEventPlugin from 'react-tap-event-plugin'
 
 import { getLocation } from '../../utils/routes'
 import NavigationBar from '../../components/NavigationBar'
+
+injectTapEventPlugin()
 
 const routeMap = {
   '/home': 'HOME',
@@ -46,7 +49,10 @@ class App extends Component {
     return (
       <div>
         {/* navigation */}
-        <NavigationBar open={showDrawer} onClose={this.onCloseDrawer} />
+        <NavigationBar
+          open={showDrawer}
+          onClose={this.onCloseDrawer}
+        />
 
         {/* header */}
         <AppBar

@@ -7,7 +7,6 @@ import { Provider } from 'react-redux'
 import ReactDOM from 'react-dom'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 // import getMuiTheme from 'material-ui/styles/getMuiTheme'
-import injectTapEventPlugin from 'react-tap-event-plugin'
 
 import configureStore from './store/configureStore'
 import rootReducer from './reducers'
@@ -34,14 +33,6 @@ if (__CLIENT__) {
       </MuiThemeProvider>
     </Provider>
   )
-
-  const {
-    hasHotReloaded,
-  } = store.getState().hotReloaded
-
-  if (!hasHotReloaded) {
-    injectTapEventPlugin()
-  }
 
   ReactDOM.render(
     <App />,
