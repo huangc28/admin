@@ -1,11 +1,10 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { submit, reset } from 'redux-form/immutable'
-import RaisedButton from 'material-ui/RaisedButton'
 
-import styles from './CreateIdea.css'
 import IdeaForm from '../../components/forms/IdeaForm'
 import { SAVE, SAVE_AND_SUBMIT } from '../../constants/generic'
+import Submitable from '../../components/Submitable'
 import {
   saveIdea,
   saveAndSubmitIdea,
@@ -39,54 +38,26 @@ class CreateIdea extends Component {
     saveAndSubmitIdea(value)
   }
 
-  onTouchTapSave = () => {
-    const { submit } = this.props
-
+  onSave = () => {
     this.setState({ submitType: SAVE })
-    submit('ideaForm')
   }
 
-  onTouchTapSaveAndSubmit = () => {
-    const { submit } = this.props
-
+  onSaveAndSubmit = () => {
     this.setState({ submitType: SAVE_AND_SUBMIT })
-    submit('ideaForm')
   }
 
   render () {
-    const {
-      reset,
-    } = this.props
-
     return (
       <div>
         <IdeaForm onSubmitCallback={this.onSubmit} />
-        <div className={styles.btns}>
-          <div>
-            <RaisedButton
-              label="Save"
-              type="submit"
-              onTouchTap={this.onTouchTapSave}
-              primary
-            />
-          </div>
-          <div>
-            <RaisedButton
-              label="Save & Submit"
-              type="button"
-              onTouchTap={this.onTouchTapSaveAndSubmit}
-              primary
-            />
-          </div>
-          <div>
-            <RaisedButton
-              label="reset"
-              type="button"
-              onTouchTap={() => reset('ideaForm')}
-              default
-            />
-          </div>
-        </div>
+        <Submitable
+          formName="ideaForm"
+          onSave={this.onSave}
+          onSaveAndSubmit={this.onSaveAndSubmit}
+          showSaveButton
+          showSaveAndSubmitButton
+          showResetButton
+        />
       </div>
     )
   }

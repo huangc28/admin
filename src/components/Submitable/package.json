@@ -1,0 +1,6 @@
+{
+  "name": "Submitable",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./Submitable.jsx"
+}
