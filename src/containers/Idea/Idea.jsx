@@ -25,6 +25,7 @@ class Idea extends Component {
         />
 
         <Submitable
+          formName="ideaForm"
           showEditButton
           showDeleteButton
           onEdit={() => browserHistory.push(`/erp/procurement/ideas/${ideaId}/edit`)}

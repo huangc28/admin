@@ -17,7 +17,7 @@
 @value grey: #ccc;
 @value daveysGrey: #555;
 @value silverchalice: #a9a9a9;
-
+@value alto: #e0e0e0;
 
 /* Light Grey */
 @value lightGrey: #ebece7;
@@ -61,6 +61,7 @@
 @value bermuda500: #6dcbc4;
 @value paleOliveGreen: #96de73;
 @value apple: #7fcc59;
+@value persian: #009688;
 
 /* Turquise */
 @value lightTeal: #84e5de;

@@ -1,9 +1,10 @@
 import React, { Component, PropTypes } from 'react'
+import TextField from 'material-ui/TextField'
+import FlatButton from 'material-ui/FlatButton'
 import { connect } from 'react-redux'
-import { login } from '../../actions/auth'
-import classNames from 'classnames'
 
 import styles from './Login.css'
+import { login } from '../../actions/auth'
 
 class Login extends Component {
   constructor () {
@@ -44,67 +45,41 @@ class Login extends Component {
 
     return (
       <div className={styles.root}>
-        <div className={classNames('mdl-card mdl-shadow--6dp', styles.card)}>
-          {/* title */}
-          <div className="mdl-card__title mdl-color--primary mdl-color-text--white">
-            <h2 className="mdl-card__title-text">
-              Next Deal Shop co.
-            </h2>
+        <div className={styles.cardContainer}>
+          {/* Title */}
+          <div className={styles.cardTitle}>
+            Next Deal Shop
           </div>
 
-          <div className="mdl-card__supporting-text">
+          {/* Content */}
+          <div className={styles.cardContent}>
+            <div className={styles.text}>
+              <TextField
+                hintText="email"
+                fullWidth
+                onInput={this.onInputEmail}
+                value={email}
+              />
+            </div>
 
-            {/* form tag is necessary for mdl for the text field to work properly */}
-            <form>
-              {/* email */}
-              <div className="mdl-textfield mdl-js-textfield">
-                <input
-                  className="mdl-textfield__input"
-                  type="text"
-                  id="email"
-                  value={email}
-                  onInput={this.onInputEmail}
-                />
-                <label
-                  className="mdl-textfield__label"
-                  htmlFor="email"
-                >
-                  email
-                </label>
-              </div>
-
-              {/* password */}
-              <div className="mdl-textfield mdl-js-textfield">
-                <input
-                  className="mdl-textfield__input"
-                  type="password"
-                  id="password"
-                  value={password}
-                  onInput={this.onInputPassword}
-                />
-                <label
-                  className="mdl-textfield__label"
-                  htmlFor="password"
-                >
-                  password
-                </label>
-              </div>
-            </form>
+            <div className={styles.text}>
+              <TextField
+                hintText="password"
+                type="password"
+                fullWidth
+                onInput={this.onInputPassword}
+                value={password}
+              />
+            </div>
           </div>
 
-          {/* login button */}
-          <div className="mdl-card__actions mdl-card--border">
-            <button
-              className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
-              onClick={this.onSubmit}
-            >
-              Log in
-            </button>
-
-            {/* error tag */}
-            <span className={styles.error}>
-              email and password not matched!
-            </span>
+          {/* Action bar */}
+          <div className={styles.cardAction}>
+            <FlatButton
+              label="Login"
+              default
+              onTouchTap={this.onSubmit}
+            />
           </div>
         </div>
       </div>

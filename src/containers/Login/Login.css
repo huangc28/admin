@@ -1,5 +1,5 @@
-@value size12 from '../../styles/font.css';
-@value solar, lightGrey200 from '../../styles/colors.css';
+@value size12, size24 from '../../styles/font.css';
+@value solar, lightGrey200, persian, alto from '../../styles/colors.css';
 
 .root {
   width: 100vw;
@@ -9,8 +9,35 @@
   background-color: lightGrey200;
 }
 
-.card {
+.cardContainer {
+  width: 20.625rem;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  border-radius: 2px;
+  box-shadow: 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12), 0 3px 5px -1px rgba(0,0,0,.2);
+}
+
+.cardTitle {
+  composes: size24;
+  background-color: #009688;
+  color: white;
+  padding: 1rem;
+}
+
+.cardContent {
+  background-color: white;
+  border-bottom: solid 1px alto;
+  padding: 1rem 1rem 0 1rem;
+}
+
+.text {
+  padding: 1rem 0;
+}
+
+.cardAction {
+  background-color: white;
+  padding: 0.5rem;
 }
 
 .error {
