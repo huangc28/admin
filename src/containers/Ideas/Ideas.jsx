@@ -8,12 +8,13 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table'
+import IconButton from 'material-ui/IconButton'
 import { Tabs, Tab } from 'material-ui/Tabs'
 import RaisedButton from 'material-ui/RaisedButton'
 import { browserHistory } from 'react-router'
 
 import styles from './ideas.css'
-import { sortIdeasByType, getIdeas } from '../../actions/ideas'
+import { sortIdeasByType, getIdeas, deleteIdea } from '../../actions/ideas'
 import {
   SORT_BY_ALL,
   SORT_BY_NEW,
@@ -85,18 +86,17 @@ class Ideas extends Component {
 
   renderIdeaData = idea => (
     ideaDataHeaders.map((header, index) => ( // eslint-disable-line no-confusing-arrow
-      index === 0
-        ? (
-          <TableRowColumn key={index}>
-            { idea[header.field] }
-          </TableRowColumn>
-        )
-        : <TableRowColumn key={index}> { idea[header.field] } </TableRowColumn>
+      <TableRowColumn key={index}>
+        { idea[header.field] }
+      </TableRowColumn>
     ))
   )
 
   render () {
-    const { ideas } = this.props
+    const {
+      ideas,
+      deleteIdea,
+    } = this.props
 
     return (
       <div>
@@ -122,7 +122,7 @@ class Ideas extends Component {
           />
         </div>
 
-        <Table>
+        <Table selectable={false}>
           {/* data header */}
           <TableHeader>
             <TableRow>
@@ -133,6 +133,13 @@ class Ideas extends Component {
                   </TableHeaderColumn>
                 ))
               }
+
+              {/* list of actions to manipulate an idea */}
+              <TableHeaderColumn>
+                <div>
+                  Actions
+                </div>
+              </TableHeaderColumn>
             </TableRow>
           </TableHeader>
 
@@ -144,6 +151,38 @@ class Ideas extends Component {
                   {
                     this.renderIdeaData(idea)
                   }
+
+                  {/* Idea Action Bar */}
+                  <TableRowColumn>
+                    {/* visible */}
+                    <IconButton
+                      iconClassName="material-icons"
+                      tooltip="View"
+                      onTouchTap={() => browserHistory.push(`/erp/procurement/ideas/${idea.id}`)}
+                    >
+                      visibility
+                    </IconButton>
+
+                    {/* edit */}
+                    <IconButton
+                      iconClassName="material-icons"
+                      tooltip="Edit Idea"
+                      onTouchTap={
+                        () => browserHistory.push(`/erp/procurement/ideas/${idea.id}/edit`)
+                      }
+                    >
+                      mode_edit
+                    </IconButton>
+
+                    {/* Delete */}
+                    <IconButton
+                      iconClassName="material-icons"
+                      tooltip="Delete Idea"
+                      onTouchTap={() => deleteIdea(idea.id)}
+                    >
+                      delete
+                    </IconButton>
+                  </TableRowColumn>
                 </TableRow>
               ))
             }
@@ -155,6 +194,7 @@ class Ideas extends Component {
 }
 
 Ideas.propTypes = {
+  deleteIdea: PropTypes.func,
   getIdeas: PropTypes.func,
   ideas: PropTypes.array,
   sortIdeasByType: PropTypes.func,
@@ -165,6 +205,7 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps, {
+  deleteIdea,
   getIdeas,
   sortIdeasByType,
 })(Ideas)
