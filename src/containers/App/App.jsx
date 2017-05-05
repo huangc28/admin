@@ -9,9 +9,15 @@ import NavigationBar from '../../components/NavigationBar'
 
 injectTapEventPlugin()
 
-const routeMap = {
-  '/home': 'HOME',
-  '/erp/procurement/ideas': 'IDEAS',
+/**
+ * @param {string} currentRoute
+ */
+const getPageTitle = currentRoute => {
+  if (currentRoute.includes('ideas')) {
+    return 'IDEAS'
+  }
+
+  return 'HOME'
 }
 
 class App extends Component {
@@ -56,7 +62,7 @@ class App extends Component {
 
         {/* header */}
         <AppBar
-          title={routeMap[currentRoute] || ''}
+          title={getPageTitle(currentRoute) || ''}
           onLeftIconButtonTouchTap={this.onToggleDrawer}
         />
 
