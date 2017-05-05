@@ -34,6 +34,18 @@ class Submitable extends Component {
     submit(formName)
   }
 
+  onTouchTapEdit = () => {
+    const { onEdit } = this.props
+
+    onEdit()
+  }
+
+  onTouchTapDelete = () => {
+    const { onDelete } = this.props
+
+    onDelete()
+  }
+
   renderSaveButton = () => (
     <div>
       <RaisedButton
@@ -71,8 +83,34 @@ class Submitable extends Component {
     )
   }
 
+  renderEditButton = () => (
+    <div>
+      <div>
+        <RaisedButton
+          label="Edit"
+          type="button"
+          onTouchTap={this.onTouchTapEdit}
+          primary
+        />
+      </div>
+    </div>
+  )
+
+  renderDeleteButton = () => (
+    <div>
+      <RaisedButton
+        label="Delete"
+        type="button"
+        onTouchTap={this.onTouchTapDelete}
+        default
+      />
+    </div>
+  )
+
   render () {
     const {
+      showEditButton,
+      showDeleteButton,
       showResetButton,
       showSaveAndSubmitButton,
       showSaveButton,
@@ -80,6 +118,18 @@ class Submitable extends Component {
 
     return (
       <div className={styles.btns}>
+        {
+          showEditButton
+            ? this.renderEditButton()
+            : ''
+        }
+
+        {
+          showDeleteButton
+            ? this.renderDeleteButton()
+            : ''
+        }
+
         {
           showSaveButton
             ? this.renderSaveButton()
@@ -103,15 +153,24 @@ class Submitable extends Component {
 Submitable.propTypes = {
   formName: PropTypes.string.isRequired,
   reset: PropTypes.func,
+
+  showDeleteButton: PropTypes.bool,
+  showEditButton: PropTypes.bool,
   showResetButton: PropTypes.bool,
   showSaveAndSubmitButton: PropTypes.bool,
   showSaveButton: PropTypes.bool,
+
   submit: PropTypes.func,
+
+  onDelete: PropTypes.func,
+  onEdit: PropTypes.func,
   onSave: PropTypes.func,
   onSaveAndSubmit: PropTypes.func,
 }
 
 Submitable.defaultProps = {
+  showDeleteButton: false,
+  showEditButton: false,
   showResetButton: false,
   showSaveAndSubmitButton: false,
   showSaveButton: false,
