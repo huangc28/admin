@@ -75,7 +75,7 @@ router.post('/idea', (req, res, next) => {
 })
 
 /**
- * @TODO backend api hasn't setup yet.
+ * Save ideas.
  */
 router.post('/idea/save', (req, res, next) => {
   const { body: formData } = req
@@ -84,7 +84,7 @@ router.post('/idea/save', (req, res, next) => {
     res.send(errorObjFormatter(400, 'form data is not provided'))
   }
 
-  fetch(`${ERP_BASE_URL}/idea`, {
+  fetch(`${ERP_BASE_URL}/ideas`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

@@ -70,17 +70,6 @@ class IdeaForm extends Component {
 
         <div className={styles.fieldContainer}>
           <Field
-            name="productCost"
-            hintText="Product Cost"
-            floatingLabelText="Product Cost"
-            fullWidth
-            disabled={disabled}
-            component={TextField}
-          />
-        </div>
-
-        <div className={styles.fieldContainer}>
-          <Field
             name="netWeight"
             hintText="Net Weight"
             floatingLabelText="Net Weight"
@@ -95,6 +84,17 @@ class IdeaForm extends Component {
             name="approximatePackWeight"
             hintText="Approxmiate Pack Weight"
             floatingLabelText="Approxmiate Pack Weight"
+            fullWidth
+            disabled={disabled}
+            component={TextField}
+          />
+        </div>
+
+        <div className={styles.fieldContainer}>
+          <Field
+            name="productCost"
+            hintText="Product Cost"
+            floatingLabelText="Product Cost"
             fullWidth
             disabled={disabled}
             component={TextField}
@@ -128,6 +128,64 @@ class IdeaForm extends Component {
             labelPosition="right"
             disabled={disabled}
             component={Checkbox}
+          />
+        </div>
+
+        <div className={styles.fieldContainer}>
+          <Field
+            name="color"
+            hintText="Color"
+            floatingLabelText="Color"
+            fullWidth
+            disabled={disabled}
+            component={TextField}
+          />
+        </div>
+
+        <div className={styles.fieldContainer}>
+          <Field
+            name="width"
+            hintText="Width"
+            floatingLabelText="Width"
+            fullWidth
+            disabled={disabled}
+            component={TextField}
+          />
+        </div>
+
+        <div className={styles.fieldContainer}>
+          <Field
+            name="height"
+            hintText="Height"
+            floatingLabelText="Height"
+            fullWidth
+            disabled={disabled}
+            component={TextField}
+          />
+        </div>
+
+        <div className={styles.fieldContainer}>
+          <Field
+            name="length"
+            hintText="Length"
+            floatingLabelText="Length"
+            fullWidth
+            disabled={disabled}
+            component={TextField}
+          />
+        </div>
+
+        <div className={styles.fieldContainer}>
+          <Field
+            name="accessories"
+            hintText="Accessories"
+            floatingLabelText="Accessories"
+            multiLine
+            rows={2}
+            rowsMax={4}
+            fullWidth
+            disabled={disabled}
+            component={TextField}
           />
         </div>
 
