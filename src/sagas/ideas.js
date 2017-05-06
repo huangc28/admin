@@ -63,7 +63,7 @@ export function * watchLoadIdeaFlow (action) {
   const ideas = yield select(getAllIdeas)
 
   // find the idea object that matches action.payload.id
-  const initFormData = ideas.find(idea => idea.id === action.payload.id)
+  const initFormData = ideas.find(idea => idea.id === parseInt(action.payload.id, 10))
 
   if (initFormData) {
     // dispatch an action for reinitialising form data.
@@ -89,6 +89,8 @@ export function * watchDeleteIdeaFlow (action) {
 
     // here we remove the specific idea from redux store
     yield put(actions.deleteIdeaSuccess(id))
+    // redirect to previous route
+    browserHistory.push('/erp/procurement/ideas')
   } catch (err) {
     yield put(actions.deleteIdeaFailed(err.message))
   }

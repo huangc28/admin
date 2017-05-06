@@ -38,7 +38,7 @@ export const getIdea = id => (
 )
 
 export const deleteIdea = id => (
-  fetch(`${BASE_URL}/idea`, {
+  fetch(`${BASE_URL}/idea/destroy`, {
     method: 'POST',
     body: JSON.stringify({
       id,

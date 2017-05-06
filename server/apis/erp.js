@@ -156,6 +156,31 @@ router.post('/idea/edit', (req, res, next) => {
   .catch(next)
 })
 
+/**
+ * Delete idea.
+ */
+router.post('/idea/destroy', (req, res, next) => {
+  const { id } = req.body
+
+  if (!id) {
+    res.send(errorObjFormatter(400, 'id is not specified'))
+  }
+
+  fetch(`${ERP_BASE_URL}/ideas/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+  .then(res => res.json())
+  .then(
+    response => {
+      res.send(response)
+    }
+  )
+  .catch(next)
+})
+
 router.use((err, req, res, next) => {
   res.send(err)
 })
