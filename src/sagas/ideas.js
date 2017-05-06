@@ -11,16 +11,28 @@ import { getAllIdeas } from '../reducers/ideas'
  * Fetch ideas from server
  */
 export function * watchGetIdeasFlow (action) {
+  const {
+    status,
+    searchText,
+    offset,
+    limit,
+  } = action.payload
+
   try {
-    const ideas = yield call(APIS.getIdeas)
+    const ideas = yield call(APIS.getIdeas, {
+      status,
+      searchText,
+      offset,
+      limit,
+    })
 
     if (ideas.error) {
       throw Error(ideas.message)
     }
 
-    yield put(actions.storeIdeas(ideas.data))
+    yield put(actions.getIdeasSuccess(ideas.data))
   } catch (err) {
-    console.log('BRYAN: error', err.message)
+    yield put(actions.getIdeasFailed(err.message))
   }
 }
 

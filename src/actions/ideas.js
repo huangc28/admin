@@ -1,6 +1,7 @@
-export const SORT_IDEAS = 'SORT_IDEAS'
-
 export const GET_IDEAS = 'GET_IDEAS'
+export const GET_IDEAS_SUCCESS = 'GET_IDEAS_SUCCESS'
+export const GET_IDEAS_FAILED = 'GET_IDEAS_FAILED'
+
 export const GET_IDEA = 'GET_IDEA'
 
 export const STORE_IDEAS = 'STORE_IDEAS'
@@ -24,22 +25,58 @@ export const EDIT_IDEA_FAILED = 'EDIT_IDEA_FAILED'
 export const LOAD_IDEA = 'LOAD_IDEA'
 
 /**
- * @param {string} sortType
+ * Fetch all ideas from server
+ *
+ * @param {string} status
+ * @param {string} searchText
+ * @param {number} offset
+ * @param {number} limit
  * @returns {object}
  */
-export const sortIdeasByType = sortType => ({
-  type: SORT_IDEAS,
+export const getIdeas = (
+  {
+    status = '', // default to retrieve all
+    searchText = '',
+    offset = '',
+    limit = '',
+  } = {}
+) => ({
+  type: GET_IDEAS,
   payload: {
-    sortType,
+    status,
+    searchText,
+    offset,
+    limit,
   },
 })
 
 /**
- * Fetch all ideas from server
- *
+ * @param {array} ideas
+ */
+export const getIdeasSuccess = ideas => ({
+  type: GET_IDEAS_SUCCESS,
+  payload: {
+    ideas,
+  },
+})
+
+/**
+ * @param {string} errorMessage
+ */
+export const getIdeasFailed = errorMessage => ({
+  type: GET_IDEAS_FAILED,
+  payload: {
+    errorMessage,
+  },
+})
+
+/**
+ * @param {array} ideas
  * @returns {object}
  */
-export const getIdeas = () => ({ type: GET_IDEAS })
+// export const storeIdeas = ideas => ({
+
+// })
 
 /**
  * @param {string} id
@@ -140,17 +177,6 @@ export const saveAndSubmitIdeaFailed = errorMessage => ({
   type: SAVE_AND_SUBMIT_IDEA_FAILED,
   payload: {
     errorMessage,
-  },
-})
-
-/**
- * @param {array} ideas
- * @returns {object}
- */
-export const storeIdeas = ideas => ({
-  type: STORE_IDEAS,
-  payload: {
-    ideas,
   },
 })
 

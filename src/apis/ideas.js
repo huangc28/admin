@@ -3,12 +3,23 @@ import fetch from 'isomorphic-fetch'
 // @TODO extract it to environment configuration file
 const BASE_URL = 'http://localhost:3005/api'
 
-export const getIdeas = () => (
+export const getIdeas = ({
+  status,
+  searchText,
+  offset,
+  limit,
+}) => (
   fetch(`${BASE_URL}/ideas`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
+    body: JSON.stringify({
+      status,
+      searchText,
+      offset,
+      limit,
+    }),
   })
   .then(res => res.json())
 )

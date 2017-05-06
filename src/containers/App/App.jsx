@@ -76,7 +76,7 @@ class App extends Component {
 }
 
 App.childContextTypes = {
-  muiTheme: React.PropTypes.object.isRequired,
+  muiTheme: PropTypes.object.isRequired,
 }
 
 App.propTypes = {

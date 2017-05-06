@@ -1,4 +1,6 @@
 import React, { Component, PropTypes } from 'react'
+import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme'
+import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import TextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
 import { connect } from 'react-redux'
@@ -14,6 +16,11 @@ class Login extends Component {
       email: '',
       password: '',
     }
+  }
+
+  // http://stackoverflow.com/questions/36953711/i-cannot-use-material-ui-components-after-update-to-material-ui0-15-0-beta-1
+  getChildContext () {
+    return { muiTheme: getMuiTheme(baseTheme) }
   }
 
   onInputEmail = evt => {
@@ -85,6 +92,10 @@ class Login extends Component {
       </div>
     )
   }
+}
+
+Login.childContextTypes = {
+  muiTheme: React.PropTypes.object.isRequired,
 }
 
 Login.propTypes = {

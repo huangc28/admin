@@ -95,6 +95,7 @@ class Ideas extends Component {
   render () {
     const {
       ideas,
+      getIdeas,
       deleteIdea,
     } = this.props
 
@@ -105,7 +106,11 @@ class Ideas extends Component {
             sortingTabs.map((tab, index) => (
               <Tab
                 key={index}
-                onClick={() => this.props.sortIdeasByType(tab.sortby)}
+                onClick={
+                  () => getIdeas({
+                    status: tab.sortby,
+                  })
+                }
                 label={tab.title}
               />
             ))

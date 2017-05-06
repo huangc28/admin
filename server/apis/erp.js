@@ -1,5 +1,6 @@
 import express from 'express'
 import fetch from 'isomorphic-fetch'
+import url from 'url'
 
 const router = express.Router()
 
@@ -16,10 +17,36 @@ const errorObjFormatter = (code, message) => ({
 
 // @TODO this is the base URL of ERP for testing purposes
 const ERP_BASE_URL_TEST = 'http://localhost:3002'
-const ERP_BASE_URL = 'http://localhost:3001'
+const ERP_BASE_URL = 'http://localhost:3001/api/v1'
+
+/**
+ * @param {string} apiUrl
+ * @param {object} queries
+ */
+export const buildApiUrl = (apiPath, queries) => {
+  const apiUrl = url.parse(`${ERP_BASE_URL}/${apiPath}`)
+
+  // get pre-existed query
+  const query = apiUrl.query
+
+  // merge queries
+  Object.assign(query, queries)
+
+  // if query object is not empty, assign query
+  if (Object.keys(query).length) apiUrl.query = query
+
+  return apiUrl.format()
+}
 
 router.post('/ideas', (req, res, next) => {
-  fetch(`${ERP_BASE_URL_TEST}/ideas`)
+  const {
+    status,
+    searchText,
+    offset,
+    limit,
+  } = req.body
+
+  fetch(`${ERP_BASE_URL}/ideas?status=${status}&searchText=${searchText}&offset=${offset}&limit=${limit}`) // eslint-disable-line max-len
     .then(res => res.json())
     .then(
       response => {
