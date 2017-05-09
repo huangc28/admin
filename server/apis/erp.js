@@ -1,3 +1,7 @@
+/**
+ * POST data format: x-www-form-urlencoded
+ */
+
 import express from 'express'
 import fetch from 'isomorphic-fetch'
 import url from 'url'
@@ -16,7 +20,6 @@ const errorObjFormatter = (code, message) => ({
 })
 
 // @TODO this is the base URL of ERP for testing purposes
-const ERP_BASE_URL_TEST = 'http://localhost:3002'
 const ERP_BASE_URL = 'http://localhost:3001/api/v1'
 
 /**
@@ -63,8 +66,8 @@ router.post('/idea', (req, res, next) => {
     res.send(errorObjFormatter(400, 'idea id is not specified'))
   }
 
-  // @TODO here we use fake api from json-server
-  fetch(`${ERP_BASE_URL_TEST}/idea/${id}`)
+  // // @TODO here we use fake api from json-server
+  fetch(`${ERP_BASE_URL}/ideas/${id}`)
     .then(res => res.json())
     .then(
       response => {
@@ -140,8 +143,8 @@ router.post('/idea/edit', (req, res, next) => {
     res.send(errorObjFormatter(400, 'form data is not provided'))
   }
 
-  fetch(`${ERP_BASE_URL}/idea/submit`, {
-    method: 'POST',
+  fetch(`${ERP_BASE_URL}/ideas/${formData.id}`, {
+    method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },

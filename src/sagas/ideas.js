@@ -4,8 +4,8 @@ import { browserHistory } from 'react-router'
 
 import * as APIS from '../apis/ideas'
 import * as actions from '../actions/ideas'
-import { storeInitFormData } from '../actions/initFormData'
 import { getAllIdeas } from '../reducers/ideas'
+import { storeInitFormData } from '../actions/initFormData'
 
 /**
  * Fetch ideas from server
@@ -49,9 +49,12 @@ export function * watchGetIdeaFlow (action) {
       throw Error(idea.error.message)
     }
 
-    yield put(storeInitFormData(idea))
+    yield put(actions.getIdeaSuccess(idea.data))
+
+    // @TODO api has not been fixed yet, still in camel case.
+    yield put(storeInitFormData(idea.data))
   } catch (e) {
-    console.log('BRYAN', e.message)
+    yield put(actions.getIdeaFailed(e.message))
   }
 }
 
@@ -63,7 +66,7 @@ export function * watchLoadIdeaFlow (action) {
   const ideas = yield select(getAllIdeas)
 
   // find the idea object that matches action.payload.id
-  const initFormData = ideas.find(idea => idea.id === parseInt(action.payload.id, 10))
+  const initFormData = ideas.find(idea => idea.id === action.payload.id)
 
   if (initFormData) {
     // dispatch an action for reinitialising form data.

@@ -7,7 +7,7 @@ import {
 } from 'redux-form-material-ui'
 
 import styles from './IdeaForm.css'
-import { loadIdea } from '../../../actions/ideas'
+import { getIdea } from '../../../actions/ideas'
 
 /**
  * product name - string
@@ -25,12 +25,12 @@ class IdeaForm extends Component {
 
   componentDidMount = () => {
     const {
-      loadIdea,
+      getIdea,
       refId,
     } = this.props
 
     if (refId) {
-      loadIdea(refId)
+      getIdea(refId)
     }
   }
 
@@ -209,18 +209,19 @@ class IdeaForm extends Component {
 
 IdeaForm.propTypes = {
   disabled: PropTypes.bool,
-  handleSubmit: PropTypes.func,
 
   /**
    * Load idea data.
    * use the data to reinitialize form.
    */
-  loadIdea: PropTypes.func,
+  getIdea: PropTypes.func,
+
+  handleSubmit: PropTypes.func,
 
   /**
    * Use refId to load existing idea data.
    */
-  refId: PropTypes.string,
+  refId: PropTypes.number,
   reset: PropTypes.func,
 
   /**
@@ -235,7 +236,7 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps, {
-  loadIdea,
+  getIdea,
 })(
   reduxForm({
     form: 'ideaForm',

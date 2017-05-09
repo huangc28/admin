@@ -42,6 +42,37 @@ export default function ideasReducer (state = INIT_STATE, action) {
         ...state,
         data: state.data.unshift(action.payload.formData),
       }
+    case actionTypes.EDIT_IDEA_SUCCESS:
+      return {
+        ...state,
+        loading: loadingStatus.LOADING,
+        // find data that matches the id and replace the data object
+        data: state.data.map(formData => {
+          if (formData.id === action.payload.formData.id) {
+            return action.payload.formdata
+          }
+
+          return formData
+        }),
+      }
+    case actionTypes.EDIT_IDEA_FAILED:
+      return {
+        ...state,
+        loading: loadingStatus.ERROR,
+        errorMessage: action.payload.errorMessage,
+      }
+    case actionTypes.GET_IDEA_FAILED:
+      return {
+        ...state,
+        errorMessage: action.payload.errorMessage,
+      }
+    case actionTypes.GET_IDEA_SUCCESS:
+      return {
+        ...state,
+        data: state.data
+          .filter(idea => idea.id === action.payload.idea.id)
+          .push(action.payload.idea),
+      }
     default:
       return state
   }

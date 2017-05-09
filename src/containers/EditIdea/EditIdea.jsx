@@ -75,13 +75,13 @@ class EditIdea extends Component {
 
 EditIdea.propTypes = {
   editIdea: PropTypes.func,
-  ideaId: PropTypes.string,
+  ideaId: PropTypes.number,
   saveAndSubmitIdea: PropTypes.func,
   submit: PropTypes.func,
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  ideaId: ownProps.params.id,
+  ideaId: parseInt(ownProps.params.id, 10),
 })
 
 export default connect(mapStateToProps, {

@@ -38,11 +38,11 @@ class Idea extends Component {
 
 Idea.propTypes = {
   deleteIdea: PropTypes.func,
-  ideaId: PropTypes.string,
+  ideaId: PropTypes.number,
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  ideaId: ownProps.params.id,
+  ideaId: parseInt(ownProps.params.id, 10),
 })
 
 export default connect(mapStateToProps, {

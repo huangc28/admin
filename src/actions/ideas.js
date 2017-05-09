@@ -3,6 +3,8 @@ export const GET_IDEAS_SUCCESS = 'GET_IDEAS_SUCCESS'
 export const GET_IDEAS_FAILED = 'GET_IDEAS_FAILED'
 
 export const GET_IDEA = 'GET_IDEA'
+export const GET_IDEA_FAILED = 'GET_IDEA_FAILED'
+export const GET_IDEA_SUCCESS = 'GET_IDEA_SUCCESS'
 
 export const STORE_IDEAS = 'STORE_IDEAS'
 
@@ -51,6 +53,39 @@ export const getIdeas = (
 })
 
 /**
+ * Get single idea.
+ *
+ * @param {string} id
+ */
+export const getIdea = id => ({
+  type: GET_IDEA,
+  payload: {
+    id,
+  },
+})
+
+/**
+ * @param {string} errorMessage
+ */
+export const getIdeaFailed = errorMessage => ({
+  type: GET_IDEA_FAILED,
+  payload: {
+    errorMessage,
+  },
+})
+
+/**
+ * @param {object} idea
+ * @returns {object}
+ */
+export const getIdeaSuccess = idea => ({
+  type: GET_IDEA_SUCCESS,
+  payload: {
+    idea,
+  },
+})
+
+/**
  * @param {array} ideas
  */
 export const getIdeasSuccess = ideas => ({
@@ -67,25 +102,6 @@ export const getIdeasFailed = errorMessage => ({
   type: GET_IDEAS_FAILED,
   payload: {
     errorMessage,
-  },
-})
-
-/**
- * @param {array} ideas
- * @returns {object}
- */
-// export const storeIdeas = ideas => ({
-
-// })
-
-/**
- * @param {string} id
- * @returns {object}
- */
-export const getIdea = id => ({
-  type: GET_IDEA,
-  payload: {
-    id,
   },
 })
 
