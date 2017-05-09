@@ -30,8 +30,8 @@ const ideaDataHeaders = [
     field: 'product_name',
   },
   {
-    title: 'Status',
-    field: 'status',
+    title: 'Thumbnail',
+    field: 'thumbnail',
   },
   {
     title: 'Proposer Name',
@@ -57,7 +57,11 @@ const sortingTabs = [
     sortby: SORT_BY_NEW,
   },
   {
-    title: 'Approve',
+    title: 'To Be Approved',
+    sortby: SORT_BY_PENDING,
+  },
+  {
+    title: 'Approved',
     sortby: SORT_BY_APPROVE,
   },
   {
@@ -67,10 +71,6 @@ const sortingTabs = [
   {
     title: 'Reject',
     sortby: SORT_BY_REJECT,
-  },
-  {
-    title: 'Pending',
-    sortby: SORT_BY_PENDING,
   },
 ]
 
