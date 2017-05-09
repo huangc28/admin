@@ -66,13 +66,15 @@ export default function ideasReducer (state = INIT_STATE, action) {
         ...state,
         errorMessage: action.payload.errorMessage,
       }
-    case actionTypes.GET_IDEA_SUCCESS:
+    case actionTypes.GET_IDEA_SUCCESS: {
       return {
         ...state,
-        data: state.data
-          .filter(idea => idea.id === action.payload.idea.id)
-          .push(action.payload.idea),
+        data: [
+          ...state.data.filter(idea => idea.id !== action.payload.idea.id),
+          action.payload.idea,
+        ],
       }
+    }
     default:
       return state
   }
