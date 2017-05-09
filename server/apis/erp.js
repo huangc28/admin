@@ -26,11 +26,11 @@ const ERP_BASE_URL = 'http://localhost:3001/api/v1'
  * @param {string} apiUrl
  * @param {object} queries
  */
-export const buildApiUrl = (apiPath, queries) => {
+export const buildApiUrl = (apiPath, queries = {}) => {
   const apiUrl = url.parse(`${ERP_BASE_URL}/${apiPath}`)
 
   // get pre-existed query
-  const query = apiUrl.query
+  const query = apiUrl.query || {}
 
   // merge queries
   Object.assign(query, queries)
@@ -49,7 +49,12 @@ router.post('/ideas', (req, res, next) => {
     limit,
   } = req.body
 
-  fetch(`${ERP_BASE_URL}/ideas?status=${status}&searchText=${searchText}&offset=${offset}&limit=${limit}`) // eslint-disable-line max-len
+  fetch(buildApiUrl('ideas', {
+    status,
+    searchText,
+    offset,
+    limit,
+  })) // eslint-disable-line max-len
     .then(res => res.json())
     .then(
       response => {
@@ -66,8 +71,8 @@ router.post('/idea', (req, res, next) => {
     res.send(errorObjFormatter(400, 'idea id is not specified'))
   }
 
-  // // @TODO here we use fake api from json-server
-  fetch(`${ERP_BASE_URL}/ideas/${id}`)
+  // @TODO here we use fake api from json-server
+  fetch(buildApiUrl(`ideas/${id}`))
     .then(res => res.json())
     .then(
       response => {
@@ -87,7 +92,7 @@ router.post('/idea/save', (req, res, next) => {
     res.send(errorObjFormatter(400, 'form data is not provided'))
   }
 
-  fetch(`${ERP_BASE_URL}/ideas`, {
+  fetch(buildApiUrl('ideas'), {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -115,7 +120,7 @@ router.post('/idea/submit', (req, res, next) => {
     res.send(errorObjFormatter(400, 'form data is not provided'))
   }
 
-  fetch(`${ERP_BASE_URL}/idea/submit`, {
+  fetch(buildApiUrl('idea/submit'), {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -143,7 +148,7 @@ router.post('/idea/edit', (req, res, next) => {
     res.send(errorObjFormatter(400, 'form data is not provided'))
   }
 
-  fetch(`${ERP_BASE_URL}/ideas/${formData.id}`, {
+  fetch(buildApiUrl(`ideas/${formData.id}`), {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -169,7 +174,7 @@ router.post('/idea/destroy', (req, res, next) => {
     res.send(errorObjFormatter(400, 'id is not specified'))
   }
 
-  fetch(`${ERP_BASE_URL}/ideas/${id}`, {
+  fetch(buildApiUrl(`ideas/${id}`), {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
