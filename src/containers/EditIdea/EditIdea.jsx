@@ -43,7 +43,7 @@ class EditIdea extends Component {
     saveAndSubmitIdea(value)
   }
 
-  onSave = () => {
+  onEdit = () => {
     this.setState({ submitType: SAVE })
   }
 
@@ -63,9 +63,9 @@ class EditIdea extends Component {
 
         <Submitable
           formName="ideaForm"
-          showSaveButton
+          showEditButton
           showSaveAndSubmitButton
-          onSave={this.onSave}
+          onEdit={this.onEdit}
           onSaveAndSubmit={this.onSaveAndSubmit}
         />
       </div>

@@ -46,14 +46,6 @@ class IdeaForm extends Component {
         className={styles.form}
         onSubmit={handleSubmit(onSubmitCallback)}
       >
-        {/* status field */}
-        <div className={styles.hidden}>
-          <Field
-            component="input"
-            name="status"
-          />
-        </div>
-
         <div className={styles.fieldContainer}>
           <Field
             name="productName"
@@ -245,18 +237,9 @@ IdeaForm.propTypes = {
   onSubmitCallback: PropTypes.func,
 }
 
-const mapStateToProps = (state, ownProps) => {
-  console.log('BRYAN: idea form', ownProps.status)
-
-  const { formData } = state.initFormData
-
-  // if ownProps status exists, merge status data with formData
-  if (ownProps.status) Object.assign(formData, { status: ownProps.status })
-
-  return {
-    initialValues: formData,
-  }
-}
+const mapStateToProps = (state, ownProps) => ({
+  initialValues: state.initFormData.formData,
+})
 
 export default connect(mapStateToProps, {
   getIdea,

@@ -6,6 +6,10 @@ import * as APIS from '../apis/ideas'
 import * as actions from '../actions/ideas'
 import { getAllIdeas } from '../reducers/ideas'
 import { storeInitFormData } from '../actions/initFormData'
+import {
+  SORT_BY_PENDING,
+  SORT_BY_NEW,
+} from '../constants/ideas'
 
 /**
  * Fetch ideas from server
@@ -115,6 +119,8 @@ export function * watchEditIdeaFlow (action) {
     }
 
     yield put(actions.editIdeaSuccess(response.data))
+
+    browserHistory.push(`/erp/procurement/ideas/${response.data.id}/edit`)
   } catch (err) {
     yield put(actions.editIdeaFailed(err.message))
   }
@@ -127,7 +133,8 @@ export function * watchSaveIdeaFlow (action) {
   const { formData } = action.payload
 
   try {
-    // submit idea
+    Object.assign(formData, { status: SORT_BY_NEW })
+
     const result = yield call(APIS.saveIdea, formData)
 
     if (result.error) {
@@ -148,17 +155,19 @@ export function * watchSaveIdeaAndSubmitFlow (action) {
   const { formData } = action.payload
 
   try {
-    // submit idea
-    const result = yield call(APIS.saveAndSubmitIdea, formData)
+    // merge idea status with formData
+    Object.assign(formData, { status: SORT_BY_PENDING })
+
+    const result = yield call(APIS.saveIdea, formData)
 
     if (result.error) {
       throw new Error(result.error.message)
     }
 
-    yield put(actions.saveAndSubmitIdeaSuccess(formData))
+    yield put(actions.saveAndSubmitIdeaSuccess(result.data))
 
     // redirect to list page
-    browserHistory.push('/erp/procurement/ideas')
+    browserHistory.push(`/erp/procurement/ideas/${result.data.id}`)
   } catch (err) {
     yield put(actions.saveAndSubmitIdeaFailed())
   }

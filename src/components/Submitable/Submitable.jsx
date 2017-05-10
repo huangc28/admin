@@ -35,9 +35,17 @@ class Submitable extends Component {
   }
 
   onTouchTapEdit = () => {
-    const { onEdit } = this.props
+    const {
+      onEdit,
+      formName,
+      submit,
+    } = this.props
 
-    onEdit()
+    if (onEdit) {
+      onEdit()
+    }
+
+    submit(formName)
   }
 
   onTouchTapDelete = () => {

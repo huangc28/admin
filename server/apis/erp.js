@@ -113,34 +113,6 @@ router.post('/idea/save', (req, res, next) => {
  *
  * submit implies create and save.
  */
-router.post('/idea/submit', (req, res, next) => {
-  const { body: formData } = req
-
-  if (!formData) {
-    res.send(errorObjFormatter(400, 'form data is not provided'))
-  }
-
-  fetch(buildApiUrl('idea/submit'), {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(formData),
-  })
-  .then(res => res.json())
-  .then(
-    response => {
-      res.send(response)
-    }
-  )
-  .catch(next)
-})
-
-/**
- * @TODO backend api hasn't setup yet.
- *
- * submit implies create and save.
- */
 router.post('/idea/edit', (req, res, next) => {
   const { body: formData } = req
 
