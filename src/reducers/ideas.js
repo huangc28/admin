@@ -40,7 +40,10 @@ export default function ideasReducer (state = INIT_STATE, action) {
     case actionTypes.SAVE_IDEA_SUCCESS:
       return {
         ...state,
-        data: state.data.unshift(action.payload.formData),
+        data: [
+          ...state.data,
+          action.payload.formData,
+        ],
       }
     case actionTypes.EDIT_IDEA_SUCCESS:
       return {

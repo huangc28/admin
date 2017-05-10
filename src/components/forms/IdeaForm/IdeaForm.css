@@ -6,3 +6,7 @@
 .fieldContainer {
   margin: 10px 5px;
 }
+
+.hidden {
+  display: none;
+}

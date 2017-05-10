@@ -46,6 +46,14 @@ class IdeaForm extends Component {
         className={styles.form}
         onSubmit={handleSubmit(onSubmitCallback)}
       >
+        {/* status field */}
+        <div className={styles.hidden}>
+          <Field
+            component="input"
+            name="status"
+          />
+        </div>
+
         <div className={styles.fieldContainer}>
           <Field
             name="productName"
@@ -225,15 +233,30 @@ IdeaForm.propTypes = {
   reset: PropTypes.func,
 
   /**
+   * Specify the status of this idea.
+   * so we know that which stage this idea is currently at.
+   */
+  status: PropTypes.number,
+
+  /**
    * We have to name this function this way,
    * "onSubmit" conflicts with reduc-form native function name.
    */
   onSubmitCallback: PropTypes.func,
 }
 
-const mapStateToProps = state => ({
-  initialValues: state.initFormData.formData,
-})
+const mapStateToProps = (state, ownProps) => {
+  console.log('BRYAN: idea form', ownProps.status)
+
+  const { formData } = state.initFormData
+
+  // if ownProps status exists, merge status data with formData
+  if (ownProps.status) Object.assign(formData, { status: ownProps.status })
+
+  return {
+    initialValues: formData,
+  }
+}
 
 export default connect(mapStateToProps, {
   getIdea,
