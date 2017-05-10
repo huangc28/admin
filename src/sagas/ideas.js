@@ -7,8 +7,8 @@ import * as actions from '../actions/ideas'
 import { getAllIdeas } from '../reducers/ideas'
 import { storeInitFormData } from '../actions/initFormData'
 import {
-  SORT_BY_PENDING,
-  SORT_BY_NEW,
+  PENDING,
+  NEW,
 } from '../constants/ideas'
 
 /**
@@ -133,7 +133,7 @@ export function * watchSaveIdeaFlow (action) {
   const { formData } = action.payload
 
   try {
-    Object.assign(formData, { status: SORT_BY_NEW })
+    Object.assign(formData, { status: NEW })
 
     const result = yield call(APIS.saveIdea, formData)
 
@@ -156,7 +156,7 @@ export function * watchSaveIdeaAndSubmitFlow (action) {
 
   try {
     // merge idea status with formData
-    Object.assign(formData, { status: SORT_BY_PENDING })
+    Object.assign(formData, { status: PENDING })
 
     const result = yield call(APIS.saveIdea, formData)
 

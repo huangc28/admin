@@ -16,12 +16,12 @@ import { browserHistory } from 'react-router'
 import styles from './ideas.css'
 import { sortIdeasByType, getIdeas, deleteIdea } from '../../actions/ideas'
 import {
-  SORT_BY_ALL,
-  SORT_BY_NEW,
-  SORT_BY_APPROVE,
-  SORT_BY_REWORK,
-  SORT_BY_REJECT,
-  SORT_BY_PENDING,
+  ALL,
+  NEW,
+  APPROVE,
+  REWORK,
+  REJECT,
+  PENDING,
 } from '../../constants/ideas'
 
 const ideaDataHeaders = [
@@ -50,27 +50,27 @@ const ideaDataHeaders = [
 const sortingTabs = [
   {
     title: 'All',
-    sortby: SORT_BY_ALL,
+    sortby: ALL,
   },
   {
     title: 'New',
-    sortby: SORT_BY_NEW,
+    sortby: NEW,
   },
   {
     title: 'To Be Approved',
-    sortby: SORT_BY_PENDING,
+    sortby: PENDING,
   },
   {
     title: 'Approved',
-    sortby: SORT_BY_APPROVE,
+    sortby: APPROVE,
   },
   {
     title: 'Rework',
-    sortby: SORT_BY_REWORK,
+    sortby: REWORK,
   },
   {
     title: 'Reject',
-    sortby: SORT_BY_REJECT,
+    sortby: REJECT,
   },
 ]
 
