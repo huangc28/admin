@@ -8,6 +8,12 @@ import { connect } from 'react-redux'
 import styles from './Login.css'
 import { login } from '../../actions/auth'
 
+const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ // eslint-disable-line
+
+const EMAIL_EMPTY_ERROR = 'email can not be empty'
+const EMAIL_PATTERN_ERROR = 'email pattern is not matched'
+const PASSWORD_EMPTY_ERROR = 'password can not be empty'
+
 class Login extends Component {
   constructor () {
     super()
@@ -15,6 +21,8 @@ class Login extends Component {
     this.state = {
       email: '',
       password: '',
+      emailErrorText: '',
+      passwordErrorText: '',
     }
   }
 
@@ -26,12 +34,14 @@ class Login extends Component {
   onInputEmail = evt => {
     this.setState({
       email: evt.currentTarget.value,
+      emailErrorText: '',
     })
   }
 
   onInputPassword = evt => {
     this.setState({
       password: evt.currentTarget.value,
+      passwordErrorText: '',
     })
   }
 
@@ -41,13 +51,60 @@ class Login extends Component {
       password,
     } = this.state
 
+    this.validateEmail()
+
+    this.validatePassword()
+
     this.props.login(email, password)
+  }
+
+  validateEmail = () => {
+    const { email } = this.state
+
+    if (email === '') {
+      this.setState({
+        emailErrorText: EMAIL_EMPTY_ERROR,
+      })
+
+      return
+    }
+
+    // validate email pattern
+    if (!EMAIL_REGEX.test(email)) {
+      this.setState({
+        emailErrorText: EMAIL_PATTERN_ERROR,
+      })
+
+      return
+    }
+
+    this.setState({
+      emailErrorText: '',
+    })
+  }
+
+  validatePassword = () => {
+    const { password } = this.state
+
+    if (password === '') {
+      this.setState({
+        passwordErrorText: PASSWORD_EMPTY_ERROR,
+      })
+
+      return
+    }
+
+    this.setState({
+      passwordErrorText: '',
+    })
   }
 
   render () {
     const {
       email,
       password,
+      emailErrorText,
+      passwordErrorText,
     } = this.state
 
     return (
@@ -65,7 +122,9 @@ class Login extends Component {
                 hintText="email"
                 fullWidth
                 onInput={this.onInputEmail}
+                errorText={emailErrorText}
                 value={email}
+                onBlur={this.validateEmail}
               />
             </div>
 
@@ -74,8 +133,10 @@ class Login extends Component {
                 hintText="password"
                 type="password"
                 fullWidth
+                errorText={passwordErrorText}
                 onInput={this.onInputPassword}
                 value={password}
+                onBlur={this.validatePassword}
               />
             </div>
           </div>
