@@ -23,12 +23,15 @@ export function * watchGetIdeasFlow (action) {
   } = action.payload
 
   try {
+    console.log('TRIGGER watchGetIdeasFlow')
     const ideas = yield call(APIS.getIdeas, {
       status,
       searchText,
       offset,
       limit,
     })
+
+    console.log('BRYAN: IDEAS', ideas)
 
     if (ideas.error) {
       throw Error(ideas.message)
@@ -99,6 +102,7 @@ export function * watchDeleteIdeaFlow (action) {
     // redirect to previous route
     browserHistory.push('/erp/procurement/ideas')
   } catch (err) {
+    console.log('BRYAN: deleteIdeaSuccess', err)
     yield put(actions.deleteIdeaFailed(err.message))
   }
 }
@@ -158,18 +162,18 @@ export function * watchSaveIdeaAndSubmitFlow (action) {
     // merge idea status with formData
     Object.assign(formData, { status: PENDING })
 
-    const result = yield call(APIS.saveIdea, formData)
+    const result = yield call(APIS.editIdea, formData)
 
     if (result.error) {
       throw new Error(result.error.message)
     }
 
-    yield put(actions.saveAndSubmitIdeaSuccess(result.data))
+    yield put(actions.editIdeaSuccess(result.data))
 
     // redirect to list page
     browserHistory.push(`/erp/procurement/ideas/${result.data.id}`)
   } catch (err) {
-    yield put(actions.saveAndSubmitIdeaFailed())
+    yield put(actions.editIdeaFailed(err.message))
   }
 }
 

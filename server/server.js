@@ -12,6 +12,7 @@ import morgan from 'morgan'
 import webpack from 'webpack'
 import webpackDevMiddleware from 'webpack-dev-middleware'
 import webpackHotMiddleware from 'webpack-hot-middleware'
+import proxy from 'http-proxy-middleware'
 import fs from 'fs'
 
 import apis from './apis/erp'
@@ -31,7 +32,34 @@ app.use(morgan('combined', { stream: accessLogStream }))
 // serve static files.
 app.use('/', express.static(publicPath))
 
+
 app.use(staticify.middleware)
+
+
+const rewritePath = (path, req) => path.replace('/api', '/api/v1')
+
+const proxyOptions = {
+  target: 'http://localhost:3001',
+  logLevel: 'debug',
+  changeOrigin: true,
+  pathRewrite: rewritePath,
+  onProxyReq: (proxyReq, req, res) => {
+    console.log('BRYAN: onproxyres', req.method)
+  },
+}
+
+/**
+ * Proxy frontend request directly to backend.
+ * Prevent writing duplicated api on frontend and node side.
+ *
+ * @NOTE Proxy has to place in front of bodyParser, otherwise proxy will break.
+ * @issue http://stackoverflow.com/questions/26632854/socket-hangup-while-posting-request-to-node-http-proxy-node-js
+ *
+ * For example: http://localhost:3005/api/login ---> http://localhost:3001/api/v1/login
+ */
+app.use('/api', proxy(proxyOptions))
+
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -88,7 +116,6 @@ function handleRender (req, res, next) {
   })
 }
 
-app.use('/api', apis)
 app.use(handleRender)
 
 app.listen(3005, () => {
