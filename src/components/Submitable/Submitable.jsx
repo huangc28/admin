@@ -54,6 +54,28 @@ class Submitable extends Component {
     onDelete()
   }
 
+  onTouchTapRework = () => {
+    const {
+      onRework,
+      submit,
+      formName,
+    } = this.props
+
+    if (onRework) {
+      onRework()
+    }
+
+    submit(formName)
+  }
+
+  onTouchTapReject = () => {
+    console.log('BRYAN: REJECT')
+  }
+
+  onTouchTapApprove = () => {
+    console.log('BRYAN: APPROVE')
+  }
+
   renderSaveButton = () => (
     <div>
       <RaisedButton
@@ -126,6 +148,28 @@ class Submitable extends Component {
     </div>
   )
 
+  renderRejectButton = () => (
+    <div>
+      <RaisedButton
+        label="Reject"
+        type="button"
+        onTouchTap={this.onTouchTapReject}
+        secondary
+      />
+    </div>
+  )
+
+  renderApproveButton = () => (
+    <div>
+      <RaisedButton
+        label="Approve"
+        type="button"
+        onTouchTap={this.onTouchTapApprove}
+        primary
+      />
+    </div>
+  )
+
   render () {
     const {
       showEditButton,
@@ -134,6 +178,8 @@ class Submitable extends Component {
       showSaveAndSubmitButton,
       showSaveButton,
       showReworkButton,
+      showRejectButton,
+      showApproveButton,
     } = this.props
 
     return (
@@ -141,6 +187,16 @@ class Submitable extends Component {
         {
           showReworkButton
             ? this.renderReworkButton()
+            : ''
+        }
+        {
+          showRejectButton
+            ? this.renderRejectButton()
+            : ''
+        }
+        {
+          showApproveButton
+            ? this.renderApproveButton()
             : ''
         }
         {
@@ -179,8 +235,10 @@ Submitable.propTypes = {
   formName: PropTypes.string.isRequired,
   reset: PropTypes.func,
 
+  showApproveButton: PropTypes.bool,
   showDeleteButton: PropTypes.bool,
   showEditButton: PropTypes.bool,
+  showRejectButton: PropTypes.bool,
   showResetButton: PropTypes.bool,
   showReworkButton: PropTypes.bool,
   showSaveAndSubmitButton: PropTypes.bool,
@@ -188,8 +246,11 @@ Submitable.propTypes = {
 
   submit: PropTypes.func,
 
+  onApprove: PropTypes.func,
   onDelete: PropTypes.func,
   onEdit: PropTypes.func,
+  onReject: PropTypes.func,
+  onRework: PropTypes.func,
   onSave: PropTypes.func,
   onSaveAndSubmit: PropTypes.func,
 }

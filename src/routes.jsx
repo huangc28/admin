@@ -9,7 +9,7 @@ import DashBoard from './containers/DashBoard'
 import Ideas from './containers/Ideas'
 import Idea from './containers/Idea'
 import CreateIdea from './containers/CreateIdea'
-import EditIdea from './containers/EditIdea'
+// import EditIdea from './containers/EditIdea'
 import ReviewIdea from './containers/ReviewIdea'
 
 export default (
@@ -23,9 +23,9 @@ export default (
       {/* procurement idea*/}
       <Route path="procurement/ideas">
         <IndexRoute component={Ideas} />
-        <Route path=":id" component={Idea} />
-        <Route path=":id/review" component={ReviewIdea} />
-        <Route path=":id/edit" component={EditIdea} />
+        <Route path=":ideaId" component={Idea} />
+        <Route path=":ideaId/review" component={ReviewIdea} />
+        {/* <Route path=":ideaId/edit" component={EditIdea} /> */}
         <Route path="create" component={CreateIdea} />
       </Route>
     </Route>

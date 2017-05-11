@@ -232,12 +232,12 @@ IdeaForm.propTypes = {
 
   /**
    * We have to name this function this way,
-   * "onSubmit" conflicts with reduc-form native function name.
+   * "onSubmit" conflicts with redux-form native function name.
    */
   onSubmitCallback: PropTypes.func,
 }
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = state => ({
   initialValues: state.initFormData.formData,
 })
 

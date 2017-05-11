@@ -12,7 +12,9 @@ class Idea extends Component {
 
   render () {
     const {
-      ideaId,
+      params: {
+        ideaId,
+      } = {},
       deleteIdea,
     } = this.props
 
@@ -20,7 +22,7 @@ class Idea extends Component {
       <div>
         <IdeaForm
           onSubmitCallback={this.onSubmit}
-          refId={ideaId}
+          refId={parseInt(ideaId, 10)}
           disabled
         />
 
@@ -38,13 +40,11 @@ class Idea extends Component {
 
 Idea.propTypes = {
   deleteIdea: PropTypes.func,
-  ideaId: PropTypes.number,
+  params: PropTypes.shape({
+    ideaId: PropTypes.string,
+  }),
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  ideaId: parseInt(ownProps.params.id, 10),
-})
-
-export default connect(mapStateToProps, {
+export default connect(null, {
   deleteIdea,
 })(Idea)

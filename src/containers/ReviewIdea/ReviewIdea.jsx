@@ -1,25 +1,107 @@
 import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
+import TextField from 'material-ui/TextField'
 
-import IdeaForm from '../../containers/EditIdea'
+import styles from './ReviewIdea.css'
+import {
+  REWORK,
+  APPROVE,
+  REJECT,
+} from '../../constants/ideas'
+import IdeaForm from '../../components/forms/IdeaForm'
 import Submitable from '../../components/Submitable'
 
 class ReviewIdea extends Component {
-  onSubmit = value => {
-    console.log('BRYAN: review idea', value)
+  constructor () {
+    super()
+
+    this.state = {
+      status: '',
+      comments: '',
+    }
   }
 
-  componentDidMount = () => {
-    console.log('TRIGGERED review idea')
+  onInput = evt => {
+    this.setState({
+      comments: evt.target.value,
+    })
+  }
+
+  onSubmit = value => {
+    const {
+      status,
+      comments,
+    } = this.state
+
+    const {
+      reworkIdea,
+      params: {
+        ideaId,
+      },
+    } = this.props
+
+    if (status === REWORK) {
+      reworkIdea(ideaId, comments)
+    }
+  }
+
+  onRework = () => {
+    this.setState({
+      status: REWORK,
+    })
+  }
+
+  onApprove = () => {
+    this.setState({
+      status: APPROVE,
+    })
+  }
+
+  onReject = () => {
+    this.setState({
+      status: REJECT,
+    })
   }
 
   render () {
+    const {
+      params: {
+        ideaId,
+      } = {},
+    } = this.props
+
+    const {
+      comments,
+    } = this.state
+
     return (
       <div>
         <IdeaForm
           onSubmitCallback={this.onSubmit}
-          testProps="test"
+          refId={parseInt(ideaId, 10)}
           disabled
+        />
+
+        {/* comments field */}
+        <div className={styles.comments}>
+          <TextField
+            name="ideaComments"
+            hintText="Idea Comments"
+            floatingLabelText="Idea Comments"
+            onInput={this.onInput}
+            value={comments}
+            fullWidth
+            multiLine
+          />
+        </div>
+
+        <Submitable
+          formName="ideaForm"
+          showReworkButton
+          showRejectButton
+          showApproveButton
+          onRework={this.onRework}
+          onReject={this.onReject}
+          onApprove={this.onApprove}
         />
       </div>
     )
@@ -27,13 +109,11 @@ class ReviewIdea extends Component {
 }
 
 ReviewIdea.propTypes = {
-  ideaId: PropTypes.number,
+  params: PropTypes.shape({
+    ideaId: PropTypes.string,
+  }),
+
+  reworkIdea: PropTypes.func,
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    ideaId: ownProps.params && ownProps.params.id && parseInt(ownProps.params.id, 10),
-  }
-}
-
-export default connect(null, null)(ReviewIdea)
+export default ReviewIdea

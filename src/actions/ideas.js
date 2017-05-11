@@ -26,6 +26,8 @@ export const EDIT_IDEA_FAILED = 'EDIT_IDEA_FAILED'
 
 export const LOAD_IDEA = 'LOAD_IDEA'
 
+export const REWORK_IDEA = 'REWORK_IDEA'
+
 /**
  * Fetch all ideas from server
  *
@@ -241,6 +243,19 @@ export const deleteIdeaFailed = errorMessage => ({
   type: DELETE_IDEA_FAILED,
   payload: {
     errorMessage,
+  },
+})
+
+/**
+ * @param {string} id
+ * @param {string} comments
+ * @returns {object}
+ */
+export const reworkIdea = (id, comments) => ({
+  type: REWORK_IDEA,
+  payload: {
+    id,
+    comments,
   },
 })
 
