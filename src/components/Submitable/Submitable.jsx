@@ -115,6 +115,17 @@ class Submitable extends Component {
     </div>
   )
 
+  renderReworkButton = () => (
+    <div>
+      <RaisedButton
+        label="Rework"
+        type="button"
+        onTouchTap={this.onTouchTapRework}
+        default
+      />
+    </div>
+  )
+
   render () {
     const {
       showEditButton,
@@ -122,10 +133,16 @@ class Submitable extends Component {
       showResetButton,
       showSaveAndSubmitButton,
       showSaveButton,
+      showReworkButton,
     } = this.props
 
     return (
       <div className={styles.btns}>
+        {
+          showReworkButton
+            ? this.renderReworkButton()
+            : ''
+        }
         {
           showEditButton
             ? this.renderEditButton()
@@ -165,6 +182,7 @@ Submitable.propTypes = {
   showDeleteButton: PropTypes.bool,
   showEditButton: PropTypes.bool,
   showResetButton: PropTypes.bool,
+  showReworkButton: PropTypes.bool,
   showSaveAndSubmitButton: PropTypes.bool,
   showSaveButton: PropTypes.bool,
 
@@ -180,6 +198,7 @@ Submitable.defaultProps = {
   showDeleteButton: false,
   showEditButton: false,
   showResetButton: false,
+  ShowReworkButton: false,
   showSaveAndSubmitButton: false,
   showSaveButton: false,
 }
