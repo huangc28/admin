@@ -40,6 +40,10 @@ I choose to use [google material-ui](http://www.material-ui.com) as the generic 
 
 [material-ui](https://github.com/erikras/redux-form-material-ui)
 
+### icons
+
+[material UI icons](https://material.io/icons/)
+
 **Production**
 
 `NODE_ENV=production npm run start`

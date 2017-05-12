@@ -9,6 +9,7 @@ import { storeInitFormData } from '../actions/initFormData'
 import {
   PENDING,
   NEW,
+  // REWORK,
 } from '../constants/ideas'
 
 /**
@@ -23,15 +24,12 @@ export function * watchGetIdeasFlow (action) {
   } = action.payload
 
   try {
-    console.log('TRIGGER watchGetIdeasFlow')
     const ideas = yield call(APIS.getIdeas, {
       status,
       searchText,
       offset,
       limit,
     })
-
-    console.log('BRYAN: IDEAS', ideas)
 
     if (ideas.error) {
       throw Error(ideas.message)
@@ -177,6 +175,24 @@ export function * watchSaveIdeaAndSubmitFlow (action) {
   }
 }
 
+export function * watchReworkIdeaFlow (action) {
+  console.log('BRYAN: watchReworkIdeaFlow triggered')
+  // const { id, comments } = action.payload
+
+  // try {
+  //   const response = yield call(APIS.reworkIdea, id, comments)
+
+  //   if (response.error) {
+  //     throw new Error(response.error.message)
+  //   }
+
+  //   yield put(actions.reworkIdeaSuccess)
+
+  // } catch (err) {
+  //   console.
+  // }
+}
+
 export default function * ideasFlow () {
   yield [
     takeLatest(actions.GET_IDEAS, watchGetIdeasFlow),
@@ -186,5 +202,6 @@ export default function * ideasFlow () {
     takeLatest(actions.SAVE_IDEA, watchSaveIdeaFlow),
     takeLatest(actions.SAVE_AND_SUBMIT_IDEA, watchSaveIdeaAndSubmitFlow),
     takeLatest(actions.EDIT_IDEA, watchEditIdeaFlow),
+    takeLatest(actions.REWORK_IDEA, watchReworkIdeaFlow),
   ]
 }

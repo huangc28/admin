@@ -24,6 +24,10 @@ class EditIdea extends Component {
     }
   }
 
+  componentDidMount = () => {
+    console.log('TRIGGERED EDITIDEA')
+  }
+
   onSubmit = value => {
     const {
       submitType,
@@ -81,7 +85,8 @@ EditIdea.propTypes = {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  ideaId: parseInt(ownProps.params.id, 10),
+  // pull this out to a selector.
+  ideaId: ownProps.params && ownProps.params.id && parseInt(ownProps.params.id, 10),
 })
 
 export default connect(mapStateToProps, {

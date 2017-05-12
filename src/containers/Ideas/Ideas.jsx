@@ -92,11 +92,60 @@ class Ideas extends Component {
     ))
   )
 
+  renderPendingActions = id => (
+    <div>
+      {/* review idea */}
+      <IconButton
+        iconClassName="material-icons"
+        tooltip="Review"
+        onTouchTap={() => browserHistory.push(`/erp/procurement/ideas/${id}/review`)}
+      >
+        spellcheck
+      </IconButton>
+    </div>
+  )
+
+  renderActions = id => {
+    const { deleteIdea } = this.props
+
+    return (
+      <div>
+        {/* visible */}
+        <IconButton
+          iconClassName="material-icons"
+          tooltip="View"
+          onTouchTap={() => browserHistory.push(`/erp/procurement/ideas/${id}`)}
+        >
+          visibility
+        </IconButton>
+
+        {/* edit */}
+        <IconButton
+          iconClassName="material-icons"
+          tooltip="Edit Idea"
+          onTouchTap={
+            () => browserHistory.push(`/erp/procurement/ideas/${id}/edit`)
+          }
+        >
+          mode_edit
+        </IconButton>
+
+        {/* Delete */}
+        <IconButton
+          iconClassName="material-icons"
+          tooltip="Delete Idea"
+          onTouchTap={() => deleteIdea(id)}
+        >
+          delete
+        </IconButton>
+      </div>
+    )
+  }
+
   render () {
     const {
       ideas,
       getIdeas,
-      deleteIdea,
     } = this.props
 
     return (
@@ -159,34 +208,14 @@ class Ideas extends Component {
 
                   {/* Idea Action Bar */}
                   <TableRowColumn>
-                    {/* visible */}
-                    <IconButton
-                      iconClassName="material-icons"
-                      tooltip="View"
-                      onTouchTap={() => browserHistory.push(`/erp/procurement/ideas/${idea.id}`)}
-                    >
-                      visibility
-                    </IconButton>
-
-                    {/* edit */}
-                    <IconButton
-                      iconClassName="material-icons"
-                      tooltip="Edit Idea"
-                      onTouchTap={
-                        () => browserHistory.push(`/erp/procurement/ideas/${idea.id}/edit`)
+                    {
+                      do {
+                        if (idea.status === PENDING) this.renderPendingActions(idea.id)
+                        else {
+                          this.renderActions(idea.id)
+                        }
                       }
-                    >
-                      mode_edit
-                    </IconButton>
-
-                    {/* Delete */}
-                    <IconButton
-                      iconClassName="material-icons"
-                      tooltip="Delete Idea"
-                      onTouchTap={() => deleteIdea(idea.id)}
-                    >
-                      delete
-                    </IconButton>
+                    }
                   </TableRowColumn>
                 </TableRow>
               ))
