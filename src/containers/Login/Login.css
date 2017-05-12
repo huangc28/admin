@@ -38,9 +38,12 @@
 .cardAction {
   background-color: white;
   padding: 0.5rem;
+  display: flex;
+  align-items: center;
 }
 
 .error {
   composes: size12;
   color: solar;
+  margin-left: 1.5rem;
 }

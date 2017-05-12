@@ -8,14 +8,33 @@ import ReactDOM from 'react-dom'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 // import getMuiTheme from 'material-ui/styles/getMuiTheme'
 
+import { ACCESS_TOKEN } from './constants/auth'
 import configureStore from './store/configureStore'
 import rootReducer from './reducers'
 import routes from './routes'
+import { init } from './config'
 
-const initialState = window.__INITIAL_STATE__
+let accessToken
+
+// restore accessToken from session storage
+// if session key exists.
+if (__CLIENT__ && sessionStorage) {
+  accessToken = sessionStorage.getItem(ACCESS_TOKEN)
+}
+
+const initialState = {
+  ...window.__INITIAL_STATE__,
+  auth: {
+    accessToken,
+  },
+}
 const store = configureStore(rootReducer, initialState)
 
 const history = syncHistoryWithStore(browserHistory, store)
+
+// assign store in config for later usage
+// eg. setting "access_token" in every api request
+init({ store })
 
 // const muiTheme = getMuiTheme({
 //   userAgent: 'all',

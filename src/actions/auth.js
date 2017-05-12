@@ -1,13 +1,17 @@
-const LOGIN = 'LOGIN'
+import { createActions } from 'redux-actions'
 
-/**
- * @param {string} email
- * @param {string} password
- */
-export const login = (email, password) => ({
-  type: LOGIN,
-  payload: {
+export const {
+  login,
+  loginSuccess,
+  loginFailed,
+  logout,
+} = createActions({
+  LOGIN: (email, password) => ({
     email,
     password,
-  },
-})
+  }),
+  LOGIN_FAILED: errorMessage => ({
+    errorMessage,
+  }),
+  LOGIN_SUCCESS: token => ({ token }),
+}, 'LOGOUT')

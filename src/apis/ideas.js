@@ -1,27 +1,4 @@
-import fetch from 'isomorphic-fetch'
-import url from 'url'
-
-// @TODO extract it to environment configuration file
-const BASE_URL = 'http://localhost:3005/api'
-
-/**
- * @param {string} apiUrl
- * @param {object} queries
- */
-export const buildApiUrl = (apiPath, queries = {}) => {
-  const apiUrl = url.parse(`${BASE_URL}/${apiPath}`)
-
-  // get pre-existed query
-  const query = apiUrl.query || {}
-
-  // merge queries
-  Object.assign(query, queries)
-
-  // if query object is not empty, assign query
-  if (Object.keys(query).length) apiUrl.query = query
-
-  return apiUrl.format()
-}
+import { buildApiUrl, fetchApi } from './utils'
 
 export const getIdeas = ({
   status,
@@ -29,38 +6,26 @@ export const getIdeas = ({
   offset,
   limit,
 }) => (
-  fetch(buildApiUrl('ideas', {
+  fetchApi(buildApiUrl('ideas', {
     status,
     searchText,
     offset,
     limit,
-  }), {
-    method: 'GET',
-    headers: {
-      credentials: 'same-origin',
-      'Content-Type': 'application/json',
-    },
+  }), 'GET', {
+    credentials: 'same-origin',
   })
   .then(res => res.json())
 )
 
 export const getIdea = id => (
-  fetch(buildApiUrl(`ideas/${id}`), {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+  fetchApi(buildApiUrl(`ideas/${id}`), 'GET', {
+    credentials: 'same-origin',
   })
   .then(res => res.json())
 )
 
 export const deleteIdea = id => (
-  fetch(buildApiUrl(`/ideas/${id}`), {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
+  fetchApi(buildApiUrl(`/ideas/${id}`), 'DELETE')
   .then(res => res.json())
 )
 
@@ -69,12 +34,8 @@ export const deleteIdea = id => (
  * @returns {object}
  */
 export const saveIdea = formData => (
-  fetch(buildApiUrl('ideas'), {
-    method: 'POST',
+  fetchApi(buildApiUrl('ideas'), 'POST', {}, {
     body: JSON.stringify(formData),
-    headers: {
-      'Content-Type': 'application/json',
-    },
   })
   .then(res => res.json())
 )
@@ -84,12 +45,8 @@ export const saveIdea = formData => (
  * @returns {object}
  */
 export const editIdea = formData => (
-  fetch(buildApiUrl(`ideas/${formData.id}`), {
-    method: 'PUT',
+  fetchApi(buildApiUrl(`ideas/${formData.id}`), 'PUT', {}, {
     body: JSON.stringify(formData),
-    headers: {
-      'Content-Type': 'application/json',
-    },
   })
   .then(res => res.json())
 )

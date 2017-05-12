@@ -15,7 +15,6 @@ import webpackHotMiddleware from 'webpack-hot-middleware'
 import proxy from 'http-proxy-middleware'
 import fs from 'fs'
 
-import apis from './apis/erp'
 import { renderFullPage, staticify, publicPath } from './utils/render'
 import configureStore from '../src/store/configureStore'
 import routes from '../src/routes'
@@ -31,10 +30,7 @@ app.use(morgan('combined', { stream: accessLogStream }))
 
 // serve static files.
 app.use('/', express.static(publicPath))
-
-
 app.use(staticify.middleware)
-
 
 const rewritePath = (path, req) => path.replace('/api', '/api/v1')
 
@@ -58,8 +54,6 @@ const proxyOptions = {
  * For example: http://localhost:3005/api/login ---> http://localhost:3001/api/v1/login
  */
 app.use('/api', proxy(proxyOptions))
-
-
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 

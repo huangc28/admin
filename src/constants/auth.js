@@ -1,0 +1,1 @@
+export const ACCESS_TOKEN = 'XIN_YI_ACCESS_TOKEN'

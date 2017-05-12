@@ -107,12 +107,16 @@ class Login extends Component {
       passwordErrorText,
     } = this.state
 
+    const {
+      errorMessage,
+    } = this.props
+
     return (
       <div className={styles.root}>
         <div className={styles.cardContainer}>
           {/* Title */}
           <div className={styles.cardTitle}>
-            Next Deal Shop
+            Xin Yi ERP
           </div>
 
           {/* Content */}
@@ -148,6 +152,12 @@ class Login extends Component {
               default
               onTouchTap={this.onSubmit}
             />
+
+            <div className={styles.error}>
+              {
+                errorMessage
+              }
+            </div>
           </div>
         </div>
       </div>
@@ -160,7 +170,12 @@ Login.childContextTypes = {
 }
 
 Login.propTypes = {
+  errorMessage: PropTypes.string,
   login: PropTypes.func,
 }
 
-export default connect(null, { login })(Login)
+const mapStateToProps = state => ({
+  errorMessage: state.auth.errorMessage,
+})
+
+export default connect(mapStateToProps, { login })(Login)
