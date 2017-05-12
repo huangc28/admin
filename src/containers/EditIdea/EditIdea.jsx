@@ -56,13 +56,13 @@ class EditIdea extends Component {
   }
 
   render () {
-    const { ideaId } = this.props
+    const { ideaId } = this.props.params
 
     return (
       <div>
         <IdeaFrom
           onSubmitCallback={this.onSubmit}
-          refId={ideaId}
+          refId={parseInt(ideaId, 10)}
         />
 
         <Submitable
@@ -80,16 +80,14 @@ class EditIdea extends Component {
 EditIdea.propTypes = {
   editIdea: PropTypes.func,
   ideaId: PropTypes.number,
+  params: PropTypes.shape({
+    ideaId: PropTypes.string,
+  }),
   saveAndSubmitIdea: PropTypes.func,
   submit: PropTypes.func,
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  // pull this out to a selector.
-  ideaId: ownProps.params && ownProps.params.id && parseInt(ownProps.params.id, 10),
-})
-
-export default connect(mapStateToProps, {
+export default connect(null, {
   editIdea,
   saveAndSubmitIdea,
   submit,
