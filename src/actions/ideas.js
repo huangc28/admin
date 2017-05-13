@@ -254,31 +254,6 @@ export const deleteIdeaFailed = errorMessage => ({
 })
 
 /**
- * @param {string} id
- * @param {string} comments
- * @returns {object}
- */
-export const reworkIdea = (id, comments) => ({
-  type: REWORK_IDEA,
-  payload: {
-    id,
-    comments,
-  },
-})
-
-/**
- * @param {String} ideaId
- * @returns {String} comment
- */
-export const reworkIdeaSuccess = (ideaId, comment) => ({
-  type: REWORK_IDEA_SUCCESS,
-  payload: {
-    ideaId,
-    comment,
-  },
-})
-
-/**
  * @param {String} ideaId
  */
 export const rejectIdea = ideaId => ({

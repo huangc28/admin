@@ -79,21 +79,6 @@ export default function ideasReducer (state = INIT_STATE, action) { // eslint-di
         ],
       }
     }
-    case actionTypes.REWORK_IDEA_SUCCESS:
-      // add comment into matched idea object.
-      return {
-        ...state,
-        data: state.data.map(idea => {
-          if (idea.id === action.payload.ideaId) {
-            return {
-              ...idea,
-              comment: action.payload.comment,
-            }
-          }
-
-          return idea
-        }),
-      }
     default:
       return state
   }

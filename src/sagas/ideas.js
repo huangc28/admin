@@ -11,7 +11,6 @@ import {
   NEW,
   REJECT,
   APPROVE,
-  // REWORK,
 } from '../constants/ideas'
 
 /**
@@ -176,30 +175,6 @@ export function * watchSaveIdeaAndSubmitFlow (action) {
   }
 }
 
-export function * watchReworkIdeaFlow (action) {
-  const { id, comments } = action.payload
-
-  try {
-    const response = yield call(APIS.reworkIdea, id, comments)
-
-    if (response.error) {
-      throw new Error(response.error.message)
-    }
-
-    const {
-      data: {
-        content,
-        idea_id,
-      },
-    } = response
-
-    // put the comments into relative idea.
-    yield put(actions.reworkIdeaSuccess(idea_id, content))
-  } catch (err) {
-    console.log('rework idea flow', err)
-  }
-}
-
 export function * watchRejectIdeaFlow (action) {
   const { ideaId } = action.payload
 
@@ -251,7 +226,6 @@ export default function * ideasFlow () {
     takeLatest(actions.SAVE_IDEA, watchSaveIdeaFlow),
     takeLatest(actions.SAVE_AND_SUBMIT_IDEA, watchSaveIdeaAndSubmitFlow),
     takeLatest(actions.EDIT_IDEA, watchEditIdeaFlow),
-    takeLatest(actions.REWORK_IDEA, watchReworkIdeaFlow),
     takeLatest(actions.REJECT_IDEA, watchRejectIdeaFlow),
     takeLatest(actions.APPROVE_IDEA, watchApproveIdeaFlow),
   ]
