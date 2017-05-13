@@ -105,7 +105,31 @@ class Ideas extends Component {
     </div>
   )
 
-  renderActions = id => {
+  renderRejectActions = id => (
+    <div>
+      <IconButton
+        iconClassName="material-icons"
+        tooltip="View"
+        onTouchTap={() => browserHistory.push(`/erp/procurement/ideas/${id}`)}
+      >
+        visibility
+      </IconButton>
+    </div>
+  )
+
+  renderApproveActions = id => (
+    <div>
+      <IconButton
+        iconClassName="material-icons"
+        tooltip="View"
+        onTouchTap={() => browserHistory.push(`/erp/procurement/ideas/${id}`)}
+      >
+        visibility
+      </IconButton>
+    </div>
+  )
+
+  renderReworkActions = id => {
     const { deleteIdea } = this.props
 
     return (
@@ -209,12 +233,24 @@ class Ideas extends Component {
                   {/* Idea Action Bar */}
                   <TableRowColumn>
                     {
-                      do {
-                        if (idea.status === PENDING) this.renderPendingActions(idea.id)
-                        else {
-                          this.renderActions(idea.id)
-                        }
-                      }
+                      idea.status === APPROVE
+                        ? this.renderApproveActions(idea.id)
+                        : ''
+                    }
+                    {
+                      idea.status === PENDING
+                        ? this.renderPendingActions(idea.id)
+                        : ''
+                    }
+                    {
+                      idea.status === REJECT
+                        ? this.renderRejectActions(idea.id)
+                        : ''
+                    }
+                    {
+                      idea.status === REWORK || idea.status === NEW
+                        ? this.renderReworkActions(idea.id)
+                        : ''
                     }
                   </TableRowColumn>
                 </TableRow>
