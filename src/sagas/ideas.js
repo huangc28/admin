@@ -9,6 +9,8 @@ import { storeInitFormData } from '../actions/initFormData'
 import {
   PENDING,
   NEW,
+  REJECT,
+  APPROVE,
   // REWORK,
 } from '../constants/ideas'
 
@@ -100,7 +102,6 @@ export function * watchDeleteIdeaFlow (action) {
     // redirect to previous route
     browserHistory.push('/erp/procurement/ideas')
   } catch (err) {
-    console.log('BRYAN: deleteIdeaSuccess', err)
     yield put(actions.deleteIdeaFailed(err.message))
   }
 }
@@ -176,21 +177,69 @@ export function * watchSaveIdeaAndSubmitFlow (action) {
 }
 
 export function * watchReworkIdeaFlow (action) {
-  console.log('BRYAN: watchReworkIdeaFlow triggered')
-  // const { id, comments } = action.payload
+  const { id, comments } = action.payload
 
-  // try {
-  //   const response = yield call(APIS.reworkIdea, id, comments)
+  try {
+    const response = yield call(APIS.reworkIdea, id, comments)
 
-  //   if (response.error) {
-  //     throw new Error(response.error.message)
-  //   }
+    if (response.error) {
+      throw new Error(response.error.message)
+    }
 
-  //   yield put(actions.reworkIdeaSuccess)
+    const {
+      data: {
+        content,
+        idea_id,
+      },
+    } = response
 
-  // } catch (err) {
-  //   console.
-  // }
+    // put the comments into relative idea.
+    yield put(actions.reworkIdeaSuccess(idea_id, content))
+  } catch (err) {
+    console.log('rework idea flow', err)
+  }
+}
+
+export function * watchRejectIdeaFlow (action) {
+  const { ideaId } = action.payload
+
+  try {
+    const response = yield call(APIS.editIdea, {
+      id: ideaId,
+      status: REJECT,
+    })
+
+    if (response.error) {
+      throw new Error(response.error.message)
+    }
+
+    yield put(actions.editIdeaSuccess(response.data))
+
+    browserHistory.push('erp/procurement/ideas')
+  } catch (err) {
+    yield put(actions.editIdeaFailed(err.message))
+  }
+}
+
+export function * watchApproveIdeaFlow (action) {
+  const { ideaId } = action.payload
+
+  try {
+    const response = yield call(APIS.editIdea, {
+      id: ideaId,
+      status: APPROVE,
+    })
+
+    if (response.error) {
+      throw new Error(response.error.message)
+    }
+
+    yield put(actions.editIdeaSuccess(response.data))
+
+    browserHistory.push('erp/procurement/ideas')
+  } catch (err) {
+    yield put(actions.editIdeaFailed(err.message))
+  }
 }
 
 export default function * ideasFlow () {
@@ -203,5 +252,7 @@ export default function * ideasFlow () {
     takeLatest(actions.SAVE_AND_SUBMIT_IDEA, watchSaveIdeaAndSubmitFlow),
     takeLatest(actions.EDIT_IDEA, watchEditIdeaFlow),
     takeLatest(actions.REWORK_IDEA, watchReworkIdeaFlow),
+    takeLatest(actions.REJECT_IDEA, watchRejectIdeaFlow),
+    takeLatest(actions.APPROVE_IDEA, watchApproveIdeaFlow),
   ]
 }

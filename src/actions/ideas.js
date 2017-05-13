@@ -27,6 +27,13 @@ export const EDIT_IDEA_FAILED = 'EDIT_IDEA_FAILED'
 export const LOAD_IDEA = 'LOAD_IDEA'
 
 export const REWORK_IDEA = 'REWORK_IDEA'
+export const REWORK_IDEA_SUCCESS = 'REWORK_IDEA_SUCCESS'
+
+export const REJECT_IDEA = 'REJECT_IDEA'
+export const REJECT_IDEA_SUCCESS = 'REJECT_IDEA_SUCCESS'
+export const REJECT_IDEA_FAILED = 'REJECT_IDEA_FAILED'
+
+export const APPROVE_IDEA = 'APPROVE_IDEA'
 
 /**
  * Fetch all ideas from server
@@ -259,3 +266,34 @@ export const reworkIdea = (id, comments) => ({
   },
 })
 
+/**
+ * @param {String} ideaId
+ * @returns {String} comment
+ */
+export const reworkIdeaSuccess = (ideaId, comment) => ({
+  type: REWORK_IDEA_SUCCESS,
+  payload: {
+    ideaId,
+    comment,
+  },
+})
+
+/**
+ * @param {String} ideaId
+ */
+export const rejectIdea = ideaId => ({
+  type: REJECT_IDEA,
+  payload: {
+    ideaId,
+  },
+})
+
+/**
+ * @param {String} ideaId
+ */
+export const approveIdea = ideaId => ({
+  type: APPROVE_IDEA,
+  payload: {
+    ideaId,
+  },
+})

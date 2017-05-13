@@ -8,7 +8,7 @@ const INIT_STATE = {
   loading: loadingStatus.EMPTY,
 }
 
-export default function ideasReducer (state = INIT_STATE, action) {
+export default function ideasReducer (state = INIT_STATE, action) { // eslint-disable-line complexity
   switch (action.type) {
     case actionTypes.GET_IDEAS:
       return {
@@ -45,19 +45,20 @@ export default function ideasReducer (state = INIT_STATE, action) {
           action.payload.formData,
         ],
       }
-    case actionTypes.EDIT_IDEA_SUCCESS:
+    case actionTypes.EDIT_IDEA_SUCCESS: {
       return {
         ...state,
         loading: loadingStatus.LOADING,
         // find data that matches the id and replace the data object
         data: state.data.map(formData => {
           if (formData.id === action.payload.formData.id) {
-            return action.payload.formdata
+            return action.payload.formData
           }
 
           return formData
         }),
       }
+    }
     case actionTypes.EDIT_IDEA_FAILED:
       return {
         ...state,
@@ -78,6 +79,21 @@ export default function ideasReducer (state = INIT_STATE, action) {
         ],
       }
     }
+    case actionTypes.REWORK_IDEA_SUCCESS:
+      // add comment into matched idea object.
+      return {
+        ...state,
+        data: state.data.map(idea => {
+          if (idea.id === action.payload.ideaId) {
+            return {
+              ...idea,
+              comment: action.payload.comment,
+            }
+          }
+
+          return idea
+        }),
+      }
     default:
       return state
   }
@@ -101,3 +117,14 @@ export const ideaSelector = (state, id) => (
     state.ideas.data.find(idea => idea.id && idea.id === id)
   ) || null
 )
+
+/**
+ * @param {object} state
+ * @param {number} id
+ * @returns {string} || null
+ */
+export const getIdeaComment = (state, id) => {
+  const idea = ideaSelector(state, parseInt(id, 10))
+
+  return (idea && idea.comment) || ''
+}

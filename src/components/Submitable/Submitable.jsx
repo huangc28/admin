@@ -69,11 +69,32 @@ class Submitable extends Component {
   }
 
   onTouchTapReject = () => {
-    console.log('BRYAN: REJECT')
+    // we don't need to submit anything in reject action.
+    const {
+      onReject,
+      submit,
+      formName,
+    } = this.props
+
+    if (onReject) {
+      onReject()
+    }
+
+    submit(formName)
   }
 
   onTouchTapApprove = () => {
-    console.log('BRYAN: APPROVE')
+    const {
+      onApprove,
+      submit,
+      formName,
+    } = this.props
+
+    if (onApprove) {
+      onApprove()
+    }
+
+    submit(formName)
   }
 
   renderSaveButton = () => (

@@ -50,3 +50,27 @@ export const editIdea = formData => (
   })
   .then(res => res.json())
 )
+
+/**
+ * @param {string} id
+ * @param {string} comments
+ */
+export const reworkIdea = (id, comments) => (
+  fetchApi(buildApiUrl('ideaComments'), 'POST', {}, {
+    body: JSON.stringify({
+      idea_id: id,
+      content: comments,
+    }),
+  })
+  .then(res => res.json())
+)
+
+/**
+ * @param {String} ideaId
+ * @param {Promise}
+ */
+export const rejectIdea = ideaId => (
+  fetchApi(buildApiUrl(`/ideaComments/${ideaId}`), 'DELETE')
+  .then(res => res.json())
+)
+
