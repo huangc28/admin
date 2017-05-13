@@ -1,9 +1,6 @@
 import React, { Component, PropTypes } from 'react'
-import TextField from 'material-ui/TextField'
 import { connect } from 'react-redux'
 
-import styles from './ReviewIdea.css'
-import { getCommentByIdeaId } from '../../reducers/ideaComment'
 import {
   REWORK,
   APPROVE,
@@ -18,6 +15,7 @@ import {
   reworkIdea,
 } from '../../actions/ideaComment'
 import IdeaForm from '../../components/forms/IdeaForm'
+import IdeaCommentField from '../../components/IdeaCommentField'
 import Submitable from '../../components/Submitable'
 
 class ReviewIdea extends Component {
@@ -30,29 +28,14 @@ class ReviewIdea extends Component {
     }
   }
 
-  componentDidMount = () => {
-    // retrieve latest comment by idea id
-    const { fetchIdeaComment, params: { ideaId } } = this.props
-
-    fetchIdeaComment(ideaId)
-  }
-
-  componentWillReceiveProps = nextProps => {
-    const {
-      comment: {
-        content,
-      },
-    } = nextProps
-
-    if (this.state.content !== content) {
-      this.setState({ content })
-    }
-  }
-
   onInput = evt => {
     this.setState({
       content: evt.target.value,
     })
+  }
+
+  onUpdateComment = content => {
+    this.setState({ content })
   }
 
   onSubmit = value => {
@@ -71,6 +54,7 @@ class ReviewIdea extends Component {
     } = this.props
 
     if (status === REWORK) {
+      // console.log('content', content)
       reworkIdea(ideaId, content)
     }
 
@@ -120,18 +104,12 @@ class ReviewIdea extends Component {
           disabled
         />
 
-        {/* comments field */}
-        <div className={styles.comments}>
-          <TextField
-            name="ideaComments"
-            hintText="Idea Comments"
-            floatingLabelText="Idea Comments"
-            onInput={this.onInput}
-            value={content}
-            fullWidth
-            multiLine
-          />
-        </div>
+        <IdeaCommentField
+          ideaId={ideaId}
+          onInput={this.onInput}
+          content={content}
+          onUpdateComment={this.onUpdateComment}
+        />
 
         <Submitable
           formName="ideaForm"
@@ -158,11 +136,7 @@ ReviewIdea.propTypes = {
   reworkIdea: PropTypes.func,
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  comment: getCommentByIdeaId(state, parseInt(ownProps.params.ideaId, 10)),
-})
-
-export default connect(mapStateToProps, {
+export default connect(null, {
   approveIdea,
   reworkIdea,
   rejectIdea,
