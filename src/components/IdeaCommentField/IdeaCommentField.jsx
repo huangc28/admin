@@ -48,12 +48,14 @@ class IdeaCommentField extends Component {
   render () {
     const {
       content,
+      disabled,
       onInput,
     } = this.props
 
     return (
       <div className={styles.comments}>
         <TextField
+          disabled={disabled}
           name="ideaComments"
           hintText="Idea Comments"
           floatingLabelText="Idea Comments"
@@ -70,6 +72,7 @@ class IdeaCommentField extends Component {
 IdeaCommentField.propTypes = {
   comment: PropTypes.object,
   content: PropTypes.string,
+  disabled: PropTypes.bool,
   fetchIdeaComment: PropTypes.func,
   ideaId: PropTypes.string,
   onInput: PropTypes.func,

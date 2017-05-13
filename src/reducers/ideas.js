@@ -113,3 +113,10 @@ export const getIdeaComment = (state, id) => {
 
   return (idea && idea.comment) || ''
 }
+
+export const getIdeaStatus = (state, id) => {
+  const idea = ideaSelector(state, parseInt(id, 10))
+
+  return idea && idea.status
+}
+

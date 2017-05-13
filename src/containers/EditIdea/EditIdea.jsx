@@ -2,7 +2,10 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { submit } from 'redux-form/immutable'
 
+import { getIdeaStatus } from '../../reducers/ideas'
+import IdeaCommentField from '../../components/IdeaCommentField'
 import Submitable from '../../components/Submitable'
+import { REWORK } from '../../constants/ideas'
 import { SAVE, SAVE_AND_SUBMIT } from '../../constants/generic'
 import {
   editIdea,
@@ -21,11 +24,18 @@ class EditIdea extends Component {
 
     this.state = {
       submitType: SAVE,
+      content: '',
     }
   }
 
   componentDidMount = () => {
     console.log('TRIGGERED EDITIDEA')
+  }
+
+  onUpdateComment = content => {
+    this.setState({
+      content,
+    })
   }
 
   onSubmit = value => {
@@ -56,7 +66,14 @@ class EditIdea extends Component {
   }
 
   render () {
-    const { ideaId } = this.props.params
+    const {
+      params: {
+        ideaId,
+      },
+      status,
+    } = this.props
+
+    const { content } = this.state
 
     return (
       <div>
@@ -64,6 +81,19 @@ class EditIdea extends Component {
           onSubmitCallback={this.onSubmit}
           refId={parseInt(ideaId, 10)}
         />
+
+        {
+          status === REWORK
+            ? (
+              <IdeaCommentField
+                disabled
+                ideaId={ideaId}
+                content={content}
+                onUpdateComment={this.onUpdateComment}
+              />
+            )
+            : ''
+        }
 
         <Submitable
           formName="ideaForm"
@@ -84,10 +114,15 @@ EditIdea.propTypes = {
     ideaId: PropTypes.string,
   }),
   saveAndSubmitIdea: PropTypes.func,
+  status: PropTypes.number,
   submit: PropTypes.func,
 }
 
-export default connect(null, {
+const mapStateToProps = (state, ownProps) => ({
+  status: getIdeaStatus(state, ownProps.params.ideaId),
+})
+
+export default connect(mapStateToProps, {
   editIdea,
   saveAndSubmitIdea,
   submit,
