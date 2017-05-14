@@ -187,11 +187,7 @@ class Ideas extends Component {
                 value={tab.sortby}
                 key={index}
                 onActive={
-                  () => {
-                    console.log('BRYAN: sorting tab triggered', index)
-
-                    getIdeas(tab.sortby)
-                  }
+                  () => { getIdeas(tab.sortby) }
                 }
                 label={tab.title}
               />
