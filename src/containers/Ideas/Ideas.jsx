@@ -77,7 +77,12 @@ const sortingTabs = [
 class Ideas extends Component {
 
   componentDidMount = () => {
-    this.props.getIdeas()
+    const {
+      getIdeas,
+      activeTab,
+    } = this.props
+
+    getIdeas(activeTab)
   }
 
   onTapCreate = () => {
@@ -170,17 +175,23 @@ class Ideas extends Component {
     const {
       ideas,
       getIdeas,
+      activeTab,
     } = this.props
 
     return (
       <div>
-        <Tabs>
+        <Tabs value={activeTab}>
           {
             sortingTabs.map((tab, index) => (
               <Tab
+                value={tab.sortby}
                 key={index}
-                onClick={
-                  () => getIdeas(tab.sortby)
+                onActive={
+                  () => {
+                    console.log('BRYAN: sorting tab triggered', index)
+
+                    getIdeas(tab.sortby)
+                  }
                 }
                 label={tab.title}
               />
@@ -262,6 +273,7 @@ class Ideas extends Component {
 }
 
 Ideas.propTypes = {
+  activeTab: PropTypes.node,
   deleteIdea: PropTypes.func,
   getIdeas: PropTypes.func,
   ideas: PropTypes.array,
@@ -270,6 +282,7 @@ Ideas.propTypes = {
 
 const mapStateToProps = state => ({
   ideas: state.ideas.data,
+  activeTab: state.ideas.status,
 })
 
 export default connect(mapStateToProps, {

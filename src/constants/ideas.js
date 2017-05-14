@@ -1,5 +1,3 @@
-// @TODO remove SORT_BY_
-
 export const APPROVE = 2
 export const REJECT = 3
 export const REWORK = 4

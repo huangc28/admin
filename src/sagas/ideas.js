@@ -23,8 +23,6 @@ export function * watchGetIdeasFlow (action) {
     limit,
   } = action.payload
 
-  // console.log('watchGetIdeasFlow params', status, searchText, offset, limit)
-
   try {
     const ideas = yield call(APIS.getIdeas, {
       status,
@@ -104,7 +102,7 @@ export function * watchEditIdeaFlow (action) {
 
     yield put(actions.editIdeaSuccess(response.data))
 
-    browserHistory.push(`/erp/procurement/ideas/${response.data.id}/edit`)
+    browserHistory.push('/erp/procurement/ideas')
   } catch (err) {
     yield put(actions.editIdeaFailed(err.message))
   }

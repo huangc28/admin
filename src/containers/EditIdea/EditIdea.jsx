@@ -28,10 +28,6 @@ class EditIdea extends Component {
     }
   }
 
-  componentDidMount = () => {
-    console.log('TRIGGERED EDITIDEA')
-  }
-
   onUpdateComment = content => {
     this.setState({
       content,

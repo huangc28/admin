@@ -23,10 +23,10 @@ export default (
       {/* procurement idea*/}
       <Route path="procurement/ideas">
         <IndexRoute component={Ideas} />
+        <Route path="create" component={CreateIdea} />
         <Route path=":ideaId" component={Idea} />
         <Route path=":ideaId/review" component={ReviewIdea} />
         <Route path=":ideaId/edit" component={EditIdea} />
-        <Route path="create" component={CreateIdea} />
       </Route>
     </Route>
   </Route>

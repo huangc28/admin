@@ -1,10 +1,11 @@
 import { handleActions } from 'redux-actions'
 
 import * as loadingStatus from '../constants/loadingState'
+import * as ideaStatus from '../constants/ideas'
 import * as actions from '../actions/ideas'
 
 const INIT_STATE = {
-  status: null,
+  status: ideaStatus.ALL,
   data: [],
   errorMessage: null,
   loading: loadingStatus.EMPTY,
@@ -14,6 +15,7 @@ const ideasReducer = handleActions({
   [actions.getIdeas]: (state, action) => ({
     ...state,
     loading: loadingStatus.LOADING,
+    status: action.payload.status,
   }),
   [actions.getIdeasSuccess]: (state, action) => ({
     ...state,
