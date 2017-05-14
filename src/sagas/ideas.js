@@ -1,10 +1,9 @@
 import { takeLatest } from 'redux-saga'
-import { call, put, select } from 'redux-saga/effects'
+import { call, put } from 'redux-saga/effects'
 import { browserHistory } from 'react-router'
 
 import * as APIS from '../apis/ideas'
 import * as actions from '../actions/ideas'
-import { getAllIdeas } from '../reducers/ideas'
 import { storeInitFormData } from '../actions/initFormData'
 import {
   PENDING,
@@ -23,6 +22,8 @@ export function * watchGetIdeasFlow (action) {
     offset,
     limit,
   } = action.payload
+
+  // console.log('watchGetIdeasFlow params', status, searchText, offset, limit)
 
   try {
     const ideas = yield call(APIS.getIdeas, {
@@ -61,25 +62,6 @@ export function * watchGetIdeaFlow (action) {
     yield put(storeInitFormData(idea.data))
   } catch (e) {
     yield put(actions.getIdeaFailed(e.message))
-  }
-}
-
-/**
- * Load idea from the current state tree
- */
-export function * watchLoadIdeaFlow (action) {
-  // pull the data based on the id
-  const ideas = yield select(getAllIdeas)
-
-  // find the idea object that matches action.payload.id
-  const initFormData = ideas.find(idea => idea.id === action.payload.id)
-
-  if (initFormData) {
-    // dispatch an action for reinitialising form data.
-    yield put(storeInitFormData(initFormData))
-  } else {
-    // if not found in current state tree, request it from the api.
-    yield put(actions.getIdea(action.payload.id))
   }
 }
 
@@ -219,14 +201,13 @@ export function * watchApproveIdeaFlow (action) {
 
 export default function * ideasFlow () {
   yield [
-    takeLatest(actions.GET_IDEAS, watchGetIdeasFlow),
-    takeLatest(actions.GET_IDEA, watchGetIdeaFlow),
-    takeLatest(actions.LOAD_IDEA, watchLoadIdeaFlow),
-    takeLatest(actions.DELETE_IDEA, watchDeleteIdeaFlow),
-    takeLatest(actions.SAVE_IDEA, watchSaveIdeaFlow),
-    takeLatest(actions.SAVE_AND_SUBMIT_IDEA, watchSaveIdeaAndSubmitFlow),
-    takeLatest(actions.EDIT_IDEA, watchEditIdeaFlow),
-    takeLatest(actions.REJECT_IDEA, watchRejectIdeaFlow),
-    takeLatest(actions.APPROVE_IDEA, watchApproveIdeaFlow),
+    takeLatest(actions.getIdeas().type, watchGetIdeasFlow),
+    takeLatest(actions.getIdea().type, watchGetIdeaFlow),
+    takeLatest(actions.deleteIdea().type, watchDeleteIdeaFlow),
+    takeLatest(actions.saveIdea().type, watchSaveIdeaFlow),
+    takeLatest(actions.saveAndSubmitIdea().type, watchSaveIdeaAndSubmitFlow),
+    takeLatest(actions.editIdea().type, watchEditIdeaFlow),
+    takeLatest(actions.rejectIdea().type, watchRejectIdeaFlow),
+    takeLatest(actions.approveIdea().type, watchApproveIdeaFlow),
   ]
 }

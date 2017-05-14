@@ -180,9 +180,7 @@ class Ideas extends Component {
               <Tab
                 key={index}
                 onClick={
-                  () => getIdeas({
-                    status: tab.sortby,
-                  })
+                  () => getIdeas(tab.sortby)
                 }
                 label={tab.title}
               />

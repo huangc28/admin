@@ -1,5 +1,7 @@
+import { handleActions } from 'redux-actions'
+
 import * as loadingStatus from '../constants/loadingState'
-import * as actionTypes from '../actions/ideas'
+import * as actions from '../actions/ideas'
 
 const INIT_STATE = {
   status: null,
@@ -8,81 +10,66 @@ const INIT_STATE = {
   loading: loadingStatus.EMPTY,
 }
 
-export default function ideasReducer (state = INIT_STATE, action) { // eslint-disable-line complexity
-  switch (action.type) {
-    case actionTypes.GET_IDEAS:
-      return {
-        ...state,
-        loading: loadingStatus.LOADING,
+const ideasReducer = handleActions({
+  [actions.getIdeas]: (state, action) => ({
+    ...state,
+    loading: loadingStatus.LOADING,
+  }),
+  [actions.getIdeasSuccess]: (state, action) => ({
+    ...state,
+    data: action.payload.ideas,
+    loading: loadingStatus.READY,
+  }),
+  [actions.getIdeasFailed]: (state, action) => ({
+    ...state,
+    errorMessage: action.payload.errorMessage,
+  }),
+  [actions.deleteIdeaSuccess]: (state, action) => ({
+    ...state,
+    data: state.data.filter(idea => idea.id !== action.payload.id),
+  }),
+  [actions.deleteIdeaFailed]: (state, action) => ({
+    ...state,
+    errorMessage: action.payload.errorMessage,
+  }),
+  [actions.saveIdeaSuccess]: (state, action) => ({
+    ...state,
+    data: [
+      ...state.data,
+      action.payload.formData,
+    ],
+  }),
+  [actions.saveIdeaFailed]: (state, action) => ({
+    ...state,
+    errorMessage: action.payload.errorMessage,
+  }),
+  [actions.editIdeaSuccess]: (state, action) => ({
+    ...state,
+    loading: loadingStatus.LOADING,
+    // find data that matches the id and replace the data object
+    data: state.data.map(formData => {
+      if (formData.id === action.payload.formData.id) {
+        return action.payload.formData
       }
-    case actionTypes.GET_IDEAS_SUCCESS:
-      return {
-        ...state,
-        data: action.payload.ideas,
-        loading: loadingStatus.READY,
-      }
-    case actionTypes.GET_IDEAS_FAILED:
-      return {
-        ...state,
-        errorMessage: action.payload.errorMessage,
-      }
-    case actionTypes.DELETE_IDEA_SUCCESS:
-      // remove the idea that matches the specified id.
-      return {
-        ...state,
-        data: state.data.filter(idea => idea.id !== action.payload.id),
-      }
-    case actionTypes.DELETE_IDEA_FAILED:
-      return {
-        ...state,
-        errorMessage: action.payload.errorMessage,
-      }
-    case actionTypes.SAVE_IDEA_SUCCESS:
-      return {
-        ...state,
-        data: [
-          ...state.data,
-          action.payload.formData,
-        ],
-      }
-    case actionTypes.EDIT_IDEA_SUCCESS: {
-      return {
-        ...state,
-        loading: loadingStatus.LOADING,
-        // find data that matches the id and replace the data object
-        data: state.data.map(formData => {
-          if (formData.id === action.payload.formData.id) {
-            return action.payload.formData
-          }
 
-          return formData
-        }),
-      }
-    }
-    case actionTypes.EDIT_IDEA_FAILED:
-      return {
-        ...state,
-        loading: loadingStatus.ERROR,
-        errorMessage: action.payload.errorMessage,
-      }
-    case actionTypes.GET_IDEA_FAILED:
-      return {
-        ...state,
-        errorMessage: action.payload.errorMessage,
-      }
-    case actionTypes.GET_IDEA_SUCCESS: {
-      return {
-        ...state,
-        data: [
-          ...state.data.filter(idea => idea.id !== action.payload.idea.id),
-          action.payload.idea,
-        ],
-      }
-    }
-    default:
-      return state
-  }
-}
+      return formData
+    }),
+  }),
+  [actions.editIdeaFailed]: (state, action) => ({
+    ...state,
+    loading: loadingStatus.ERROR,
+    errorMessage: action.payload.errorMessage,
+  }),
+  [actions.getIdeaSuccess]: (state, action) => ({
+    ...state,
+    data: [
+      ...state.data.filter(idea => idea.id !== action.payload.idea.id),
+      action.payload.idea,
+    ],
+  }),
+}, INIT_STATE)
+
+export default ideasReducer
 
 /**
  * Get all ideas
