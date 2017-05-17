@@ -1,0 +1,40 @@
+@value silver from '../../styles/colors.css';
+@value size18, bold from '../../styles/font.css';
+
+.root {
+  padding: 1rem;
+}
+
+.samples {
+  display: flex;
+  flex-direction: row
+}
+
+.sample {
+  display: flex;
+  flex-direction: column;
+  height: 56.25rem;
+}
+
+.grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 13rem;
+  height: 13rem;
+  border: 1px solid silver;
+}
+
+.headerGrid {
+  composes: grid;
+  composes: size18;
+  composes: bold;
+}
+
+.submitGrid {
+  composes: grid;
+}
+
+.submitGrid div:first-of-type {
+  margin-right: 0.25rem;
+}

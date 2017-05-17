@@ -124,12 +124,22 @@ class Ideas extends Component {
 
   renderApproveActions = id => (
     <div>
+      {/* view icon */}
       <IconButton
         iconClassName="material-icons"
         tooltip="View"
         onTouchTap={() => browserHistory.push(`/erp/procurement/ideas/${id}`)}
       >
         visibility
+      </IconButton>
+
+      {/* add sample */}
+      <IconButton
+        iconClassName="material-icons"
+        tooltip="samples"
+        onTouchTap={() => browserHistory.push('/erp/procurement/ideas/samples')}
+      >
+        add
       </IconButton>
     </div>
   )
@@ -276,10 +286,14 @@ Ideas.propTypes = {
   sortIdeasByType: PropTypes.func,
 }
 
-const mapStateToProps = state => ({
-  ideas: state.ideas.data,
-  activeTab: state.ideas.status,
-})
+const mapStateToProps = state => {
+  const { data, status } = state.ideas
+
+  return {
+    ideas: data,
+    activeTab: status,
+  }
+}
 
 export default connect(mapStateToProps, {
   deleteIdea,
