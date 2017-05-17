@@ -31,10 +31,10 @@ export const buildApiUrl = (apiPath, queries = {}) => {
  * fetchApi('/api', UPDATE, {})
  *
  *
- * @param {string} path
- * @param {string} method
- * @param {object} headers
- * @param {object} options
+ * @param {String} path
+ * @param {String} method
+ * @param {Object} headers
+ * @param {Object} options
  */
 export const fetchApi = (path, method = 'GET', headers = {}, options = {}) => {
   // retrieve access-token from store.

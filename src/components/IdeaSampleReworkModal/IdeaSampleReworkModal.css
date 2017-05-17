@@ -32,10 +32,20 @@
 .content {
   position: relative;
   z-index: 11;
-  max-width: 28rem;
-  height: 28rem;
+  max-width: 20rem;
+  height: 20rem;
   background-color: white;
   margin: 0 auto;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  overflow-y: scroll;
+}
+
+.content .container {
+  margin: 0 auto;
+}
+
+.content .container:last-of-type {
+  margin-top: 1rem;
 }

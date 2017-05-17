@@ -4,7 +4,10 @@ import RaisedButton from 'material-ui/RaisedButton'
 
 import styles from './IdeaSamples.css'
 import IdeaSampleReworkModal from '../../components/IdeaSampleReworkModal'
-import { fetchSamples } from '../../actions/ideaSamples.js'
+import {
+  fetchSamples,
+  editIdeaSample,
+} from '../../actions/ideaSamples.js'
 
 const sampleDataHeader = [
   {
@@ -59,6 +62,9 @@ const sampleDataHeader = [
     title: 'Customer Service Remark',
   },
   {
+    title: 'Comment',
+  },
+  {
     title: 'status',
   },
   {
@@ -72,6 +78,7 @@ class IdeaSamples extends Component {
 
     this.state = {
       showModal: false,
+      selectedSampleId: null,
     }
   }
 
@@ -87,15 +94,33 @@ class IdeaSamples extends Component {
     fetchSamples(ideaId)
   }
 
+  componentWillUnmount = () => {
+    this.setState({
+      selectedSampleId: null,
+    })
+  }
+
   onClose = () => {
     this.setState({
       showModal: false,
     })
   }
 
-  onTouchTap = () => {
+  onTouchTapRework = sampleId => {
     this.setState({
       showModal: true,
+      selectedSampleId: sampleId,
+    })
+  }
+
+  onSubmit = comment => {
+    const { editIdeaSample } = this.props
+
+    const { selectedSampleId } = this.state
+
+    editIdeaSample({
+      id: selectedSampleId,
+      comment,
     })
   }
 
@@ -117,8 +142,11 @@ class IdeaSamples extends Component {
         {
           Object.keys(sample)
             .filter(sampleKey => !filterList.includes(sampleKey)) // filter out fields that we don't want to display.
-            .map(sampleKey => (
-              <div className={styles.grid}>
+            .map((sampleKey, index) => (
+              <div
+                className={styles.grid}
+                key={index}
+              >
                 {
                   sample[sampleKey]
                 }
@@ -133,7 +161,7 @@ class IdeaSamples extends Component {
     )
   }
 
-  renderSubmitGrid = () => (
+  renderSubmitGrid = sampleId => (
     <div className={styles.submitGrid}>
       {/* Approve */}
       <RaisedButton
@@ -145,7 +173,7 @@ class IdeaSamples extends Component {
       <RaisedButton
         label="Rework"
         secondary
-        onTouchTap={this.onTouchTap}
+        onTouchTap={() => this.onTouchTapRework(sampleId)}
       />
     </div>
   )
@@ -153,7 +181,10 @@ class IdeaSamples extends Component {
   render () {
     const { samples } = this.props
 
-    const { showModal } = this.state
+    const {
+      showModal,
+      selectedSampleId,
+    } = this.state
 
     return (
       <div className={styles.root}>
@@ -172,8 +203,8 @@ class IdeaSamples extends Component {
 
           {
             // filter out the fields that we don't need to display
-            samples.map(sample => (
-              <div className={styles.sample}>
+            samples.map((sample, index) => (
+              <div key={index} className={styles.sample}>
                 {
                   this.renderSample(sample)
                 }
@@ -185,6 +216,8 @@ class IdeaSamples extends Component {
             showModal
               ? (
                 <IdeaSampleReworkModal
+                  sampleId={selectedSampleId}
+                  onSubmit={this.onSubmit}
                   onClose={this.onClose}
                 />
               )
@@ -198,6 +231,7 @@ class IdeaSamples extends Component {
 }
 
 IdeaSamples.propTypes = {
+  editIdeaSample: PropTypes.func,
   fetchSamples: PropTypes.func,
   params: PropTypes.shape({
     ideaId: PropTypes.string,
@@ -211,4 +245,5 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
   fetchSamples,
+  editIdeaSample,
 })(IdeaSamples)

@@ -1,11 +1,9 @@
 import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
 import classnames from 'classnames/bind'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 
 import styles from './IdeaSampleReworkModal.css'
-import { editIdeaSample } from '../../actions/ideaSamples'
 
 const cx = classnames.bind(styles)
 
@@ -48,10 +46,6 @@ class IdeaSampleReworkModal extends Component {
     })
   }
 
-  onTouchTap = () => {
-    editIdeaSample()
-  }
-
   onInput = evt => {
     this.setState({
       comment: evt.target.value,
@@ -74,6 +68,16 @@ class IdeaSampleReworkModal extends Component {
 
       onClose()
     }
+  }
+
+  onTouchTap = () => {
+    const {
+      comment,
+    } = this.state
+
+    this.props.onSubmit(comment)
+
+    this.onClose()
   }
 
   render () {
@@ -100,20 +104,24 @@ class IdeaSampleReworkModal extends Component {
         <div className={styles.content}>
 
           {/* comments */}
-          <TextField
-            hintText="Comments"
-            floatingLabelText="Comments"
-            value={comment}
-            multiLine
-            onInput={this.onInput}
-          />
-
-          <div className={styles.buttons}>
-            <RaisedButton
-              primary
-              label="submit"
-              onTouchTap={this.onTouchTap}
+          <div className={styles.container}>
+            <TextField
+              hintText="Comments"
+              floatingLabelText="Comments"
+              value={comment}
+              multiLine
+              onInput={this.onInput}
             />
+          </div>
+
+          <div className={styles.container}>
+            <div className={styles.buttons}>
+              <RaisedButton
+                primary
+                label="submit"
+                onTouchTap={this.onTouchTap}
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -122,8 +130,13 @@ class IdeaSampleReworkModal extends Component {
 }
 
 IdeaSampleReworkModal.propTypes = {
+  /**
+   * Recieve sample id. Is used as a reference
+   * to update "sample".
+   */
   showModal: PropTypes.bool,
   onClose: PropTypes.func,
+  onSubmit: PropTypes.func,
 }
 
-export default connect()(IdeaSampleReworkModal)
+export default IdeaSampleReworkModal

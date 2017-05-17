@@ -22,8 +22,23 @@ export function * watchFetchIdeaSamplesFlow (action) {
   }
 }
 
+export function * watchEditIdeaSampleFlow (action) {
+  const { ideaSample } = action.payload
+
+  try {
+    const response = yield call(APIS.editSample, ideaSample)
+
+    console.log('watchEditIdeaSampleFlow', response)
+
+    yield put(actions.editIdeaSampleSuccess(response.data))
+  } catch (err) {
+    yield put(actions.editIdeaSampleFailed(err.message))
+  }
+}
+
 export default function * ideaSamplesFlow () {
   yield [
     takeLatest(actions.fetchSamples().type, watchFetchIdeaSamplesFlow),
+    takeLatest(actions.editIdeaSample().type, watchEditIdeaSampleFlow),
   ]
 }

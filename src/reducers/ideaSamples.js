@@ -27,6 +27,28 @@ const ideaSamplesReducer = handleActions({
     loading: loadingStatus.ERROR,
     errorMessage: action.payload.errorMessage,
   }),
+  [actions.editIdeaSample]: (state, action) => ({
+    ...state,
+    loading: loadingStatus.LOADING,
+  }),
+  [actions.editIdeaSampleSuccess]: (state, action) => ({
+    ...state,
+    loading: loadingStatus.READY,
+    data: [
+      ...state.data.map(sample => {
+        if (sample.id === action.payload.ideaSample.id) {
+          return action.payload.ideaSample
+        }
+
+        return sample
+      }),
+    ],
+  }),
+  [actions.editIdeaSampleFailed]: (state, action) => ({
+    ...state,
+    loading: loadingStatus.ERROR,
+    errorMessage: action.payload.errorMessage,
+  }),
 }, INIT_STATE)
 
 export default ideaSamplesReducer
