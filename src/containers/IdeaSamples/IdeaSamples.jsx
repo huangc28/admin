@@ -201,16 +201,18 @@ class IdeaSamples extends Component {
             }
           </div>
 
-          {
-            // filter out the fields that we don't need to display
-            samples.map((sample, index) => (
-              <div key={index} className={styles.sample}>
-                {
-                  this.renderSample(sample)
-                }
-              </div>
-            ))
-          }
+          <div className={styles.sampleList}>
+            {
+              // filter out the fields that we don't need to display
+              samples.map((sample, index) => (
+                <div key={index} className={styles.sample}>
+                  {
+                    this.renderSample(sample)
+                  }
+                </div>
+              ))
+            }
+          </div>
           {/* idea sample rework modal */}
           {
             showModal

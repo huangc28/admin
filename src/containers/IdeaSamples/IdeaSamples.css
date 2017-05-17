@@ -13,7 +13,6 @@
 .sample {
   display: flex;
   flex-direction: column;
-  height: 56.25rem;
 }
 
 .grid {
@@ -33,6 +32,13 @@
 
 .submitGrid {
   composes: grid;
+}
+
+.sampleList {
+  display: flex;
+  padding: 0 0.5rem;
+  width: 40rem;
+  overflow-x: scroll;
 }
 
 .submitGrid div:first-of-type {
