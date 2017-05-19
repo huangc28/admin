@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import RaisedButton from 'material-ui/RaisedButton'
+import { browserHistory } from 'react-router'
 
 import styles from './IdeaSamples.css'
 import IdeaSampleReworkModal from '../../components/IdeaSampleReworkModal'
@@ -179,7 +180,12 @@ class IdeaSamples extends Component {
   )
 
   render () {
-    const { samples } = this.props
+    const {
+      samples,
+      params: {
+        ideaId,
+      },
+    } = this.props
 
     const {
       showModal,
@@ -188,6 +194,18 @@ class IdeaSamples extends Component {
 
     return (
       <div className={styles.root}>
+
+        {/* control button bar */}
+        <div className={styles.btnBar}>
+
+          {/* create button */}
+          <RaisedButton
+            label="Create" default
+            onTouchTap={
+              () => browserHistory.push(`/erp/procurement/ideas/${ideaId}/samples/create`)
+            }
+          />
+        </div>
 
         {/* Header with data */}
         <div className={styles.samples}>

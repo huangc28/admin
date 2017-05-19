@@ -12,6 +12,7 @@ import CreateIdea from './containers/CreateIdea'
 import EditIdea from './containers/EditIdea'
 import ReviewIdea from './containers/ReviewIdea'
 import IdeaSamples from './containers/IdeaSamples'
+import CreateIdeaSamples from './containers/CreateIdeaSample'
 
 export default (
   <Route path="/" >
@@ -27,6 +28,7 @@ export default (
         <Route path="create" component={CreateIdea} />
         <Route path=":ideaId" component={Idea} />
         <Route path=":ideaId/samples" component={IdeaSamples} />
+        <Route path=":ideaId/samples/create" component={CreateIdeaSamples} />
         <Route path=":ideaId/review" component={ReviewIdea} />
         <Route path=":ideaId/edit" component={EditIdea} />
       </Route>

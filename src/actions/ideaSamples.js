@@ -7,6 +7,9 @@ export const {
   editIdeaSample,
   editIdeaSampleSuccess,
   editIdeaSampleFailed,
+  saveIdeaSample,
+  saveIdeaSampleSuccess,
+  saveIdeaSampleFailed,
 } = createActions({
   FETCH_SAMPLES: ideaId => ({
     ideaId,
@@ -36,6 +39,19 @@ export const {
    * @param {String} errorMessage
    */
   EDIT_IDEA_SAMPLE_FAILED: errorMessage => ({
+    errorMessage,
+  }),
+
+  /**
+   * @param {Object} ideaSample
+   */
+  SAVE_IDEA_SAMPLE: ideaSample => ({
+    ideaSample,
+  }),
+  SAVE_IDEA_SAMPLE_SUCCESS: ideaSample => ({
+    ideaSample,
+  }),
+  SAVE_IDEA_SAMPLE_FAILED: errorMessage => ({
     errorMessage,
   }),
 })

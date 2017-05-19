@@ -54,7 +54,6 @@ class ReviewIdea extends Component {
     } = this.props
 
     if (status === REWORK) {
-      // console.log('content', content)
       reworkIdea(ideaId, content)
     }
 

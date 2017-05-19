@@ -7,7 +7,8 @@
 
 .samples {
   display: flex;
-  flex-direction: row
+  flex-direction: row;
+  padding-top: 0.5rem;
 }
 
 .sample {
@@ -16,6 +17,8 @@
 }
 
 .grid {
+  box-sizing: border-box;
+  padding: 0.25rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -37,10 +40,16 @@
 .sampleList {
   display: flex;
   padding: 0 0.5rem;
-  width: 40rem;
   overflow-x: scroll;
 }
 
 .submitGrid div:first-of-type {
   margin-right: 0.25rem;
+}
+
+.btnBar {
+  margin: 0.5rem 0;
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 1rem;
 }

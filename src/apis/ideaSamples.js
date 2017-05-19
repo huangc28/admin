@@ -14,3 +14,12 @@ export const editSample = ideaSample => (
   )
   .then(res => res.json())
 )
+
+export const saveIdeaSample = ideaSample => (
+  fetchApi(buildApiUrl('ideaSamples'), 'POST', {},
+    {
+      body: JSON.stringify(ideaSample),
+    }
+  )
+  .then(res => res.json())
+)
