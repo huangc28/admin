@@ -4,6 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import { browserHistory } from 'react-router'
 
 import styles from './IdeaSamples.css'
+import * as ideaSampleStatus from '../../constants/ideaSamples'
 import IdeaSampleReworkModal from '../../components/IdeaSampleReworkModal'
 import {
   fetchSamples,
@@ -72,6 +73,25 @@ const sampleDataHeader = [
     title: 'Actions',
   },
 ]
+
+const statusText = {
+  [ideaSampleStatus.IDEA_SAMPLE_PENDING]: 'PENDING',
+  [ideaSampleStatus.IDEA_SAMPLE_APPROVE]: 'APPROVE',
+  [ideaSampleStatus.IDEA_SAMPLE_DISABLED]: 'DISABLED',
+  [ideaSampleStatus.IDEA_SAMPLE_REWORK]: 'REWORK',
+  [ideaSampleStatus.IDEA_SAMPLE_CREATED]: 'CREATED',
+}
+
+/**
+ * @param {Number} status
+ */
+// const getStatusText = status =>
+//   if (statusText[status]) {
+//     return statusText[status]
+//   }
+
+//   return ''
+// }
 
 class IdeaSamples extends Component {
   constructor () {
@@ -149,7 +169,9 @@ class IdeaSamples extends Component {
                 key={index}
               >
                 {
-                  sample[sampleKey]
+                  sampleKey === 'status'
+                    ? statusText[sample[sampleKey]] || ''
+                    : sample[sampleKey]
                 }
               </div>
             ))

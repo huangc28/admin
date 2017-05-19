@@ -35,6 +35,12 @@
 
 .submitGrid {
   composes: grid;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.submitGrid button {
+  margin-bottom: 0.25rem;
 }
 
 .sampleList {
