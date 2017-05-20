@@ -7,7 +7,11 @@ import styles from './IdeaSampleForm.css'
 
 class IdeaSampleForm extends Component {
   componentDidMount = () => {
-    console.log('IdeaSampleForm triggered componentDidMount')
+    const { onMount } = this.props
+
+    if (onMount) {
+      onMount()
+    }
   }
 
   render () {
@@ -213,13 +217,21 @@ class IdeaSampleForm extends Component {
 IdeaSampleForm.propTypes = {
   disabled: PropTypes.bool,
   handleSubmit: PropTypes.func,
+
+  /**
+   * Callback to be executed on componentDidMount
+   */
+  onMount: PropTypes.func,
   onSubmitCallback: PropTypes.func,
 }
 
-const mapStateToProps = () => ({})
+const mapStateToProps = state => ({
+  initialValues: state.initFormData.formData,
+})
 
 export default connect(mapStateToProps)(
   reduxForm({
     form: 'ideaSampleForm',
+    enableReinitialize: true,
   })(IdeaSampleForm)
 )

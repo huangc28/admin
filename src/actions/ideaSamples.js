@@ -4,12 +4,18 @@ export const {
   fetchSamples,
   fetchSamplesSuccess,
   fetchSamplesFailed,
+  fetchSample,
+  fetchSampleSuccess,
+  fetchSampleFailed,
   editIdeaSample,
   editIdeaSampleSuccess,
   editIdeaSampleFailed,
   saveIdeaSample,
   saveIdeaSampleSuccess,
   saveIdeaSampleFailed,
+  deleteIdeaSample,
+  deleteIdeaSampleSuccess,
+  deleteIdeaSampleFailed,
 } = createActions({
   FETCH_SAMPLES: ideaId => ({
     ideaId,
@@ -18,6 +24,18 @@ export const {
     samples,
   }),
   FETCH_SAMPLES_FAILED: errorMessage => ({
+    errorMessage,
+  }),
+
+  FETCH_SAMPLE: sampleId => ({
+    sampleId,
+  }),
+
+  FETCH_SAMPLE_SUCCESS: sample => ({
+    sample,
+  }),
+
+  FETCH_SAMPLE_FAILED: errorMessage => ({
     errorMessage,
   }),
 
@@ -52,6 +70,18 @@ export const {
     ideaSample,
   }),
   SAVE_IDEA_SAMPLE_FAILED: errorMessage => ({
+    errorMessage,
+  }),
+
+  DELETE_IDEA_SAMPLE: sampleId => ({
+    sampleId,
+  }),
+
+  DELETE_IDEA_SAMPLE_SUCCESS: sampleId => ({
+    sampleId,
+  }),
+
+  DELETE_IDEA_SAMPLE_FAILED: errorMessage => ({
     errorMessage,
   }),
 })

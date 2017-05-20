@@ -9,7 +9,8 @@ import IdeaSampleReworkModal from '../../components/IdeaSampleReworkModal'
 import {
   fetchSamples,
   editIdeaSample,
-} from '../../actions/ideaSamples.js'
+  deleteIdeaSample,
+} from '../../actions/ideaSamples'
 
 const sampleDataHeader = [
   {
@@ -82,17 +83,6 @@ const statusText = {
   [ideaSampleStatus.IDEA_SAMPLE_CREATED]: 'CREATED',
 }
 
-/**
- * @param {Number} status
- */
-// const getStatusText = status =>
-//   if (statusText[status]) {
-//     return statusText[status]
-//   }
-
-//   return ''
-// }
-
 class IdeaSamples extends Component {
   constructor () {
     super()
@@ -127,11 +117,26 @@ class IdeaSamples extends Component {
     })
   }
 
+  onTouchTapApprove = sampleId => {
+    const { editIdeaSample } = this.props
+
+    editIdeaSample({
+      id: sampleId,
+      status: ideaSampleStatus.IDEA_SAMPLE_APPROVE,
+    })
+  }
+
   onTouchTapRework = sampleId => {
     this.setState({
       showModal: true,
       selectedSampleId: sampleId,
     })
+  }
+
+  onTouchTapDelete = sampleId => {
+    const { deleteIdeaSample } = this.props
+
+    deleteIdeaSample(sampleId)
   }
 
   onSubmit = comment => {
@@ -161,7 +166,7 @@ class IdeaSamples extends Component {
     return (
       <div>
         {
-          Object.keys(sample)
+          sample && Object.keys(sample)
             .filter(sampleKey => !filterList.includes(sampleKey)) // filter out fields that we don't want to display.
             .map((sampleKey, index) => (
               <div
@@ -178,28 +183,56 @@ class IdeaSamples extends Component {
         }
 
         {
+          sample &&
+          sample.id &&
           this.renderSubmitGrid(sample.id)
         }
       </div>
     )
   }
 
-  renderSubmitGrid = sampleId => (
-    <div className={styles.submitGrid}>
-      {/* Approve */}
-      <RaisedButton
-        label="Approve"
-        primary
-      />
+  // @TODO show render appropriate buttons according to user permission.
+  renderSubmitGrid = sampleId => {
+    const {
+      params: {
+        ideaId,
+      },
+    } = this.props
 
-      {/* Rework */}
-      <RaisedButton
-        label="Rework"
-        secondary
-        onTouchTap={() => this.onTouchTapRework(sampleId)}
-      />
-    </div>
-  )
+    return (
+      <div className={styles.submitGrid}>
+        {/* Approve */}
+        <RaisedButton
+          label="Approve"
+          primary
+          onTouchTap={() => this.onTouchTapApprove(sampleId)}
+        />
+
+        {/* Edit */}
+        <RaisedButton
+          label="Edit"
+          primary
+          onTouchTap={
+            () => browserHistory.push(`/erp/procurement/ideas/${ideaId}/samples/${sampleId}/edit`)
+          }
+        />
+
+        {/* Rework */}
+        <RaisedButton
+          label="Rework"
+          default
+          onTouchTap={() => this.onTouchTapRework(sampleId)}
+        />
+
+        {/* Delete */}
+        <RaisedButton
+          label="Delete"
+          secondary
+          onTouchTap={() => this.onTouchTapDelete(sampleId)}
+        />
+      </div>
+    )
+  }
 
   render () {
     const {
@@ -273,6 +306,7 @@ class IdeaSamples extends Component {
 }
 
 IdeaSamples.propTypes = {
+  deleteIdeaSample: PropTypes.func,
   editIdeaSample: PropTypes.func,
   fetchSamples: PropTypes.func,
   params: PropTypes.shape({
@@ -288,4 +322,5 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {
   fetchSamples,
   editIdeaSample,
+  deleteIdeaSample,
 })(IdeaSamples)

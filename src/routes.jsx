@@ -13,6 +13,7 @@ import EditIdea from './containers/EditIdea'
 import ReviewIdea from './containers/ReviewIdea'
 import IdeaSamples from './containers/IdeaSamples'
 import CreateIdeaSamples from './containers/CreateIdeaSample'
+import EditIdeaSample from './containers/EditIdeaSample'
 
 export default (
   <Route path="/" >
@@ -29,6 +30,7 @@ export default (
         <Route path=":ideaId" component={Idea} />
         <Route path=":ideaId/samples" component={IdeaSamples} />
         <Route path=":ideaId/samples/create" component={CreateIdeaSamples} />
+        <Route path=":ideaId/samples/:sampleId/edit" component={EditIdeaSample} />
         <Route path=":ideaId/review" component={ReviewIdea} />
         <Route path=":ideaId/edit" component={EditIdea} />
       </Route>
