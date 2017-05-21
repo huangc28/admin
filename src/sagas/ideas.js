@@ -1,5 +1,4 @@
-import { takeLatest } from 'redux-saga'
-import { call, put } from 'redux-saga/effects'
+import { call, put, takeLatest, all } from 'redux-saga/effects'
 import { browserHistory } from 'react-router'
 
 import * as APIS from '../apis/ideas'
@@ -198,7 +197,7 @@ export function * watchApproveIdeaFlow (action) {
 }
 
 export default function * ideasFlow () {
-  yield [
+  yield all([
     takeLatest(actions.getIdeas().type, watchGetIdeasFlow),
     takeLatest(actions.getIdea().type, watchGetIdeaFlow),
     takeLatest(actions.deleteIdea().type, watchDeleteIdeaFlow),
@@ -207,5 +206,5 @@ export default function * ideasFlow () {
     takeLatest(actions.editIdea().type, watchEditIdeaFlow),
     takeLatest(actions.rejectIdea().type, watchRejectIdeaFlow),
     takeLatest(actions.approveIdea().type, watchApproveIdeaFlow),
-  ]
+  ])
 }

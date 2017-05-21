@@ -1,5 +1,4 @@
-import { call, put } from 'redux-saga/effects'
-import { takeLatest } from 'redux-saga'
+import { call, put, takeLatest, all } from 'redux-saga/effects'
 import { browserHistory } from 'react-router'
 
 import * as actions from '../actions/ideaComment'
@@ -41,8 +40,8 @@ export function * watchReworkIdeaFlow (action) {
 }
 
 export default function * ideaCommentFlow () {
-  yield [
+  yield all([
     takeLatest(actions.fetchIdeaComment().type, watchFetchIdeaCommentflow),
     takeLatest(actions.reworkIdea().type, watchReworkIdeaFlow),
-  ]
+  ])
 }

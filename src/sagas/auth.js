@@ -1,11 +1,13 @@
-import { call, fork, put, take, cancel } from 'redux-saga/effects'
+import { call, put, all, takeLatest } from 'redux-saga/effects'
 import { browserHistory } from 'react-router'
 
 import { ACCESS_TOKEN } from '../constants/auth'
 import * as APIS from '../apis/auth'
 import * as actions from '../actions/auth'
 
-export function * authorize (email, password) {
+export function * watchLoginFlow (action) {
+  const { payload: { email, password } } = action
+
   try {
     const response = yield call(APIS.authorize, email, password)
 
@@ -26,29 +28,17 @@ export function * authorize (email, password) {
   }
 }
 
-export function * watchLoginFlow () {
-  while (true) {
-    const { payload: { email, password } } = yield take(actions.login().type)
+export function * watchLogoutFlow () {
+  yield put(actions.clearAccessToken())
 
-    // fork authorize action
-    const task = yield fork(authorize, email, password)
+  sessionStorage.removeItem(ACCESS_TOKEN)
 
-    const loginFailedAction = yield take([
-      actions.loginFailed().type,
-      actions.logout().type,
-    ])
-
-    console.log('trigger watchLoginFlow', loginFailedAction)
-
-    if (loginFailedAction.type === actions.logout().type) {
-      yield cancel(task)
-      // remove api token from both redux store and session storage.
-    }
-  }
+  browserHistory.push('/login')
 }
 
 export default function * () {
-  yield [
-    fork(watchLoginFlow),
-  ]
+  yield all([
+    takeLatest(actions.login().type, watchLoginFlow),
+    takeLatest(actions.logout().type, watchLogoutFlow),
+  ])
 }

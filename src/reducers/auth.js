@@ -11,18 +11,26 @@ const INIT_STATE = {
 
 const authReducer = handleActions({
   [actions.login]: (state, action) => ({
+    ...state,
     loading: loadingStatus.LOADING,
   }),
   [actions.loginSuccess]: (state, action) => ({
+    ...state,
     errorMessage: null,
     accessToken: action.payload.token,
   }),
   [actions.loginFailed]: (state, action) => ({
+    ...state,
     errorMessage: action.payload.errorMessage,
     accessToken: null,
   }),
   [actions.logout]: (state, action) => ({
+    ...state,
     errorMessage: null,
+    accessToken: null,
+  }),
+  [actions.clearAccessToken]: (state, action) => ({
+    ...state,
     accessToken: null,
   }),
 }, INIT_STATE)

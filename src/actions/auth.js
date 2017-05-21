@@ -5,6 +5,7 @@ export const {
   loginSuccess,
   loginFailed,
   logout,
+  clearAccessToken,
 } = createActions({
   LOGIN: (email, password) => ({
     email,
@@ -14,4 +15,4 @@ export const {
     errorMessage,
   }),
   LOGIN_SUCCESS: token => ({ token }),
-}, 'LOGOUT')
+}, 'LOGOUT', 'CLEAR_ACCESS_TOKEN')

@@ -1,5 +1,4 @@
-import { takeLatest } from 'redux-saga'
-import { call, put } from 'redux-saga/effects'
+import { call, put, takeLatest, all } from 'redux-saga/effects'
 import { browserHistory } from 'react-router'
 import { storeInitFormData } from '../actions/initFormData'
 
@@ -117,11 +116,11 @@ export function * watchSaveIdeaSample (action) {
 }
 
 export default function * ideaSamplesFlow () {
-  yield [
+  yield all([
     takeLatest(actions.fetchSamples().type, watchFetchIdeaSamplesFlow),
     takeLatest(actions.fetchSample().type, watchFetchIdeaSampleFlow),
     takeLatest(actions.editIdeaSample().type, watchEditIdeaSampleFlow),
     takeLatest(actions.saveIdeaSample().type, watchSaveIdeaSample),
     takeLatest(actions.deleteIdeaSample().type, watchDeleteIdeaSampleFlow),
-  ]
+  ])
 }
