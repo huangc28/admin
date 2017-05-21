@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import { browserHistory } from 'react-router'
 import { connect } from 'react-redux'
 
 import {
@@ -14,6 +15,7 @@ import {
   fetchIdeaComment,
   reworkIdea,
 } from '../../actions/ideaComment'
+import ControllButtonBar from '../../components/ControllButtonBar'
 import IdeaForm from '../../components/forms/IdeaForm'
 import IdeaCommentField from '../../components/IdeaCommentField'
 import Submitable from '../../components/Submitable'
@@ -97,9 +99,13 @@ class ReviewIdea extends Component {
 
     return (
       <div>
+        <ControllButtonBar
+          onBack={() => browserHistory.push('/erp/procurement/ideas')}
+        />
+
         <IdeaForm
           onSubmitCallback={this.onSubmit}
-          refId={parseInt(ideaId, 10)}
+          refId={parseInt(ideaId, 10)} // @TODO this parseInt should be fixed!
           disabled
         />
 

@@ -13,7 +13,7 @@ import { Tabs, Tab } from 'material-ui/Tabs'
 import RaisedButton from 'material-ui/RaisedButton'
 import { browserHistory } from 'react-router'
 
-import styles from './ideas.css'
+import ControllButtonBar from '../../components/ControllButtonBar'
 import { sortIdeasByType, getIdeas, deleteIdea } from '../../actions/ideas'
 import {
   ALL,
@@ -186,7 +186,17 @@ class Ideas extends Component {
       ideas,
       getIdeas,
       activeTab,
+      router: {
+        goBack,
+      },
     } = this.props
+
+    const createIdeaButton = (
+      <RaisedButton
+        label="Create" default
+        onTouchTap={this.onTapCreate}
+      />
+    )
 
     return (
       <div>
@@ -206,14 +216,10 @@ class Ideas extends Component {
         </Tabs>
 
         {/* control button bar */}
-        <div className={styles.btnBar}>
-
-          {/* create button */}
-          <RaisedButton
-            label="Create" default
-            onTouchTap={this.onTapCreate}
-          />
-        </div>
+        <ControllButtonBar
+          onBack={() => goBack()}
+          rightButton={createIdeaButton}
+        />
 
         <Table selectable={false}>
           {/* data header */}
@@ -283,6 +289,9 @@ Ideas.propTypes = {
   deleteIdea: PropTypes.func,
   getIdeas: PropTypes.func,
   ideas: PropTypes.array,
+  router: PropTypes.shape({
+    goBack: PropTypes.func,
+  }),
   sortIdeasByType: PropTypes.func,
 }
 

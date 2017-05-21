@@ -5,6 +5,7 @@ import {
   fetchSample,
   editIdeaSample,
 } from '../../actions/ideaSamples'
+import ControllButtonBar from '../../components/ControllButtonBar'
 import IdeaSampleForm from '../../components/forms/IdeaSampleForm'
 import Submitable from '../../components/Submitable/Submitable'
 
@@ -27,8 +28,18 @@ class EditIdeaSample extends Component {
   }
 
   render () {
+    const {
+      router: {
+        goBack,
+      },
+    } = this.props
+
     return (
       <div>
+        <ControllButtonBar
+          onBack={() => goBack()}
+        />
+
         <IdeaSampleForm
           onSubmitCallback={this.onSubmit}
           onMount={this.onMount}
@@ -48,6 +59,9 @@ EditIdeaSample.propTypes = {
   fetchSample: PropTypes.func,
   params: PropTypes.shape({
     sampleId: PropTypes.string,
+  }),
+  router: PropTypes.shape({
+    goBack: PropTypes.func,
   }),
 }
 

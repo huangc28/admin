@@ -4,6 +4,7 @@ import { browserHistory } from 'react-router'
 import Submitable from '../../components/Submitable'
 
 import { deleteIdea } from '../../actions/ideas'
+import ControllButtonBar from '../../components/ControllButtonBar'
 import IdeaForm from '../../components/forms/IdeaForm'
 
 class Idea extends Component {
@@ -20,6 +21,10 @@ class Idea extends Component {
 
     return (
       <div>
+        <ControllButtonBar
+          onBack={() => browserHistory.push('/erp/procurement/ideas')}
+        />
+
         <IdeaForm
           onSubmitCallback={this.onSubmit}
           refId={parseInt(ideaId, 10)}

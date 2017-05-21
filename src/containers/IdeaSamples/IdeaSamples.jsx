@@ -5,6 +5,7 @@ import { browserHistory } from 'react-router'
 
 import styles from './IdeaSamples.css'
 import * as ideaSampleStatus from '../../constants/ideaSamples'
+import ControllButtonBar from '../../components/ControllButtonBar'
 import IdeaSampleReworkModal from '../../components/IdeaSampleReworkModal'
 import {
   fetchSamples,
@@ -240,6 +241,9 @@ class IdeaSamples extends Component {
       params: {
         ideaId,
       },
+      router: {
+        goBack,
+      },
     } = this.props
 
     const {
@@ -247,20 +251,23 @@ class IdeaSamples extends Component {
       selectedSampleId,
     } = this.state
 
+    const createIdeaSampleButton = (
+      <RaisedButton
+        label="Create"
+        default
+        onTouchTap={
+          () => browserHistory.push(`/erp/procurement/ideas/${ideaId}/samples/create`)
+        }
+      />
+    )
+
     return (
       <div className={styles.root}>
 
-        {/* control button bar */}
-        <div className={styles.btnBar}>
-
-          {/* create button */}
-          <RaisedButton
-            label="Create" default
-            onTouchTap={
-              () => browserHistory.push(`/erp/procurement/ideas/${ideaId}/samples/create`)
-            }
-          />
-        </div>
+        <ControllButtonBar
+          onBack={() => goBack()}
+          rightButton={createIdeaSampleButton}
+        />
 
         {/* Header with data */}
         <div className={styles.samples}>
@@ -311,6 +318,9 @@ IdeaSamples.propTypes = {
   fetchSamples: PropTypes.func,
   params: PropTypes.shape({
     ideaId: PropTypes.string,
+  }),
+  router: PropTypes.shape({
+    goBack: PropTypes.func,
   }),
   samples: PropTypes.array,
 }

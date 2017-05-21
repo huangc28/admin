@@ -46,11 +46,11 @@ export function * watchFetchIdeaSampleFlow (action) {
       throw new Error(response.error.message)
     }
 
-    yield put(actions.fetchSamplesSuccess(response.data))
+    yield put(actions.fetchSampleSuccess(response.data))
 
     yield put(storeInitFormData(response.data))
   } catch (err) {
-    yield put(actions.fetchSamplesFailed(err.message))
+    yield put(actions.fetchSampleFailed(err.message))
   }
 }
 
