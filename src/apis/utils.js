@@ -3,6 +3,7 @@ import url from 'url'
 
 import config from '../config'
 import { getAccessToken } from '../reducers/auth'
+import { accessTokenUnauthorized } from '../actions/auth'
 
 const BASE_URL = 'http://localhost:3005/api'
 
@@ -51,5 +52,21 @@ export const fetchApi = (path, method = 'GET', headers = {}, options = {}) => {
     method,
     headers: fetchHeaders,
     ...options,
+  })
+  .then(res => res.json())
+  .then(res => {
+    // if by any chance the access token expired
+    // log current user out.
+    if (res.status === 401) {
+      config.store.dispatch(accessTokenUnauthorized('access token unauthorized'))
+
+      throw new Error('access token unauthorized')
+    }
+
+    const parsedRes = {
+      json: () => res,
+    }
+
+    return new Promise(resolve => resolve(parsedRes))
   })
 }

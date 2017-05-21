@@ -8,7 +8,9 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import Menu from 'material-ui/Menu'
 import MenuItem from 'material-ui/MenuItem'
+import { browserHistory } from 'react-router'
 
+import { getAccessToken } from '../../reducers/auth'
 import { logout } from '../../actions/auth'
 import { getLocation } from '../../utils/routes'
 import NavigationBar from '../../components/NavigationBar'
@@ -40,6 +42,12 @@ class App extends Component {
   // http://stackoverflow.com/questions/36953711/i-cannot-use-material-ui-components-after-update-to-material-ui0-15-0-beta-1
   getChildContext () {
     return { muiTheme: getMuiTheme(baseTheme) }
+  }
+
+  componentWillMount = () => {
+    if (browserHistory && !this.props.isLoggedIn) {
+      browserHistory.push('/login')
+    }
   }
 
   onToggleDrawer = () => {
@@ -139,9 +147,14 @@ App.childContextTypes = {
 
 App.propTypes = {
   children: PropTypes.node,
+  isLoggedIn: PropTypes.bool,
   logout: PropTypes.func,
 }
 
-export default connect(null, {
+const mapStateToProps = state => ({
+  isLoggedIn: !!getAccessToken(state),
+})
+
+export default connect(mapStateToProps, {
   logout,
 })(App)

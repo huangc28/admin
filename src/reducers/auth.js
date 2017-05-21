@@ -33,6 +33,10 @@ const authReducer = handleActions({
     ...state,
     accessToken: null,
   }),
+  [actions.accessTokenUnauthorized]: (state, action) => ({
+    ...state,
+    errorMessage: action.payload.errorMessage,
+  }),
 }, INIT_STATE)
 
 export const getAccessToken = state => state.auth.accessToken
