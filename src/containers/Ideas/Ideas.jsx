@@ -137,7 +137,7 @@ class Ideas extends Component {
       <IconButton
         iconClassName="material-icons"
         tooltip="samples"
-        onTouchTap={() => browserHistory.push('/erp/procurement/ideas/samples')}
+        onTouchTap={() => browserHistory.push(`/erp/procurement/ideas/${id}/samples`)}
       >
         add
       </IconButton>
