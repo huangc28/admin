@@ -89,7 +89,7 @@
     "redux-actions": "^2.0.2",
     "redux-form": "^6.6.3",
     "redux-form-material-ui": "^4.2.0",
-    "redux-saga": "0.11.0",
+    "redux-saga": "^0.15.3",
     "supertest": "^3.0.0",
     "underscore.string": "^3.3.4",
     "webpack-hot-middleware": "^2.18.0"
