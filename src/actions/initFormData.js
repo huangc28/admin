@@ -3,6 +3,7 @@
  */
 
 export const STORE_INIT_FORM_DATA = 'STORE_INIT_FORM_DATA'
+export const DELETE_INIT_FORM_DATA = 'DELETE_INIT_FORM_DATA'
 
 /**
  * @param {object} formData
@@ -13,4 +14,8 @@ export const storeInitFormData = formData => ({
   payload: {
     formData,
   },
+})
+
+export const deleteInitFormData = () => ({
+  type: DELETE_INIT_FORM_DATA,
 })

@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 
+import { deleteInitFormData } from '../../actions/initFormData'
 import { saveIdeaSample } from '../../actions/ideaSamples'
 import { SAVE } from '../../constants/generic'
 import IdeaSampleForm from '../../components/forms/IdeaSampleForm'
@@ -13,6 +14,10 @@ class CreateIdeaSample extends Component {
     this.state = {
       submitType: null,
     }
+  }
+
+  componentWillMount = () => {
+    this.props.deleteInitFormData()
   }
 
   onSubmit = value => {
@@ -58,6 +63,7 @@ class CreateIdeaSample extends Component {
 }
 
 CreateIdeaSample.propTypes = {
+  deleteInitFormData: PropTypes.func,
   params: PropTypes.shape({
     ideaId: PropTypes.string,
   }),
@@ -65,5 +71,6 @@ CreateIdeaSample.propTypes = {
 }
 
 export default connect(null, {
+  deleteInitFormData,
   saveIdeaSample,
 })(CreateIdeaSample)

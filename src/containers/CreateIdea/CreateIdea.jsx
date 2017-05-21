@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { submit, reset } from 'redux-form/immutable'
 
 import IdeaForm from '../../components/forms/IdeaForm'
+import { deleteInitFormData } from '../../actions/initFormData'
 import { SAVE, SAVE_AND_SUBMIT } from '../../constants/generic'
 import Submitable from '../../components/Submitable'
 import {
@@ -17,6 +18,10 @@ class CreateIdea extends Component {
     this.state = {
       submitType: SAVE,
     }
+  }
+
+  componentWillMount = () => {
+    this.props.deleteInitFormData()
   }
 
   onSubmit = value => {
@@ -68,6 +73,7 @@ class CreateIdea extends Component {
 }
 
 CreateIdea.propTypes = {
+  deleteInitFormData: PropTypes.func,
   reset: PropTypes.func,
   saveAndSubmitIdea: PropTypes.func,
   saveIdea: PropTypes.func,
@@ -75,6 +81,7 @@ CreateIdea.propTypes = {
 }
 
 export default connect(null, {
+  deleteInitFormData,
   saveIdea,
   saveAndSubmitIdea,
   submit,

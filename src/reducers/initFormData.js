@@ -34,6 +34,12 @@ export default function initFormData (state = INIT_STATE, action) {
         formData: normalizeFormFieldName(action.payload.formData),
       }
     }
+    case ACTIONS.DELETE_INIT_FORM_DATA: {
+      return {
+        ...state,
+        formData: {},
+      }
+    }
     default:
       return state
   }
