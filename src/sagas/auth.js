@@ -38,8 +38,11 @@ export function * watchLoginFlow () {
       actions.logout().type,
     ])
 
+    console.log('trigger watchLoginFlow', loginFailedAction)
+
     if (loginFailedAction.type === actions.logout().type) {
       yield cancel(task)
+      // remove api token from both redux store and session storage.
     }
   }
 }
