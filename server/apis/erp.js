@@ -6,6 +6,8 @@ import express from 'express'
 import fetch from 'isomorphic-fetch'
 import url from 'url'
 
+import env from '../../env'
+
 const router = express.Router()
 
 /**
@@ -19,15 +21,15 @@ const errorObjFormatter = (code, message) => ({
   },
 })
 
-// @TODO this is the base URL of ERP for testing purposes
-const ERP_BASE_URL = 'http://localhost:3001/api/v1'
+// get ERP_BASE_URL from .env
+const { ERP_API_HOST } = env()
 
 /**
  * @param {string} apiUrl
  * @param {object} queries
  */
 export const buildApiUrl = (apiPath, queries = {}) => {
-  const apiUrl = url.parse(`${ERP_BASE_URL}/${apiPath}`)
+  const apiUrl = url.parse(`${ERP_API_HOST}/${apiPath}`)
 
   // get pre-existed query
   const query = apiUrl.query || {}

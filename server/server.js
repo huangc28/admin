@@ -16,6 +16,7 @@ import proxy from 'http-proxy-middleware'
 import fs from 'fs'
 
 import { renderFullPage, staticify, publicPath } from './utils/render'
+import env from '../env'
 import configureStore from '../src/store/configureStore'
 import routes from '../src/routes'
 import rootReducer from '../src/reducers'
@@ -35,7 +36,7 @@ app.use(staticify.middleware)
 const rewritePath = (path, req) => path.replace('/api', '/api/v1')
 
 const proxyOptions = {
-  target: 'http://localhost:3001',
+  target: env().ERP_API_HOST,
   logLevel: 'debug',
   changeOrigin: true,
   pathRewrite: rewritePath,

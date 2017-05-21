@@ -2,17 +2,18 @@ import fetch from 'isomorphic-fetch'
 import url from 'url'
 
 import config from '../config'
+import env from '../../env'
 import { getAccessToken } from '../reducers/auth'
 import { accessTokenUnauthorized } from '../actions/auth'
 
-const BASE_URL = 'http://localhost:3005/api'
+const { CLIENT_API_HOST } = env()
 
 /**
  * @param {string} apiUrl
  * @param {object} queries
  */
 export const buildApiUrl = (apiPath, queries = {}) => {
-  const apiUrl = url.parse(`${BASE_URL}/${apiPath}`)
+  const apiUrl = url.parse(`${CLIENT_API_HOST}/${apiPath}`)
 
   // get pre-existed query
   const query = apiUrl.query || {}
