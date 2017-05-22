@@ -18,6 +18,12 @@ export default i18next.init({
         'APPROVED': '已通過',
         'REWORK': '重做',
         'REJECT': '拒絕',
+        'Product Name': '產品名稱',
+        'Thumbnail': '縮圖',
+        'Proposer Name': '提出者',
+        'Created At': '建立於',
+        'Updated At': '修改於',
+        'Actions': '動作',
       }
     },
   },

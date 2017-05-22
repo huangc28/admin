@@ -230,7 +230,7 @@ class Ideas extends Component {
               {
                 ideaDataHeaders.map((header, index) => (
                   <TableHeaderColumn key={index}>
-                    { header.title }
+                    { translation(header.title) }
                   </TableHeaderColumn>
                 ))
               }
@@ -238,7 +238,7 @@ class Ideas extends Component {
               {/* list of actions to manipulate an idea */}
               <TableHeaderColumn>
                 <div>
-                  Actions
+                  {translation('Actions')}
                 </div>
               </TableHeaderColumn>
             </TableRow>
