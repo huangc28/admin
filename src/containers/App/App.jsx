@@ -9,6 +9,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin'
 import Menu from 'material-ui/Menu'
 import MenuItem from 'material-ui/MenuItem'
 import { browserHistory } from 'react-router'
+import { translate } from 'react-i18next'
 
 import { getAccessToken } from '../../reducers/auth'
 import { logout } from '../../actions/auth'
@@ -21,8 +22,8 @@ injectTapEventPlugin()
  * @param {string} currentRoute
  */
 const getPageTitle = currentRoute => {
-  if (currentRoute.includes('ideas')) {
-    return 'IDEAS'
+  if (currentRoute.includes('procurement')) {
+    return 'PROCURE'
   }
 
   return 'HOME'
@@ -77,6 +78,7 @@ class App extends Component {
     const {
       children,
       logout,
+      translation,
     } = this.props
 
     const {
@@ -101,7 +103,6 @@ class App extends Component {
           open={showDrawer}
           onClose={this.onCloseDrawer}
         />
-
         {/* header */}
         <AppBar
           title={getPageTitle(currentRoute) || ''}
@@ -126,7 +127,7 @@ class App extends Component {
         >
           <Menu>
             <MenuItem
-              primaryText="Sign out"
+              primaryText={translation('Log Out')}
               onTouchTap={logout}
             />
           </Menu>
@@ -149,12 +150,18 @@ App.propTypes = {
   children: PropTypes.node,
   isLoggedIn: PropTypes.bool,
   logout: PropTypes.func,
+  translation: PropTypes.func,
 }
 
 const mapStateToProps = state => ({
   isLoggedIn: !!getAccessToken(state),
 })
 
-export default connect(mapStateToProps, {
-  logout,
-})(App)
+export default translate(null, {
+  translateFuncName: 'translation',
+})(
+  connect(mapStateToProps, {
+    logout,
+  })(App)
+)
+

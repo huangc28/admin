@@ -14,7 +14,9 @@ import webpackDevMiddleware from 'webpack-dev-middleware'
 import webpackHotMiddleware from 'webpack-hot-middleware'
 import proxy from 'http-proxy-middleware'
 import fs from 'fs'
+import { I18nextProvider } from 'react-i18next'
 
+import i18n from '../src/i18n'
 import { renderFullPage, staticify, publicPath } from './utils/render'
 import env from '../env'
 import configureStore from '../src/store/configureStore'
@@ -96,7 +98,9 @@ function handleRender (req, res, next) {
       // route is found, prepare html string...
       const html = renderToString(
         <Provider store={store}>
-          <RouterContext {...renderProps} />
+          <I18nextProvider i18n={i18n}>
+            <RouterContext {...renderProps} />
+          </I18nextProvider>
         </Provider>
       )
 

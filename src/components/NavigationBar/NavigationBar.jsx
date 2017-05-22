@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
 import Drawer from 'material-ui/Drawer'
 import MenuItem from 'material-ui/MenuItem'
+import { translate } from 'react-i18next'
 
 import styles from './NavigationBar.css'
 
@@ -62,6 +63,8 @@ class NavigationBar extends Component {
 
     const { subMenuOpenState } = this.state
 
+    const { translation } = this.props
+
     const selectedName = getMenuItemName(menuItem.title)
     // If submenu open status equals to false, hide submenu.
 
@@ -70,7 +73,7 @@ class NavigationBar extends Component {
         key={index}
         onTouchTap={evt => this.showSubmenu(evt, title)}
       >
-        {title}
+        {translation(title)}
 
         {
           subMenuOpenState[selectedName]
@@ -90,13 +93,15 @@ class NavigationBar extends Component {
   renderSubmenuItem = (submenuItem, index) => {
     const { link, title } = submenuItem
 
+    const { translation } = this.props
+
     return (
       <MenuItem key={index}>
         <Link
           to={link}
           className={styles.subMenuLink}
         >
-          {title}
+          {translation(title)}
         </Link>
       </MenuItem>
     )
@@ -142,7 +147,8 @@ NavigationBar.defaultProps = {
 
 NavigationBar.propTypes = {
   open: PropTypes.bool,
+  translation: PropTypes.func,
   onClose: PropTypes.func,
 }
 
-export default NavigationBar
+export default translate(null, { translateFuncName: 'translation' })(NavigationBar)

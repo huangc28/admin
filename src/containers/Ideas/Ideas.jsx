@@ -12,6 +12,7 @@ import IconButton from 'material-ui/IconButton'
 import { Tabs, Tab } from 'material-ui/Tabs'
 import RaisedButton from 'material-ui/RaisedButton'
 import { browserHistory } from 'react-router'
+import { translate } from 'react-i18next'
 
 import ControllButtonBar from '../../components/ControllButtonBar'
 import { sortIdeasByType, getIdeas, deleteIdea } from '../../actions/ideas'
@@ -49,27 +50,27 @@ const ideaDataHeaders = [
 
 const sortingTabs = [
   {
-    title: 'All',
+    title: 'ALL',
     sortby: ALL,
   },
   {
-    title: 'New',
+    title: 'NEW',
     sortby: NEW,
   },
   {
-    title: 'To Be Approved',
+    title: 'TO BE APPROVED',
     sortby: PENDING,
   },
   {
-    title: 'Approved',
+    title: 'APPROVED',
     sortby: APPROVE,
   },
   {
-    title: 'Rework',
+    title: 'REWORK',
     sortby: REWORK,
   },
   {
-    title: 'Reject',
+    title: 'REJECT',
     sortby: REJECT,
   },
 ]
@@ -189,6 +190,7 @@ class Ideas extends Component {
       router: {
         goBack,
       },
+      translation,
     } = this.props
 
     const createIdeaButton = (
@@ -209,7 +211,7 @@ class Ideas extends Component {
                 onActive={
                   () => { getIdeas(tab.sortby) }
                 }
-                label={tab.title}
+                label={translation(tab.title)}
               />
             ))
           }
@@ -293,6 +295,7 @@ Ideas.propTypes = {
     goBack: PropTypes.func,
   }),
   sortIdeasByType: PropTypes.func,
+  translation: PropTypes.func,
 }
 
 const mapStateToProps = state => {
@@ -304,8 +307,10 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, {
-  deleteIdea,
-  getIdeas,
-  sortIdeasByType,
-})(Ideas)
+export default translate(null, { translateFuncName: 'translation' })(
+  connect(mapStateToProps, {
+    deleteIdea,
+    getIdeas,
+    sortIdeasByType,
+  })(Ideas)
+)
