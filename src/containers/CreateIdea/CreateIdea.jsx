@@ -1,7 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { submit, reset } from 'redux-form/immutable'
+import { browserHistory } from 'react-router'
 
+import ControllButtonBar from '../../components/ControllButtonBar'
 import IdeaForm from '../../components/forms/IdeaForm'
 import { deleteInitFormData } from '../../actions/initFormData'
 import { SAVE, SAVE_AND_SUBMIT } from '../../constants/generic'
@@ -58,6 +60,10 @@ class CreateIdea extends Component {
   render () {
     return (
       <div>
+        <ControllButtonBar
+          onBack={() => browserHistory.push('/erp/procurement/ideas')}
+        />
+
         <IdeaForm onSubmitCallback={this.onSubmit} />
         <Submitable
           formName="ideaForm"

@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
 import { submit, reset } from 'redux-form/immutable'
 import RaisedButton from 'material-ui/RaisedButton'
+import { translate } from 'react-i18next'
 
 import styles from './Submitable.css'
 
@@ -100,7 +101,7 @@ class Submitable extends Component {
   renderSaveButton = () => (
     <div>
       <RaisedButton
-        label="Save"
+        label={this.props.translation('Save')}
         type="submit"
         onTouchTap={this.onTouchTapSave}
         primary
@@ -111,7 +112,7 @@ class Submitable extends Component {
   renderSaveAndSubmitButton = () => (
     <div>
       <RaisedButton
-        label="Save & Submit"
+        label={this.props.translation('Save & Submit')}
         type="button"
         onTouchTap={this.onTouchTapSaveAndSubmit}
         primary
@@ -125,7 +126,7 @@ class Submitable extends Component {
     return (
       <div>
         <RaisedButton
-          label="reset"
+          label={this.props.translation('Reset')}
           type="button"
           onTouchTap={() => reset()}
           default
@@ -138,7 +139,7 @@ class Submitable extends Component {
     <div>
       <div>
         <RaisedButton
-          label="Edit"
+          label={this.props.translation('Edit')}
           type="button"
           onTouchTap={this.onTouchTapEdit}
           primary
@@ -150,7 +151,7 @@ class Submitable extends Component {
   renderDeleteButton = () => (
     <div>
       <RaisedButton
-        label="Delete"
+        label={this.props.translation('Delete')}
         type="button"
         onTouchTap={this.onTouchTapDelete}
         default
@@ -267,6 +268,8 @@ Submitable.propTypes = {
 
   submit: PropTypes.func,
 
+  translation: PropTypes.func,
+
   onApprove: PropTypes.func,
   onDelete: PropTypes.func,
   onEdit: PropTypes.func,
@@ -287,7 +290,9 @@ Submitable.defaultProps = {
 
 const mapStateToProps = () => ({})
 
-export default connect(mapStateToProps, {
-  submit,
-  reset,
-})(Submitable)
+export default translate(null, { translateFuncName: 'translation' })(
+  connect(mapStateToProps, {
+    submit,
+    reset,
+  })(Submitable)
+)

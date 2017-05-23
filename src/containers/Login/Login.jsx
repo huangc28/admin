@@ -4,6 +4,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import TextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
 import { connect } from 'react-redux'
+import { translate } from 'react-i18next'
 
 import styles from './Login.css'
 import { login } from '../../actions/auth'
@@ -109,6 +110,7 @@ class Login extends Component {
 
     const {
       errorMessage,
+      translation,
     } = this.props
 
     return (
@@ -116,14 +118,14 @@ class Login extends Component {
         <div className={styles.cardContainer}>
           {/* Title */}
           <div className={styles.cardTitle}>
-            Xin Yi ERP
+            { translation('Xin Yi') } ERP
           </div>
 
           {/* Content */}
           <div className={styles.cardContent}>
             <div className={styles.text}>
               <TextField
-                hintText="email"
+                hintText={translation('email')}
                 fullWidth
                 onInput={this.onInputEmail}
                 errorText={emailErrorText}
@@ -134,7 +136,7 @@ class Login extends Component {
 
             <div className={styles.text}>
               <TextField
-                hintText="password"
+                hintText={translation('password')}
                 type="password"
                 fullWidth
                 errorText={passwordErrorText}
@@ -148,7 +150,7 @@ class Login extends Component {
           {/* Action bar */}
           <div className={styles.cardAction}>
             <FlatButton
-              label="Login"
+              label={translation('Login')}
               default
               onTouchTap={this.onSubmit}
             />
@@ -172,10 +174,13 @@ Login.childContextTypes = {
 Login.propTypes = {
   errorMessage: PropTypes.string,
   login: PropTypes.func,
+  translation: PropTypes.func,
 }
 
 const mapStateToProps = state => ({
   errorMessage: state.auth.errorMessage,
 })
 
-export default connect(mapStateToProps, { login })(Login)
+export default translate(null, { translateFuncName: 'translation' })(
+  connect(mapStateToProps, { login })(Login)
+)

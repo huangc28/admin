@@ -1,7 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { submit } from 'redux-form/immutable'
+import { browserHistory } from 'react-router'
 
+import ControllButtonBar from '../../components/ControllButtonBar'
 import { getIdeaStatus } from '../../reducers/ideas'
 import IdeaCommentField from '../../components/IdeaCommentField'
 import Submitable from '../../components/Submitable'
@@ -73,6 +75,11 @@ class EditIdea extends Component {
 
     return (
       <div>
+        <ControllButtonBar onBack={
+            () => browserHistory.push('/erp/procurement/ideas')
+          }
+        />
+
         <IdeaFrom
           onSubmitCallback={this.onSubmit}
           refId={parseInt(ideaId, 10)}

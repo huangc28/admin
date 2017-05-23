@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Form, Field, reduxForm } from 'redux-form'
+import RaisedButton from 'material-ui/RaisedButton'
 import {
   Checkbox,
   TextField,
@@ -8,6 +9,8 @@ import {
 
 import styles from './IdeaForm.css'
 import { getIdea } from '../../../actions/ideas'
+import { uploadPhoto } from '../../../actions/photo'
+import { translate } from 'react-i18next'
 
 /**
  * product name - string
@@ -22,6 +25,14 @@ import { getIdea } from '../../../actions/ideas'
  * editor / creator
  */
 class IdeaForm extends Component {
+  constructor () {
+    super()
+
+    this.state = {
+      previewImage: null,
+      photoFiles: [],
+    }
+  }
 
   componentDidMount = () => {
     const {
@@ -34,12 +45,50 @@ class IdeaForm extends Component {
     }
   }
 
+  onPhotoChange = evt => {
+    evt.persist()
+
+    if (evt.target.files && evt.target.files[0]) {
+      this.setState({
+        photoFiles: evt.target.files,
+      })
+
+      const reader = new FileReader()
+
+      reader.onload = evt => {
+        this.setState({
+          previewImage: evt.target.result,
+        })
+      }
+
+      reader.readAsDataURL(evt.target.files[0])
+    }
+  }
+
+  onRemovePreviewImage = () => {
+    this.setState({
+      previewImage: null,
+      photoFiles: [],
+    })
+  }
+
+  onImageUpload = () => {
+    const { photoFiles } = this.state
+
+    this.props.uploadPhoto(photoFiles[0])
+  }
+
   render () {
     const {
       handleSubmit,
       onSubmitCallback,
       disabled,
+      translation,
     } = this.props
+
+    const {
+      previewImage,
+    } = this.state
 
     return (
       <Form
@@ -49,19 +98,53 @@ class IdeaForm extends Component {
         <div className={styles.fieldContainer}>
           <Field
             name="productName"
-            hintText="Product Name"
-            floatingLabelText="Product Name"
+            hintText={translation('Product Name')}
+            floatingLabelText={translation('Product Name')}
             fullWidth
             disabled={disabled}
             component={TextField}
           />
         </div>
 
+        {/* image preview */}
+        <div className={styles.fieldContainer}>
+          <img className={styles.previewImg} src={previewImage} />
+        </div>
+
+
+        <div className={styles.imgFieldContainer}>
+          {/* select photo button */}
+          <RaisedButton
+            containerElement="label"
+            label={translation('Select Photo')}
+          >
+            <input
+              type="file"
+              style={{ display: 'none' }}
+              onChange={this.onPhotoChange}
+            />
+          </RaisedButton>
+
+          {/* upload photo button */}
+          <RaisedButton
+            label={translation('Upload')}
+            primary
+            onTouchTap={this.onImageUpload}
+          />
+
+          {/* remove preview button */}
+          <RaisedButton
+            label={translation('Remove Preview')}
+            secondary
+            onTouchTap={this.onRemovePreviewImage}
+          />
+        </div>
+
         <div className={styles.fieldContainer}>
           <Field
             name="proposerName"
-            hintText="Proposer Name"
-            floatingLabelText="Proposer Name"
+            hintText={translation('Proposer Name')}
+            floatingLabelText={translation('Proposer Name')}
             fullWidth
             disabled={disabled}
             component={TextField}
@@ -71,8 +154,8 @@ class IdeaForm extends Component {
         <div className={styles.fieldContainer}>
           <Field
             name="netWeight"
-            hintText="Net Weight"
-            floatingLabelText="Net Weight"
+            hintText={translation('Net Weight')}
+            floatingLabelText={translation('Net Weight')}
             fullWidth
             disabled={disabled}
             component={TextField}
@@ -82,8 +165,8 @@ class IdeaForm extends Component {
         <div className={styles.fieldContainer}>
           <Field
             name="approximatePackWeight"
-            hintText="Approxmiate Pack Weight"
-            floatingLabelText="Approxmiate Pack Weight"
+            hintText={translation('Approxmiate Pack Weight')}
+            floatingLabelText={translation('Approxmiate Pack Weight')}
             fullWidth
             disabled={disabled}
             component={TextField}
@@ -93,8 +176,8 @@ class IdeaForm extends Component {
         <div className={styles.fieldContainer}>
           <Field
             name="productCost"
-            hintText="Product Cost"
-            floatingLabelText="Product Cost"
+            hintText={translation('Product Cost')}
+            floatingLabelText={translation('Product Cost')}
             fullWidth
             disabled={disabled}
             component={TextField}
@@ -104,7 +187,7 @@ class IdeaForm extends Component {
         <div className={styles.fieldContainer}>
           <Field
             name="battery"
-            label="Battery"
+            label={translation('Battery')}
             labelPosition="right"
             disabled={disabled}
             component={Checkbox}
@@ -114,7 +197,7 @@ class IdeaForm extends Component {
         <div className={styles.fieldContainer}>
           <Field
             name="branded"
-            label="Branded"
+            label={translation('Branded')}
             labelPosition="right"
             disabled={disabled}
             component={Checkbox}
@@ -124,7 +207,7 @@ class IdeaForm extends Component {
         <div className={styles.fieldContainer}>
           <Field
             name="fragile"
-            label="fragile"
+            label={translation('Fragile')}
             labelPosition="right"
             disabled={disabled}
             component={Checkbox}
@@ -134,8 +217,8 @@ class IdeaForm extends Component {
         <div className={styles.fieldContainer}>
           <Field
             name="color"
-            hintText="Color"
-            floatingLabelText="Color"
+            hintText={translation('Color')}
+            floatingLabelText={translation('Color')}
             fullWidth
             disabled={disabled}
             component={TextField}
@@ -145,8 +228,8 @@ class IdeaForm extends Component {
         <div className={styles.fieldContainer}>
           <Field
             name="width"
-            hintText="Width"
-            floatingLabelText="Width"
+            hintText={translation('Width')}
+            floatingLabelText={translation('Width')}
             fullWidth
             disabled={disabled}
             component={TextField}
@@ -156,8 +239,8 @@ class IdeaForm extends Component {
         <div className={styles.fieldContainer}>
           <Field
             name="height"
-            hintText="Height"
-            floatingLabelText="Height"
+            hintText={translation('Height')}
+            floatingLabelText={translation('Height')}
             fullWidth
             disabled={disabled}
             component={TextField}
@@ -167,8 +250,8 @@ class IdeaForm extends Component {
         <div className={styles.fieldContainer}>
           <Field
             name="length"
-            hintText="Length"
-            floatingLabelText="Length"
+            hintText={translation('Length')}
+            floatingLabelText={translation('Length')}
             fullWidth
             disabled={disabled}
             component={TextField}
@@ -178,8 +261,8 @@ class IdeaForm extends Component {
         <div className={styles.fieldContainer}>
           <Field
             name="accessories"
-            hintText="Accessories"
-            floatingLabelText="Accessories"
+            hintText={translation('Accessories')}
+            floatingLabelText={translation('Accessories')}
             multiLine
             rows={2}
             rowsMax={4}
@@ -192,8 +275,8 @@ class IdeaForm extends Component {
         <div className={styles.fieldContainer}>
           <Field
             name="remark"
-            hintText="remark"
-            floatingLabelText="remark"
+            hintText={translation('Remark')}
+            floatingLabelText={translation('Remark')}
             multiLine
             rows={2}
             rowsMax={4}
@@ -230,22 +313,30 @@ IdeaForm.propTypes = {
    */
   status: PropTypes.number,
 
+  translation: PropTypes.func,
+
+  uploadPhoto: PropTypes.func,
+
   /**
    * We have to name this function this way,
    * "onSubmit" conflicts with redux-form native function name.
    */
   onSubmitCallback: PropTypes.func,
+
 }
 
 const mapStateToProps = state => ({
   initialValues: state.initFormData.formData,
 })
 
-export default connect(mapStateToProps, {
-  getIdea,
-})(
-  reduxForm({
-    form: 'ideaForm',
-    enableReinitialize: true,
-  })(IdeaForm)
+export default translate(null, { translateFuncName: 'translation' })(
+  connect(mapStateToProps, {
+    getIdea,
+    uploadPhoto,
+  })(
+    reduxForm({
+      form: 'ideaForm',
+      enableReinitialize: true,
+    })(IdeaForm)
+  )
 )

@@ -195,7 +195,8 @@ class Ideas extends Component {
 
     const createIdeaButton = (
       <RaisedButton
-        label="Create" default
+        label={translation('Create')}
+        default
         onTouchTap={this.onTapCreate}
       />
     )
