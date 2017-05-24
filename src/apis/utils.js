@@ -45,7 +45,6 @@ export const fetchApi = (path, method = 'GET', headers = {}, options = {}) => {
   // assign headers
   const fetchHeaders = {
     ...headers,
-    'Content-Type': 'application/json',
     'Access-Token': accessToken,
   }
 

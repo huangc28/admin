@@ -57,8 +57,11 @@ const proxyOptions = {
  * For example: http://localhost:3005/api/login ---> http://localhost:3001/api/v1/login
  */
 app.use('/api', proxy(proxyOptions))
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json({ limit: '20mb' }))
+app.use(bodyParser.urlencoded({
+  extended: true,
+  limit: '20mb',
+}))
 
 if (process.env.NODE_ENV === 'development') {
   // webpack dev middleware

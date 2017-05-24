@@ -10,7 +10,9 @@ export const fetchIdeaComment = ideaId => (
  * @param {string} comments
  */
 export const reworkIdea = (id, comments) => (
-  fetchApi(buildApiUrl('ideaComments'), 'POST', {}, {
+  fetchApi(buildApiUrl('ideaComments'), 'POST', {
+    'Content-Type': 'application/json',
+  }, {
     body: JSON.stringify({
       idea_id: id,
       content: comments,

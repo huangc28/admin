@@ -5,6 +5,34 @@ import { TextField } from 'redux-form-material-ui'
 
 import styles from './IdeaSampleForm.css'
 
+const validate = values => {
+  const errors = {}
+
+  // productName is required
+  if (!values.productName) {
+    errors.productName = 'is required'
+  }
+
+  // float required
+  const requireFloat = [
+    'inventoryLevel',
+    'estimateShippingCost',
+    'price',
+    'weight',
+    'length',
+    'width',
+    'height',
+  ]
+
+  requireFloat.forEach(field => {
+    if (!/\d+(\.\d+)?/.test(values[field])) {
+      errors[field] = 'number required'
+    }
+  })
+
+  return errors
+}
+
 class IdeaSampleForm extends Component {
   componentDidMount = () => {
     const { onMount } = this.props
@@ -233,5 +261,6 @@ export default connect(mapStateToProps)(
   reduxForm({
     form: 'ideaSampleForm',
     enableReinitialize: true,
+    validate,
   })(IdeaSampleForm)
 )

@@ -12,7 +12,9 @@ export const fetchSample = sampleId => (
 
 export const editSample = ideaSample => (
   fetchApi(buildApiUrl(
-    `/ideaSamples/${ideaSample.id}`), 'PUT', {},
+    `/ideaSamples/${ideaSample.id}`), 'PUT', {
+      'Content-Type': 'application/json',
+    },
     {
       body: JSON.stringify(ideaSample),
     }
@@ -23,13 +25,19 @@ export const editSample = ideaSample => (
 export const deleteSample = sampleId => (
   fetchApi(
     buildApiUrl(`ideaSamples/${sampleId}`),
-    'DELETE'
+    'DELETE',
+    {
+      'Content-Type': 'application/json',
+    }
   )
   .then(res => res.json())
 )
 
 export const saveIdeaSample = ideaSample => (
-  fetchApi(buildApiUrl('ideaSamples'), 'POST', {},
+  fetchApi(buildApiUrl('ideaSamples'), 'POST',
+    {
+      'Content-Type': 'application/json',
+    },
     {
       body: JSON.stringify(ideaSample),
     }

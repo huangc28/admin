@@ -6,11 +6,52 @@ import {
   Checkbox,
   TextField,
 } from 'redux-form-material-ui'
+import { translate } from 'react-i18next'
 
 import styles from './IdeaForm.css'
 import { getIdea } from '../../../actions/ideas'
 import { uploadPhoto } from '../../../actions/photo'
-import { translate } from 'react-i18next'
+import { getLargeSizeImageUrl } from '../../../utils/images.js'
+
+/**
+ * @param {Object} values
+ * @returns {Object} errors
+ *
+ */
+const validate = values => {
+  const errors = {}
+
+  // productName is requried
+  if (!values.productName) {
+    errors.productName = 'Required'
+  }
+
+  // netWeight, width, height, length should be float.
+  const requireFloat = [
+    'netWeight',
+    'width',
+    'height',
+    'length',
+  ]
+
+  requireFloat.forEach(field => {
+    if (!/\d+(\.\d+)?/.test(values[field])) {
+      errors[field] = 'number required'
+    }
+  })
+
+  return errors
+}
+
+const renderPreviewImageField = field => {
+  const src = field.src || getLargeSizeImageUrl(field.input.value)
+
+  return (
+    <div className={styles.fieldContainer}>
+      <img className={styles.previewImg} src={src} />
+    </div>
+  )
+}
 
 /**
  * product name - string
@@ -107,10 +148,11 @@ class IdeaForm extends Component {
         </div>
 
         {/* image preview */}
-        <div className={styles.fieldContainer}>
-          <img className={styles.previewImg} src={previewImage} />
-        </div>
-
+        <Field
+          name="image"
+          src={previewImage}
+          component={renderPreviewImageField}
+        />
 
         <div className={styles.imgFieldContainer}>
           {/* select photo button */}
@@ -301,6 +343,10 @@ IdeaForm.propTypes = {
 
   handleSubmit: PropTypes.func,
 
+  initialValues: PropTypes.shape({
+    image: PropTypes.string,
+  }),
+
   /**
    * Use refId to load existing idea data.
    */
@@ -337,6 +383,7 @@ export default translate(null, { translateFuncName: 'translation' })(
     reduxForm({
       form: 'ideaForm',
       enableReinitialize: true,
+      validate,
     })(IdeaForm)
   )
 )

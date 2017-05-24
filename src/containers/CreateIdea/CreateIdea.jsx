@@ -34,15 +34,21 @@ class CreateIdea extends Component {
     const {
       saveIdea,
       saveAndSubmitIdea,
+      image,
     } = this.props
 
+    const composedValue = {
+      ...value,
+      image,
+    }
+
     if (submitType === SAVE) {
-      saveIdea(value)
+      saveIdea(composedValue)
 
       return
     }
 
-    saveAndSubmitIdea(value)
+    saveAndSubmitIdea(composedValue)
   }
 
   onSave = () => {
@@ -80,13 +86,18 @@ class CreateIdea extends Component {
 
 CreateIdea.propTypes = {
   deleteInitFormData: PropTypes.func,
+  image: PropTypes.string,
   reset: PropTypes.func,
   saveAndSubmitIdea: PropTypes.func,
   saveIdea: PropTypes.func,
   submit: PropTypes.func,
 }
 
-export default connect(null, {
+const mapStateToProps = state => ({
+  image: state.photo.image,
+})
+
+export default connect(mapStateToProps, {
   deleteInitFormData,
   saveIdea,
   saveAndSubmitIdea,

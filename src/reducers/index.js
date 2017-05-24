@@ -7,6 +7,7 @@ import auth from './auth'
 import ideaSamples from './ideaSamples'
 import ideaComment from './ideaComment'
 import ideas from './ideas'
+import photo from './photo'
 import initFormData from './initFormData'
 
 const rootReducer = combineReducers({
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   ideaSamples,
   ideaComment,
   ideas,
+  photo,
   initFormData,
   routing: routerReducer,
   form: formReducer,

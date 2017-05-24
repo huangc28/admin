@@ -69,3 +69,7 @@ export default config()
 ## I18n
 
 I choose [i18next](http://i18next.com) and [react-i18next](https://github.com/i18next/react-i18next) after sometimes surveying other alteratives.
+
+## Problems Encounterred
+
+1. [upload image with isomorphic fetch](https://stackoverflow.com/questions/40794468/upload-a-image-with-fetch)
