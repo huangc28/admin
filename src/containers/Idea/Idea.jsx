@@ -3,13 +3,27 @@ import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
 import Submitable from '../../components/Submitable'
 
-import { deleteIdea } from '../../actions/ideas'
+import {
+  deleteIdea,
+  getIdea,
+} from '../../actions/ideas'
 import ControllButtonBar from '../../components/ControllButtonBar'
 import IdeaForm from '../../components/forms/IdeaForm'
 
 class Idea extends Component {
 
   onSubmit = values => { console.log('value', values) }
+
+  onMount = () => {
+    const {
+      getIdea,
+      params: {
+        ideaId,
+      },
+    } = this.props
+
+    getIdea(ideaId)
+  }
 
   render () {
     const {
@@ -27,7 +41,7 @@ class Idea extends Component {
 
         <IdeaForm
           onSubmitCallback={this.onSubmit}
-          refId={parseInt(ideaId, 10)}
+          onMount={this.onMount}
           disabled
         />
 
@@ -45,6 +59,7 @@ class Idea extends Component {
 
 Idea.propTypes = {
   deleteIdea: PropTypes.func,
+  getIdea: PropTypes.func,
   params: PropTypes.shape({
     ideaId: PropTypes.string,
   }),
@@ -52,4 +67,5 @@ Idea.propTypes = {
 
 export default connect(null, {
   deleteIdea,
+  getIdea,
 })(Idea)

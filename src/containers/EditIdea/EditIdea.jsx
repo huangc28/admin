@@ -12,6 +12,7 @@ import { SAVE, SAVE_AND_SUBMIT } from '../../constants/generic'
 import {
   editIdea,
   saveAndSubmitIdea,
+  getIdea,
 } from '../../actions/ideas'
 import IdeaFrom from '../../components/forms/IdeaForm'
 
@@ -59,6 +60,17 @@ class EditIdea extends Component {
     this.setState({ submitType: SAVE })
   }
 
+  onMount = () => {
+    const {
+      getIdea,
+      params: {
+        ideaId,
+      },
+    } = this.props
+
+    getIdea(ideaId)
+  }
+
   onSaveAndSubmit = () => {
     this.setState({ submitType: SAVE_AND_SUBMIT })
   }
@@ -82,7 +94,7 @@ class EditIdea extends Component {
 
         <IdeaFrom
           onSubmitCallback={this.onSubmit}
-          refId={parseInt(ideaId, 10)}
+          onMount={this.onMount}
         />
 
         {
@@ -112,6 +124,7 @@ class EditIdea extends Component {
 
 EditIdea.propTypes = {
   editIdea: PropTypes.func,
+  getIdea: PropTypes.func,
   ideaId: PropTypes.number,
   params: PropTypes.shape({
     ideaId: PropTypes.string,
@@ -129,4 +142,5 @@ export default connect(mapStateToProps, {
   editIdea,
   saveAndSubmitIdea,
   submit,
+  getIdea,
 })(EditIdea)

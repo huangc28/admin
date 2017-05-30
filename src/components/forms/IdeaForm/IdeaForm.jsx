@@ -9,7 +9,6 @@ import {
 import { translate } from 'react-i18next'
 
 import styles from './IdeaForm.css'
-import { getIdea } from '../../../actions/ideas'
 import { uploadPhoto } from '../../../actions/photo'
 import { getLargeSizeImageUrl } from '../../../utils/images.js'
 
@@ -77,12 +76,11 @@ class IdeaForm extends Component {
 
   componentDidMount = () => {
     const {
-      getIdea,
-      refId,
+      onMount,
     } = this.props
 
-    if (refId) {
-      getIdea(refId)
+    if (onMount) {
+      onMount()
     }
   }
 
@@ -334,23 +332,11 @@ class IdeaForm extends Component {
 
 IdeaForm.propTypes = {
   disabled: PropTypes.bool,
-
-  /**
-   * Load idea data.
-   * use the data to reinitialize form.
-   */
-  getIdea: PropTypes.func,
-
   handleSubmit: PropTypes.func,
 
   initialValues: PropTypes.shape({
     image: PropTypes.string,
   }),
-
-  /**
-   * Use refId to load existing idea data.
-   */
-  refId: PropTypes.number,
   reset: PropTypes.func,
 
   /**
@@ -358,17 +344,15 @@ IdeaForm.propTypes = {
    * so we know that which stage this idea is currently at.
    */
   status: PropTypes.number,
-
   translation: PropTypes.func,
-
   uploadPhoto: PropTypes.func,
+  onMount: PropTypes.func,
 
   /**
    * We have to name this function this way,
    * "onSubmit" conflicts with redux-form native function name.
    */
   onSubmitCallback: PropTypes.func,
-
 }
 
 const mapStateToProps = state => ({
@@ -377,7 +361,6 @@ const mapStateToProps = state => ({
 
 export default translate(null, { translateFuncName: 'translation' })(
   connect(mapStateToProps, {
-    getIdea,
     uploadPhoto,
   })(
     reduxForm({

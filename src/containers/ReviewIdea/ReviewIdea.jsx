@@ -10,6 +10,7 @@ import {
 import {
   rejectIdea,
   approveIdea,
+  getIdea,
 } from '../../actions/ideas'
 import {
   fetchIdeaComment,
@@ -86,6 +87,17 @@ class ReviewIdea extends Component {
     })
   }
 
+  onMount = () => {
+    const {
+      getIdea,
+      params: {
+        ideaId,
+      },
+    } = this.props
+
+    getIdea(ideaId)
+  }
+
   render () {
     const {
       params: {
@@ -105,7 +117,7 @@ class ReviewIdea extends Component {
 
         <IdeaForm
           onSubmitCallback={this.onSubmit}
-          refId={parseInt(ideaId, 10)} // @TODO this parseInt should be fixed!
+          onMount={this.onMount}
           disabled
         />
 
@@ -134,6 +146,7 @@ ReviewIdea.propTypes = {
   approveIdea: PropTypes.func,
   comment: PropTypes.object,
   fetchIdeaComment: PropTypes.func,
+  getIdea: PropTypes.func,
   params: PropTypes.shape({
     ideaId: PropTypes.string,
   }),
@@ -146,4 +159,5 @@ export default connect(null, {
   reworkIdea,
   rejectIdea,
   fetchIdeaComment,
+  getIdea,
 })(ReviewIdea)

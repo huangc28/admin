@@ -51,7 +51,7 @@ const proxyOptions = {
  * Proxy frontend request directly to backend.
  * Prevent writing duplicated api on frontend and node side.
  *
- * @NOTE Proxy has to place in front of bodyParser, otherwise proxy will break.
+ * @NOTE Proxy has to be placed in front of bodyParser, otherwise proxy will break.
  * @issue http://stackoverflow.com/questions/26632854/socket-hangup-while-posting-request-to-node-http-proxy-node-js
  *
  * For example: http://localhost:3005/api/login ---> http://localhost:3001/api/v1/login
