@@ -7,8 +7,12 @@ import * as APIS from '../apis/ideaComment'
 export function * watchFetchIdeaCommentflow (action) {
   const { ideaId } = action.payload
 
+  console.log('ideaId', ideaId)
+
   try {
     const response = yield call(APIS.fetchIdeaComment, ideaId)
+
+    console.log('watchFetchIdeaCommentflow response', response)
 
     if (response.error) {
       throw new Error(response.error.message)

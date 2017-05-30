@@ -11,11 +11,11 @@ import {
   rejectIdea,
   approveIdea,
   getIdea,
-} from '../../actions/ideas'
+} from '../../redux/ideas'
 import {
   fetchIdeaComment,
   reworkIdea,
-} from '../../actions/ideaComment'
+} from '../../redux/ideaComments'
 import ControllButtonBar from '../../components/ControllButtonBar'
 import IdeaForm from '../../components/forms/IdeaForm'
 import IdeaCommentField from '../../components/IdeaCommentField'

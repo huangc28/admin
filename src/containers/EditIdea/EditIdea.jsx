@@ -4,16 +4,16 @@ import { submit } from 'redux-form/immutable'
 import { browserHistory } from 'react-router'
 
 import ControllButtonBar from '../../components/ControllButtonBar'
-import { getIdeaStatus } from '../../reducers/ideas'
+import {
+  getIdeaStatus,
+  editIdea,
+  saveAndSubmitIdea,
+  getIdea,
+} from '../../redux/ideas'
 import IdeaCommentField from '../../components/IdeaCommentField'
 import Submitable from '../../components/Submitable'
 import { REWORK } from '../../constants/ideas'
 import { SAVE, SAVE_AND_SUBMIT } from '../../constants/generic'
-import {
-  editIdea,
-  saveAndSubmitIdea,
-  getIdea,
-} from '../../actions/ideas'
 import IdeaFrom from '../../components/forms/IdeaForm'
 
 /**

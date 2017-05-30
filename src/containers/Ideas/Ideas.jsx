@@ -15,7 +15,7 @@ import { browserHistory } from 'react-router'
 import { translate } from 'react-i18next'
 
 import ControllButtonBar from '../../components/ControllButtonBar'
-import { sortIdeasByType, getIdeas, deleteIdea } from '../../actions/ideas'
+import { sortIdeasByType, getIdeas, deleteIdea } from '../../redux/ideas'
 import {
   ALL,
   NEW,

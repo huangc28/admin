@@ -5,8 +5,8 @@ import TextField from 'material-ui/TextField'
 import styles from './IdeaCommentField.css'
 import {
   fetchIdeaComment,
-} from '../../actions/ideaComment'
-import { getCommentByIdeaId } from '../../reducers/ideaComment'
+  getCommentByIdeaId,
+} from '../../redux/ideaComments'
 
 class IdeaCommentField extends Component {
   constructor () {

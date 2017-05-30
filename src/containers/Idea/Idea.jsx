@@ -6,7 +6,7 @@ import Submitable from '../../components/Submitable'
 import {
   deleteIdea,
   getIdea,
-} from '../../actions/ideas'
+} from '../../redux/ideas'
 import ControllButtonBar from '../../components/ControllButtonBar'
 import IdeaForm from '../../components/forms/IdeaForm'
 

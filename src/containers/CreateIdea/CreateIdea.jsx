@@ -11,7 +11,7 @@ import Submitable from '../../components/Submitable'
 import {
   saveIdea,
   saveAndSubmitIdea,
-} from '../../actions/ideas'
+} from '../../redux/ideas'
 
 class CreateIdea extends Component {
   constructor () {
