@@ -1,7 +1,7 @@
 import { call, put, takeLatest, all } from 'redux-saga/effects'
 import { browserHistory } from 'react-router'
 
-import * as actions from '../actions/ideaComment'
+import * as actions from '../redux/ideaComments'
 import * as APIS from '../apis/ideaComment'
 
 export function * watchFetchIdeaCommentflow (action) {

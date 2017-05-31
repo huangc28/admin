@@ -29,8 +29,8 @@ export default function configureStore (rootReducer, preloadedState) {
   sagaMiddleware.run(rootSaga)
 
   if (module.hot) {
-    module.hot.accept('../reducers', () => {
-      const nextRootReducer = require('../reducers').default // eslint-disable-line global-require
+    module.hot.accept('../redux/reducers', () => {
+      const nextRootReducer = require('../redux/reducers').default // eslint-disable-line global-require
       store.replaceReducer(nextRootReducer)
     })
   }

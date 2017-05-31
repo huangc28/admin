@@ -1,10 +1,10 @@
 import { call, put, takeLatest, all } from 'redux-saga/effects'
 import { browserHistory } from 'react-router'
-import { storeInitFormData } from '../actions/initFormData'
 
 import config from '../config'
 import * as APIS from '../apis/ideaSamples'
-import * as actions from '../actions/ideaSamples'
+import { storeInitFormData } from '../redux/initFormData'
+import * as actions from '../redux/ideaSamples'
 
 // @TODO should extract this to a location saga.
 const getCurrentRoute = state => (

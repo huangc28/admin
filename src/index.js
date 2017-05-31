@@ -12,7 +12,7 @@ import { I18nextProvider } from 'react-i18next'
 import i18n from './i18n'
 import { ACCESS_TOKEN } from './constants/auth'
 import configureStore from './store/configureStore'
-import rootReducer from './reducers'
+import rootReducer from './redux/reducers'
 import routes from './routes'
 import { init } from './config'
 

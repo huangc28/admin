@@ -11,8 +11,7 @@ import MenuItem from 'material-ui/MenuItem'
 import { browserHistory } from 'react-router'
 import { translate } from 'react-i18next'
 
-import { getAccessToken } from '../../reducers/auth'
-import { logout } from '../../actions/auth'
+import { getAccessToken, logout } from '../../redux/auth'
 import { getLocation } from '../../utils/routes'
 import NavigationBar from '../../components/NavigationBar'
 

@@ -5,7 +5,7 @@ import { browserHistory } from 'react-router'
 
 import ControllButtonBar from '../../components/ControllButtonBar'
 import IdeaForm from '../../components/forms/IdeaForm'
-import { deleteInitFormData } from '../../actions/initFormData'
+import { deleteInitFormData } from '../../redux/initFormData'
 import { SAVE, SAVE_AND_SUBMIT } from '../../constants/generic'
 import Submitable from '../../components/Submitable'
 import {

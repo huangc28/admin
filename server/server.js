@@ -21,7 +21,7 @@ import { renderFullPage, staticify, publicPath } from './utils/render'
 import env from '../env'
 import configureStore from '../src/store/configureStore'
 import routes from '../src/routes'
-import rootReducer from '../src/reducers'
+import rootReducer from '../src/redux/reducers'
 
 const app = express()
 const webpackConfig = require('../webpack.config.js')({ dev: true })

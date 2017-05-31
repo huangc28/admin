@@ -11,7 +11,7 @@ import {
   fetchSamples,
   editIdeaSample,
   deleteIdeaSample,
-} from '../../actions/ideaSamples'
+} from '../../redux/ideaSamples'
 
 const sampleDataHeader = [
   {

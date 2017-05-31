@@ -1,7 +1,7 @@
 import { takeLatest, all, call, put } from 'redux-saga/effects'
 import * as APIS from '../apis/photo'
 
-import * as actions from '../actions/photo'
+import * as actions from '../redux/photo'
 
 function * watchUploadFileFlow (action) {
   const { file } = action.payload

@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 
-import { deleteInitFormData } from '../../actions/initFormData'
-import { saveIdeaSample } from '../../actions/ideaSamples'
+import { deleteInitFormData } from '../../redux/initFormData'
+import { saveIdeaSample } from '../../redux/ideaSamples'
 import { SAVE } from '../../constants/generic'
 import IdeaSampleForm from '../../components/forms/IdeaSampleForm'
 import Submitable from '../../components/Submitable'

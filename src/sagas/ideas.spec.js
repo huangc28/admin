@@ -7,7 +7,7 @@ import * as sagas from './ideas'
 import { getAllIdeas } from '../reducers/ideas'
 import * as actions from '../actions/ideas'
 import * as APIS from '../apis/ideas'
-import { storeInitFormData } from '../actions/initFormData'
+import { storeInitFormData } from '../redux/initFormData'
 
 const mockedDB = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../../faker', 'db.json'), 'utf-8'))
 

@@ -3,7 +3,7 @@ import { browserHistory } from 'react-router'
 
 import { ACCESS_TOKEN } from '../constants/auth'
 import * as APIS from '../apis/auth'
-import * as actions from '../actions/auth'
+import * as actions from '../redux/auth'
 
 export function * watchLoginFlow (action) {
   const { payload: { email, password } } = action

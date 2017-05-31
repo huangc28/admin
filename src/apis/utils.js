@@ -2,9 +2,11 @@ import fetch from 'isomorphic-fetch'
 import url from 'url'
 
 import config from '../config'
+import {
+  accessTokenUnauthorized,
+  getAccessToken,
+} from '../redux/auth'
 import env from '../../env'
-import { getAccessToken } from '../reducers/auth'
-import { accessTokenUnauthorized } from '../actions/auth'
 
 const { CLIENT_API_HOST } = env()
 

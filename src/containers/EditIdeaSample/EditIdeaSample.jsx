@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import {
   fetchSample,
   editIdeaSample,
-} from '../../actions/ideaSamples'
+} from '../../redux/ideaSamples'
 import ControllButtonBar from '../../components/ControllButtonBar'
 import IdeaSampleForm from '../../components/forms/IdeaSampleForm'
 import Submitable from '../../components/Submitable/Submitable'

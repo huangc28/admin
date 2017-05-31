@@ -2,8 +2,8 @@ import { call, put, takeLatest, all } from 'redux-saga/effects'
 import { browserHistory } from 'react-router'
 
 import * as APIS from '../apis/ideas'
-import * as actions from '../actions/ideas'
-import { storeInitFormData } from '../actions/initFormData'
+import * as actions from '../redux/ideas'
+import { storeInitFormData } from '../redux/initFormData'
 import {
   PENDING,
   NEW,

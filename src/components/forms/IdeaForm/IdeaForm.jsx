@@ -9,7 +9,7 @@ import {
 import { translate } from 'react-i18next'
 
 import styles from './IdeaForm.css'
-import { uploadPhoto } from '../../../actions/photo'
+import { uploadPhoto } from '../../../redux/photo'
 import { getLargeSizeImageUrl } from '../../../utils/images.js'
 
 /**
