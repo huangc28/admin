@@ -15,7 +15,9 @@ import webpackHotMiddleware from 'webpack-hot-middleware'
 import proxy from 'http-proxy-middleware'
 import fs from 'fs'
 import { I18nextProvider } from 'react-i18next'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
+import { muiTheme } from '../src/index'
 import i18n from '../src/i18n'
 import { renderFullPage, staticify, publicPath } from './utils/render'
 import env from '../env'
@@ -96,14 +98,15 @@ function handleRender (req, res, next) {
       res.redirect(302, `${redirectLocation.pathname}${redirectLocation.search}`)
     } else if (renderProps) {
       const preloadedState = {}
-
       const store = configureStore(rootReducer, preloadedState)
       // route is found, prepare html string...
       const html = renderToString(
         <Provider store={store}>
-          <I18nextProvider i18n={i18n}>
-            <RouterContext {...renderProps} />
-          </I18nextProvider>
+          <MuiThemeProvider muiTheme={muiTheme}>
+            <I18nextProvider i18n={i18n}>
+              <RouterContext {...renderProps} />
+            </I18nextProvider>
+          </MuiThemeProvider>
         </Provider>
       )
 
