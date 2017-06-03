@@ -7,6 +7,7 @@ import styles from './IdeaSamples.css'
 import * as ideaSampleStatus from '../../constants/ideaSamples'
 import ControllButtonBar from '../../components/ControllButtonBar'
 import IdeaSampleReworkModal from '../../components/IdeaSampleReworkModal'
+import IdeaSampleApproveModal from '../../components/IdeaSampleApproveModal'
 import {
   fetchSamples,
   editIdeaSample,
@@ -89,7 +90,8 @@ class IdeaSamples extends Component {
     super()
 
     this.state = {
-      showModal: false,
+      showReworkModal: false,
+      showApproveModal: false,
       selectedSampleId: null,
     }
   }
@@ -112,24 +114,27 @@ class IdeaSamples extends Component {
     })
   }
 
-  onClose = () => {
+  onCloseReworkModal = () => {
     this.setState({
-      showModal: false,
+      showReworkModal: false,
+    })
+  }
+
+  onCloseApproveModal = () => {
+    this.setState({
+      showApproveModal: false,
     })
   }
 
   onTouchTapApprove = sampleId => {
-    const { editIdeaSample } = this.props
-
-    editIdeaSample({
-      id: sampleId,
-      status: ideaSampleStatus.IDEA_SAMPLE_APPROVE,
+    this.setState({
+      showApproveModal: true,
     })
   }
 
   onTouchTapRework = sampleId => {
     this.setState({
-      showModal: true,
+      showReworkModal: true,
       selectedSampleId: sampleId,
     })
   }
@@ -140,7 +145,7 @@ class IdeaSamples extends Component {
     deleteIdeaSample(sampleId)
   }
 
-  onSubmit = comment => {
+  onSubmitRework = comment => {
     const { editIdeaSample } = this.props
 
     const { selectedSampleId } = this.state
@@ -149,6 +154,10 @@ class IdeaSamples extends Component {
       id: selectedSampleId,
       comment,
     })
+  }
+
+  onSubmitApprove = () => {
+    console.log('on submit approve')
   }
 
   renderSampleHeaders = (header, index) => (
@@ -247,7 +256,8 @@ class IdeaSamples extends Component {
     } = this.props
 
     const {
-      showModal,
+      showReworkModal,
+      showApproveModal,
       selectedSampleId,
     } = this.state
 
@@ -293,14 +303,27 @@ class IdeaSamples extends Component {
               ))
             }
           </div>
+
           {/* idea sample rework modal */}
           {
-            showModal
+            showReworkModal
               ? (
                 <IdeaSampleReworkModal
                   sampleId={selectedSampleId}
-                  onSubmit={this.onSubmit}
-                  onClose={this.onClose}
+                  onSubmit={this.onSubmitRework}
+                  onClose={this.onCloseReworkModal}
+                />
+              )
+              : ''
+          }
+
+          {/* idea sample approve modal */}
+          {
+            showApproveModal
+              ? (
+                <IdeaSampleApproveModal
+                  onSubmit={this.onSubmitApprove}
+                  onClose={this.onCloseApproveModal}
                 />
               )
               : ''

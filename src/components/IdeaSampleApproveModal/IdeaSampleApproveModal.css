@@ -10,15 +10,15 @@
 }
 
 .animate .content {
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3 ease;
 }
 
 .visible .content {
-  opacity: 1;
+    opacity: 1;
 }
 
 .hidden .content {
-  opacity: 0;
+    opacity: 0;
 }
 
 .visible .background {
