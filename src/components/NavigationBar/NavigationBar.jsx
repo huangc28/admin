@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { Link } from 'react-router'
+import { browserHistory } from 'react-router'
 import Drawer from 'material-ui/Drawer'
 import MenuItem from 'material-ui/MenuItem'
 import { translate } from 'react-i18next'
@@ -13,7 +13,7 @@ const procurementListSubmenu = [
   },
   {
     title: 'purchase order',
-    link: '/erp/procurement/purchase-order',
+    link: '/erp/procurement/purchase-orders',
   },
 ]
 
@@ -93,16 +93,20 @@ class NavigationBar extends Component {
   renderSubmenuItem = (submenuItem, index) => {
     const { link, title } = submenuItem
 
-    const { translation } = this.props
+    const {
+      translation,
+      onClose,
+    } = this.props
 
     return (
-      <MenuItem key={index}>
-        <Link
-          to={link}
-          className={styles.subMenuLink}
-        >
-          {translation(title)}
-        </Link>
+      <MenuItem
+        key={index}
+        onTouchTap={() => {
+          browserHistory.push(link)
+          onClose()
+        }}
+      >
+        {translation(title)}
       </MenuItem>
     )
   }
