@@ -158,6 +158,7 @@ module.exports = () => {
       ifProd(new ExtractTextPlugin({
         filename: 'bundle.css',
         allChunks: true,
+        ignoreOrder: true,
       })),
       new webpack.optimize.CommonsChunkPlugin({
         name: 'vendor',
