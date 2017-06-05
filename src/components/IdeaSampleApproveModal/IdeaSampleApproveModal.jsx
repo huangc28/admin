@@ -53,7 +53,14 @@ class IdeaSampleApproveModal extends Component {
   }
 
   onSubmit = () => {
-    console.log('trigger on submit')
+    const {
+      assignee,
+      quantity,
+    } = this.state
+
+    this.props.onSubmit(assignee, quantity)
+
+    this.onClose()
   }
 
   render () {
@@ -117,6 +124,7 @@ class IdeaSampleApproveModal extends Component {
 
 IdeaSampleApproveModal.propTypes = {
   onClose: PropTypes.func,
+  onSubmit: PropTypes.func,
 }
 
 export default IdeaSampleApproveModal

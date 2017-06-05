@@ -5,6 +5,7 @@ import photoSaga from './photo'
 import ideaCommentSaga from './ideaComment'
 import ideaSampleSaga from './ideaSamples'
 import ideasSaga from './ideas'
+import purchaseOrderSaga from './purchaseOrder'
 
 export default function * root () {
   yield all([
@@ -13,5 +14,6 @@ export default function * root () {
     call(ideaSampleSaga),
     call(ideaCommentSaga),
     call(ideasSaga),
+    call(purchaseOrderSaga),
   ])
 }

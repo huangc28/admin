@@ -13,6 +13,7 @@ import {
   editIdeaSample,
   deleteIdeaSample,
 } from '../../redux/ideaSamples'
+import { createPurchaseOrder } from '../../redux/purchaseOrder'
 
 const sampleDataHeader = [
   {
@@ -129,6 +130,7 @@ class IdeaSamples extends Component {
   onTouchTapApprove = sampleId => {
     this.setState({
       showApproveModal: true,
+      selectedSampleId: sampleId,
     })
   }
 
@@ -156,8 +158,26 @@ class IdeaSamples extends Component {
     })
   }
 
-  onSubmitApprove = () => {
-    console.log('on submit approve')
+  onSubmitApprove = (assignee, quantity) => {
+    const { selectedSampleId } = this.state
+
+    const {
+      editIdeaSample,
+      createPurchaseOrder,
+    } = this.props
+
+    // edit idea sample status
+    editIdeaSample({
+      id: selectedSampleId,
+      status: ideaSampleStatus.IDEA_SAMPLE_APPROVE,
+    })
+
+    // create new purchase order
+    createPurchaseOrder({
+      assigneeUserId: assignee,
+      quantity,
+      ideaSampleId: selectedSampleId,
+    })
   }
 
   renderSampleHeaders = (header, index) => (
@@ -258,7 +278,6 @@ class IdeaSamples extends Component {
     const {
       showReworkModal,
       showApproveModal,
-      selectedSampleId,
     } = this.state
 
     const createIdeaSampleButton = (
@@ -309,7 +328,6 @@ class IdeaSamples extends Component {
             showReworkModal
               ? (
                 <IdeaSampleReworkModal
-                  sampleId={selectedSampleId}
                   onSubmit={this.onSubmitRework}
                   onClose={this.onCloseReworkModal}
                 />
@@ -336,6 +354,7 @@ class IdeaSamples extends Component {
 }
 
 IdeaSamples.propTypes = {
+  createPurchaseOrder: PropTypes.func,
   deleteIdeaSample: PropTypes.func,
   editIdeaSample: PropTypes.func,
   fetchSamples: PropTypes.func,
@@ -353,6 +372,7 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps, {
+  createPurchaseOrder,
   fetchSamples,
   editIdeaSample,
   deleteIdeaSample,
