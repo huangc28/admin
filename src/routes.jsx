@@ -15,6 +15,10 @@ import IdeaSamples from './containers/IdeaSamples'
 import CreateIdeaSamples from './containers/CreateIdeaSample'
 import EditIdeaSample from './containers/EditIdeaSample'
 
+/* purchase-order */
+import PurchaseOrder from './containers/PurchaseOrder'
+import PurchaseOrderEdit from './containers/PurchaseOrderEdit'
+
 export default (
   <Route path="/" >
     <IndexRoute component={Login} />
@@ -33,6 +37,12 @@ export default (
         <Route path=":ideaId/samples/:sampleId/edit" component={EditIdeaSample} />
         <Route path=":ideaId/review" component={ReviewIdea} />
         <Route path=":ideaId/edit" component={EditIdea} />
+      </Route>
+
+      {/* purchase-order */}
+      <Route path="procurement/purchase-order">
+        <Route path=":orderId" component={PurchaseOrder} />
+        <Route path=":orderId/edit" component={PurchaseOrderEdit} />
       </Route>
     </Route>
   </Route>
