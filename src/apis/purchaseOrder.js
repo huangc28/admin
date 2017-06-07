@@ -13,3 +13,8 @@ export const createPurchaseOrder = po => (
   .then(res => res.json())
 )
 
+export const fetchPurchaseOrders = () => (
+  fetchApi(buildApiUrl('purchaseOrders'))
+  .then(res => res.json())
+)
+

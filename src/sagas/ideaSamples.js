@@ -115,6 +115,27 @@ export function * watchSaveIdeaSample (action) {
   }
 }
 
+export function * watchApproveIdeaSampleFlow (action) {
+  const { id } = action.payload
+
+  try {
+    const response = yield call(APIS.approveIdeaSample, id)
+
+    if (response.error) {
+      throw new Error(response.error.message)
+    }
+
+    yield put(actions.approveIdeaSampleSuccess(id))
+
+    // redirect to idea sample page.
+    browserHistory.push(
+      getCurrentRoute(config.store.getState())
+    )
+  } catch (error) {
+    yield put(actions.approveIdeaSampleFailed(error.errorMessage))
+  }
+}
+
 export default function * ideaSamplesFlow () {
   yield all([
     takeLatest(actions.fetchSamples().type, watchFetchIdeaSamplesFlow),
@@ -122,5 +143,6 @@ export default function * ideaSamplesFlow () {
     takeLatest(actions.editIdeaSample().type, watchEditIdeaSampleFlow),
     takeLatest(actions.saveIdeaSample().type, watchSaveIdeaSample),
     takeLatest(actions.deleteIdeaSample().type, watchDeleteIdeaSampleFlow),
+    takeLatest(actions.approveIdeaSample().type, watchApproveIdeaSampleFlow),
   ])
 }

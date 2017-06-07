@@ -4,6 +4,7 @@ import {
 } from 'redux-actions'
 
 import * as loadingStatus from '../constants/loadingState'
+import * as sampleStatus from '../constants/ideaSamples'
 
 export const {
   fetchSamples,
@@ -21,6 +22,9 @@ export const {
   deleteIdeaSample,
   deleteIdeaSampleSuccess,
   deleteIdeaSampleFailed,
+  approveIdeaSample,
+  approveIdeaSampleSuccess,
+  approveIdeaSampleFailed,
 } = createActions({
   FETCH_SAMPLES: ideaId => ({
     ideaId,
@@ -87,6 +91,18 @@ export const {
   }),
 
   DELETE_IDEA_SAMPLE_FAILED: errorMessage => ({
+    errorMessage,
+  }),
+
+  APPROVE_IDEA_SAMPLE: id => ({
+    id,
+  }),
+
+  APPROVE_IDEA_SAMPLE_SUCCESS: id => ({
+    id,
+  }),
+
+  APPROVE_IDEA_SAMPLE_FAILED: errorMessage => ({
     errorMessage,
   }),
 })
@@ -194,6 +210,35 @@ const ideaSamplesReducer = handleActions({
     loading: loadingStatus.READY,
   }),
   [deleteIdeaSampleFailed]: (state, action) => ({
+    ...state,
+    loading: loadingStatus.ERROR,
+    errorMessage: action.payload.errorMessage,
+  }),
+  [approveIdeaSample]: (state, action) => ({
+    ...state,
+    loading: loadingStatus.LOADING,
+  }),
+  [approveIdeaSampleSuccess]: (state, action) => ({
+    ...state,
+    loading: loadingStatus.READY,
+    // find the matched sample id, set status to approve, set the rest to disabled.
+    data: [
+      ...state.data.map(sample => {
+        if (sample.id === action.payload.id) {
+          return {
+            ...sample,
+            status: sampleStatus.IDEA_SAMPLE_APPROVE,
+          }
+        }
+
+        return {
+          ...sample,
+          status: sampleStatus.IDEA_SAMPLE_DISABLED,
+        }
+      }),
+    ],
+  }),
+  [approveIdeaSampleFailed]: (state, action) => ({
     ...state,
     loading: loadingStatus.ERROR,
     errorMessage: action.payload.errorMessage,

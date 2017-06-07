@@ -13,7 +13,7 @@ const procurementListSubmenu = [
   },
   {
     title: 'purchase order',
-    link: '/erp/procurement/purchase-orders',
+    link: '/erp/procurement/purchase-order',
   },
 ]
 

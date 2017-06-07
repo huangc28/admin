@@ -10,7 +10,7 @@ import IdeaSampleReworkModal from '../../components/IdeaSampleReworkModal'
 import IdeaSampleApproveModal from '../../components/IdeaSampleApproveModal'
 import {
   fetchSamples,
-  editIdeaSample,
+  approveIdeaSample,
   deleteIdeaSample,
 } from '../../redux/ideaSamples'
 import { createPurchaseOrder } from '../../redux/purchaseOrder'
@@ -162,15 +162,11 @@ class IdeaSamples extends Component {
     const { selectedSampleId } = this.state
 
     const {
-      editIdeaSample,
+      approveIdeaSample,
       createPurchaseOrder,
     } = this.props
 
-    // edit idea sample status
-    editIdeaSample({
-      id: selectedSampleId,
-      status: ideaSampleStatus.IDEA_SAMPLE_APPROVE,
-    })
+    approveIdeaSample(selectedSampleId)
 
     // create new purchase order
     createPurchaseOrder({
@@ -354,6 +350,7 @@ class IdeaSamples extends Component {
 }
 
 IdeaSamples.propTypes = {
+  approveIdeaSample: PropTypes.func,
   createPurchaseOrder: PropTypes.func,
   deleteIdeaSample: PropTypes.func,
   editIdeaSample: PropTypes.func,
@@ -374,6 +371,6 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {
   createPurchaseOrder,
   fetchSamples,
-  editIdeaSample,
+  approveIdeaSample,
   deleteIdeaSample,
 })(IdeaSamples)

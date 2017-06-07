@@ -169,7 +169,7 @@ export function * watchRejectIdeaFlow (action) {
 
     yield put(actions.editIdeaSuccess(response.data))
 
-    browserHistory.push('erp/procurement/ideas')
+    browserHistory.push('/erp/procurement/ideas')
   } catch (err) {
     yield put(actions.editIdeaFailed(err.message))
   }
@@ -190,7 +190,7 @@ export function * watchApproveIdeaFlow (action) {
 
     yield put(actions.editIdeaSuccess(response.data))
 
-    browserHistory.push('erp/procurement/ideas')
+    browserHistory.push('/erp/procurement/ideas')
   } catch (err) {
     yield put(actions.editIdeaFailed(err.message))
   }

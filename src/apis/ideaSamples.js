@@ -44,3 +44,8 @@ export const saveIdeaSample = ideaSample => (
   )
   .then(res => res.json())
 )
+
+export const approveIdeaSample = id => (
+  fetchApi(buildApiUrl(`/ideaSamples/${id}/approve`), 'PATCH')
+  .then(res => res.json())
+)

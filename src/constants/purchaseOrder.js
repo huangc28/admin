@@ -1,0 +1,2 @@
+export const PURCHASE_ORDER_UNFULFILLED = 1
+export const PURCHASE_ORDER_FULFILLED = 2

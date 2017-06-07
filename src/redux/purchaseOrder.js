@@ -5,6 +5,25 @@ import {
 
 import * as loadingStatus from '../constants/loadingState'
 
+/**
+ * Bring out product_name, image out
+ * to the first level of an object.
+ *
+ * @param {Array} orders
+ * @returns {Array}
+ */
+export const normalizedPurchaseOrder = orders => (
+  orders.map(order => {
+    const { ideaSample } = order
+
+    return {
+      ...order,
+      product_name: ideaSample.product_name,
+      image: ideaSample.image,
+    }
+  })
+)
+
 // Action Creators
 
 /**
@@ -24,6 +43,9 @@ export const {
   createPurchaseOrder,
   createPurchaseOrderSuccess,
   createPurchaseOrderFailed,
+  fetchPurchaseOrdersSuccess,
+  fetchPurchaseOrdersFailed,
+  fetchPurchaseOrders,
 } = createActions({
   CREATE_PURCHASE_ORDER: po => ({
     po,
@@ -34,10 +56,15 @@ export const {
   CREATE_PURCHASE_ORDER_FAILED: errorMessage => ({
     errorMessage,
   }),
-})
+  FETCH_PURCHASE_ORDERS_SUCCESS: orders => ({
+    orders,
+  }),
+  FETCH_PURCHASE_ORDERS_FAILED: errorMessage => ({
+    errorMessage,
+  }),
+}, 'FETCH_PURCHASE_ORDERS')
 
 // Reducer
-
 const INITIAL_STATE = {
   data: [],
   errorMessage: null,
@@ -58,6 +85,20 @@ const reducer = handleActions({
     ],
   }),
   [createPurchaseOrderFailed]: (state, action) => ({
+    ...state,
+    loading: loadingStatus.ERROR,
+    errorMessage: action.payload.errorMessage,
+  }),
+  [fetchPurchaseOrders]: (state, action) => ({
+    ...state,
+    loading: loadingStatus.LOADING,
+  }),
+  [fetchPurchaseOrdersSuccess]: (state, action) => ({
+    ...state,
+    loading: loadingStatus.READY,
+    data: normalizedPurchaseOrder(action.payload.orders),
+  }),
+  [fetchPurchaseOrdersFailed]: (state, action) => ({
     ...state,
     loading: loadingStatus.ERROR,
     errorMessage: action.payload.errorMessage,
