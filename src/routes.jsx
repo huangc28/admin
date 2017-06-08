@@ -16,6 +16,10 @@ import CreateIdeaSamples from './containers/CreateIdeaSample'
 import EditIdeaSample from './containers/EditIdeaSample'
 import PurchaseOrders from './containers/PurchaseOrders'
 
+/* purchase-order */
+import PurchaseOrder from './containers/PurchaseOrder'
+import PurchaseOrderEdit from './containers/PurchaseOrderEdit'
+
 export default (
   <Route path="/" >
     <IndexRoute component={Login} />
@@ -39,6 +43,8 @@ export default (
       {/* purchase order */}
       <Route path="procurement/purchase-order">
         <IndexRoute component={PurchaseOrders} />
+        <Route path=":orderId" component={PurchaseOrder} />
+        <Route path=":orderId/edit" component={PurchaseOrderEdit} />
       </Route>
     </Route>
   </Route>
