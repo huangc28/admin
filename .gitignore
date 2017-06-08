@@ -3,3 +3,5 @@ build/*
 
 server/access.log
 .vscode/*
+
+npm-debug.log.*
