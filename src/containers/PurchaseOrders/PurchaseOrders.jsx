@@ -106,9 +106,20 @@ class PurchaseOrders extends Component {
                     <TableRowColumn>
                       <IconButton
                         iconClassName="material-icons"
-                        tooltip="Edit Idea"
+                        tooltip="View"
+                        tooltipPosition="right"
+                      >
+                        visibility
+                      </IconButton>
+
+                      <IconButton
+                        iconClassName="material-icons"
+                        tooltip="Edit"
+                        tooltipPosition="right"
                         onTouchTap={
-                          () => browserHistory.push(`/erp/procurement/purchase-order/${order.id}`)
+                          () => browserHistory.push(
+                            `/erp/procurement/purchase-order/${order.id}/edit`
+                          )
                         }
                       >
                         mode_edit

@@ -18,7 +18,6 @@ import PurchaseOrders from './containers/PurchaseOrders'
 
 /* purchase-order */
 import PurchaseOrder from './containers/PurchaseOrder'
-import EditPurchaseOrder from './containers/EditPurchaseOrder'
 
 export default (
   <Route path="/" >
@@ -43,8 +42,7 @@ export default (
       {/* purchase order */}
       <Route path="procurement/purchase-order">
         <IndexRoute component={PurchaseOrders} />
-        <Route path=":orderId" component={PurchaseOrder} />
-        <Route path=":orderId/edit" component={EditPurchaseOrder} />
+        <Route path=":orderId/edit" component={PurchaseOrder} />
       </Route>
     </Route>
   </Route>
