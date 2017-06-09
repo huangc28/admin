@@ -2,24 +2,21 @@ import React, { Component } from 'react'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 
-import styles from './PurchaseOrderEdit.css'
-import {
-  PURCHASE_ORDER_UNFULFILL,
-  PURCHASE_ORDER_FULFILL,
-} from '../../constants/PurchaseOrder'
+import styles from './EditPurchaseOrder.css'
+// import * as status from '../../constants/PurchaseOrder'
 
-const getPurchaseOrderStatusText = {
-  [PURCHASE_ORDER_UNFULFILL]: 'unfulfill',
-  [PURCHASE_ORDER_FULFILL]: 'fulfill',
-}
+// const getPurchaseOrderStatusText = {
+//   [status.PURCHASE_ORDER_UNFULFILL]: 'unfulfill',
+//   [status.PURCHASE_ORDER_FULFILL]: 'fulfill',
+// }
 
 class PurchaseOrderEdit extends Component {
   constructor () {
     super()
 
-    this.state = {
-      status: PURCHASE_ORDER_UNFULFILL,
-    }
+    // this.state = {
+    //   status: status.PURCHASE_ORDER_UNFULFILL,
+    // }
   }
 
   render () {
@@ -30,7 +27,7 @@ class PurchaseOrderEdit extends Component {
     return (
       <div className={styles.root}>
         <div className={styles.fulfillInfo}>
-          { getPurchaseOrderStatusText[status] }
+          aa
         </div>
         <div className={styles.approverInfo}>
           <TextField

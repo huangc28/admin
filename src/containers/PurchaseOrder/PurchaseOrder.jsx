@@ -1,31 +1,35 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import { browserHistory } from 'react-router'
-import RaisedButton from 'material-ui/RaisedButton'
 
+import Submitable from '../../components/Submitable'
 import ControllButtonBar from '../../components/ControllButtonBar'
 import PurchaseOrderForm from '../../components/forms/PurchaseOrderForm'
-import styles from './PurchaseOrder.css'
 
-const PurchaseOrder = () => (
-  <div className = {styles.root}>
-    <div className = {styles.back}>
-      <ControllButtonBar
-        onBack = {() => browserHistory.push('/erp/dashboard')}
-      />
-    </div>
+const PurchaseOrder = ({ params: { orderId } }) => (
+  <div>
+    <ControllButtonBar
+      onBack={
+        () => browserHistory.push('/erp/procurement/purchase-order')
+      }
+    />
 
-    <div className = {styles.content}>
-      <PurchaseOrderForm />
-    </div>
+    <PurchaseOrderForm />
 
     {/* actions */}
-    <div className = {styles.confirmButton}>
-      <RaisedButton
-        label = "confirm Edit"
-        primary
-      />
-    </div>
+    <Submitable
+      formName="purchaseOrderForm"
+      showEditButton
+      onEdit={
+        () => browserHistory.push(`/erp/procurement/purchase-order/${orderId}`)
+      }
+    />
   </div>
 )
+
+PurchaseOrder.propTypes = {
+  params: PropTypes.shape({
+    orderId: PropTypes.string,
+  }),
+}
 
 export default PurchaseOrder

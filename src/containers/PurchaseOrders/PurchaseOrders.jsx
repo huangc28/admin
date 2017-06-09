@@ -9,6 +9,7 @@ import {
 } from 'material-ui/Table'
 import IconButton from 'material-ui/IconButton'
 import { connect } from 'react-redux'
+import { browserHistory } from 'react-router'
 
 import * as poStatus from '../../constants/purchaseOrder'
 import { fetchPurchaseOrders } from '../../redux/purchaseOrder'
@@ -107,7 +108,7 @@ class PurchaseOrders extends Component {
                         iconClassName="material-icons"
                         tooltip="Edit Idea"
                         onTouchTap={
-                          console.log('trigger redirect')
+                          () => browserHistory.push(`/erp/procurement/purchase-order/${order.id}`)
                         }
                       >
                         mode_edit

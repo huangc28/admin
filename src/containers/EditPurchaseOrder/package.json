@@ -1,0 +1,6 @@
+{
+  "name": "EditPurchaseOrder",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./EditPurchaseOrder.jsx"
+}
