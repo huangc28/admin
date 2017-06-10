@@ -255,7 +255,7 @@ class Ideas extends Component {
                   }
 
                   {/* Idea Action Bar */}
-                  <TableRowColumn>
+                  <TableRowColumn style={{ overflow: 'visible' }}>
                     {
                       idea.status === APPROVE
                         ? this.renderApproveActions(idea.id)

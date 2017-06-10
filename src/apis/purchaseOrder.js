@@ -18,3 +18,7 @@ export const fetchPurchaseOrders = () => (
   .then(res => res.json())
 )
 
+export const fetchPurchaseOrder = orderId => (
+  fetchApi(buildApiUrl(`purchaseOrders/${orderId}`))
+  .then(res => res.json())
+)

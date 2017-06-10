@@ -9,20 +9,34 @@ import * as loadingStatus from '../constants/loadingState'
  * Bring out product_name, image out
  * to the first level of an object.
  *
- * @param {Array} orders
- * @returns {Array}
+ * @param {Array} || {Object} orders
+ * @returns {Array} || {Object}
  */
-export const normalizedPurchaseOrder = orders => (
-  orders.map(order => {
-    const { ideaSample } = order
+export const normalizedPurchaseOrder = orders => {
+  // if orders is an array, loop through each
+  // and normalize data
+  // else, normalize single object
+  function flatIdeaSampleData (order) {
+    const {
+      ideaSample: {
+        product_name,
+        image,
+      } = {},
+    } = order
 
     return {
       ...order,
-      product_name: ideaSample.product_name,
-      image: ideaSample.image,
+      product_name,
+      image,
     }
-  })
-)
+  }
+
+  if (orders instanceof Array) {
+    return orders.map(flatIdeaSampleData)
+  }
+
+  return flatIdeaSampleData(orders)
+}
 
 // Action Creators
 
@@ -43,6 +57,9 @@ export const {
   createPurchaseOrder,
   createPurchaseOrderSuccess,
   createPurchaseOrderFailed,
+  fetchPurchaseOrder,
+  fetchPurchaseOrderSuccess,
+  fetchPurchaseOrderFailed,
   fetchPurchaseOrdersSuccess,
   fetchPurchaseOrdersFailed,
   fetchPurchaseOrders,
@@ -54,6 +71,15 @@ export const {
     po,
   }),
   CREATE_PURCHASE_ORDER_FAILED: errorMessage => ({
+    errorMessage,
+  }),
+  FETCH_PURCHASE_ORDER: orderId => ({
+    orderId,
+  }),
+  FETCH_PURCHASE_ORDER_SUCCESS: order => ({
+    order,
+  }),
+  FETCH_PURCHASE_ORDER_FAILED: errorMessage => ({
     errorMessage,
   }),
   FETCH_PURCHASE_ORDERS_SUCCESS: orders => ({
@@ -85,6 +111,27 @@ const reducer = handleActions({
     ],
   }),
   [createPurchaseOrderFailed]: (state, action) => ({
+    ...state,
+    loading: loadingStatus.ERROR,
+    errorMessage: action.payload.errorMessage,
+  }),
+  [fetchPurchaseOrder]: (state, action) => ({
+    ...state,
+    loading: loadingStatus.LOADING,
+  }),
+  [fetchPurchaseOrderSuccess]: (state, action) => ({
+    ...state,
+    loading: loadingStatus.READY,
+    data: [
+      ...state.data.filter(po => (
+        po.id === action.payload.order.id
+      )),
+      normalizedPurchaseOrder(
+        action.payload.order
+      ),
+    ],
+  }),
+  [fetchPurchaseOrderFailed]: (state, action) => ({
     ...state,
     loading: loadingStatus.ERROR,
     errorMessage: action.payload.errorMessage,

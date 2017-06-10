@@ -1,30 +1,56 @@
 import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
 
 import ControllButtonBar from '../../components/ControllButtonBar'
+import { fetchPurchaseOrder } from '../../redux/purchaseOrder'
 import PurchaseOrderForm from '../../components/forms/PurchaseOrderForm'
+import Submitable from '../../components/Submitable'
 
 class PurchaseOrder extends Component {
-  onSubmit = values => {
+  onMount = () => {
     const {
+      fetchPurchaseOrder,
       params: {
         orderId,
       },
     } = this.props
-    console.log('values', orderId, values)
+
+    fetchPurchaseOrder(orderId)
+  }
+
+  submit = values => {
+    console.log('Purchase order form')
   }
 
   render () {
+    const {
+      params: {
+        orderId,
+      },
+      router: {
+        goBack,
+      },
+    } = this.props
+
     return (
       <div>
         <ControllButtonBar
-          onBack={
-            () => browserHistory.push('/erp/procurement/purchase-order')
-          }
+          onBack={goBack}
         />
 
         <PurchaseOrderForm
-          onSubmit={this.onSubmit}
+          onSubmitCallback={this.submit}
+          onMount={this.onMount}
+          disabled
+        />
+
+        <Submitable
+          formName="purchaseOrderForm"
+          showEditButton
+          onEdit={() => {
+            browserHistory.push(`/erp/procurement/purchase-order/${orderId}/edit`)
+          }}
         />
       </div>
     )
@@ -32,9 +58,15 @@ class PurchaseOrder extends Component {
 }
 
 PurchaseOrder.propTypes = {
+  fetchPurchaseOrder: PropTypes.func,
   params: PropTypes.shape({
     orderId: PropTypes.string,
   }),
+  router: PropTypes.shape({
+    goBack: PropTypes.func,
+  }),
 }
 
-export default PurchaseOrder
+export default connect(null, {
+  fetchPurchaseOrder,
+})(PurchaseOrder)

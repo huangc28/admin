@@ -103,11 +103,17 @@ class PurchaseOrders extends Component {
                   }
 
                   {
-                    <TableRowColumn>
+                    // solve the problem of icon tooltip being hidden
+                    // by table row column: https://github.com/callemall/material-ui/issues/4671
+                    <TableRowColumn style={{ overflow: 'visible' }}>
                       <IconButton
                         iconClassName="material-icons"
                         tooltip="View"
-                        tooltipPosition="right"
+                        onTouchTap={
+                          () => browserHistory.push(
+                            `/erp/procurement/purchase-order/${order.id}`
+                          )
+                        }
                       >
                         visibility
                       </IconButton>
@@ -115,7 +121,6 @@ class PurchaseOrders extends Component {
                       <IconButton
                         iconClassName="material-icons"
                         tooltip="Edit"
-                        tooltipPosition="right"
                         onTouchTap={
                           () => browserHistory.push(
                             `/erp/procurement/purchase-order/${order.id}/edit`

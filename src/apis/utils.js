@@ -41,8 +41,6 @@ export const buildApiUrl = (apiPath, queries = {}) => {
  * @param {Object} options
  */
 export const fetchApi = (path, method = 'GET', headers = {}, options = {}) => {
-  console.log('BRYAN SERVER SIDE', config.store)
-
   // retrieve access-token from store.
   const accessToken = getAccessToken(config.store.getState())
 
