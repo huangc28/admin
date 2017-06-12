@@ -52,7 +52,7 @@ class PurchaseOrderForm extends Component {
             <Field
               disabled={disabled}
               onInput={this.onInputSupplier}
-              name="supplierId"
+              name="supplier"
               hintText="Supplier"
               fullWidth
               component={TextField}
@@ -162,9 +162,20 @@ PurchaseOrderForm.propTypes = {
   onSubmitCallback: PropTypes.func,
 }
 
-const mapStateToProps = state => ({
-  initialValues: state.initFormData.formData,
-})
+const mapStateToProps = state => {
+  const { formData } = state.initFormData
+
+  return {
+    initialValues: {
+      ...formData,
+      supplier: (
+        formData &&
+        formData.ideaSample &&
+        formData.ideaSample.supplier
+      ) || null,
+    },
+  }
+}
 
 export default connect(mapStateToProps, {
   deleteInitFormData,

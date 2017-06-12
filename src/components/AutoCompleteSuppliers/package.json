@@ -1,0 +1,6 @@
+{
+  "name": "AutoCompleteSuppliers",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./AutoCompleteSuppliers.jsx"
+}

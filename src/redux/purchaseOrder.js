@@ -19,6 +19,7 @@ export const normalizedPurchaseOrder = orders => {
   function flatIdeaSampleData (order) {
     const {
       ideaSample: {
+        supplier,
         product_name,
         image,
       } = {},
@@ -26,6 +27,7 @@ export const normalizedPurchaseOrder = orders => {
 
     return {
       ...order,
+      supplier,
       product_name,
       image,
     }
