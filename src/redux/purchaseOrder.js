@@ -59,6 +59,9 @@ export const {
   createPurchaseOrder,
   createPurchaseOrderSuccess,
   createPurchaseOrderFailed,
+  editPurchaseOrder,
+  editPurchaseOrderSuccess,
+  editPurchaseOrderFailed,
   fetchPurchaseOrder,
   fetchPurchaseOrderSuccess,
   fetchPurchaseOrderFailed,
@@ -73,6 +76,15 @@ export const {
     po,
   }),
   CREATE_PURCHASE_ORDER_FAILED: errorMessage => ({
+    errorMessage,
+  }),
+  EDIT_PURCHASE_ORDER: po => ({
+    po,
+  }),
+  EDIT_PURCHASE_ORDER_SUCCESS: po => ({
+    po,
+  }),
+  EDIT_PURCHASE_ORDER_FAILED: errorMessage => ({
     errorMessage,
   }),
   FETCH_PURCHASE_ORDER: orderId => ({
@@ -113,6 +125,28 @@ const reducer = handleActions({
     ],
   }),
   [createPurchaseOrderFailed]: (state, action) => ({
+    ...state,
+    loading: loadingStatus.ERROR,
+    errorMessage: action.payload.errorMessage,
+  }),
+  [editPurchaseOrder]: (state, action) => ({
+    ...state,
+    loading: loadingStatus.EMPTY,
+  }),
+  [editPurchaseOrderSuccess]: (state, action) => ({
+    ...state,
+    loading: loadingStatus.READY,
+    data: [
+      ...state.data.map(po => {
+        if (po && po.id === action.payload.po) {
+          return action.payload.po
+        }
+
+        return po
+      }),
+    ],
+  }),
+  [editPurchaseOrderFailed]: (state, action) => ({
     ...state,
     loading: loadingStatus.ERROR,
     errorMessage: action.payload.errorMessage,

@@ -9,6 +9,7 @@ export const {
   searchSupply,
   searchSupplySuccess,
   searchSupplyFailed,
+  appendSupplySearchResults,
 } = createActions({
   SEARCH_SUPPLY: (supplierId, name) => ({
     supplierId,
@@ -19,6 +20,13 @@ export const {
   }),
   SEARCH_SUPPLY_FAILED: errorMessage => ({
     errorMessage,
+  }),
+
+  /**
+   * @param {Array} results
+   */
+  APPEND_SUPPLY_SEARCH_RESULTS: results => ({
+    results,
   }),
 })
 
@@ -41,6 +49,12 @@ const reducer = handleActions({
     ...state,
     errorMessage: action.payload.errorMessage,
   }),
+  [appendSupplySearchResults]: (state, action) => ({
+    ...state,
+    searchResult: state.searchResult.concat(
+      action.payload.results
+    ),
+  }),
 }, INITIAL_STATE)
 
 export default reducer
@@ -52,3 +66,18 @@ export const getSupplyDataSource = state => (
   getSupplySearchResult(state)
     .map(supply => supply.product_name)
 )
+
+/**
+ * @param {Array} supplies
+ * @param {String} text
+ * @returns {Integer} || null
+ */
+export const getSupplyIdByProductName = (supplies, text) => {
+  const trimmedText = text.trim()
+
+  const matchedSupply = supplies.find(
+    supply => supply.product_name === trimmedText
+  )
+
+  return (matchedSupply && matchedSupply.id) || null
+}

@@ -13,6 +13,7 @@ export const {
   searchSuppliers,
   searchSuppliersSuccess,
   searchSuppliersFailed,
+  appendSupplierSearchResults,
 } = createActions({
   SEARCH_SUPPLIERS: name => ({
     name,
@@ -22,6 +23,13 @@ export const {
   }),
   SEARCH_SUPPLIERS_FAILED: errorMessage => ({
     errorMessage,
+  }),
+
+  /**
+   * @param {Array} results
+   */
+  APPEND_SUPPLIER_SEARCH_RESULTS: results => ({
+    results,
   }),
 })
 
@@ -45,6 +53,12 @@ const reducer = handleActions({
     searchLoading: loadingStatus.ERROR,
     errorMessage: action.payload.errorMessage,
   }),
+  [appendSupplierSearchResults]: (state, action) => ({
+    ...state,
+    searchResult: state.searchResult.concat(
+      action.payload.results
+    ),
+  }),
 }, INITIAL_STATE)
 
 export default reducer
@@ -64,3 +78,19 @@ export const getSupplierDataSource = state => (
   getSupplierSearchResult(state)
     .map(supplier => supplier.name)
 )
+
+/**
+ * Get supplier id by matching
+ *
+ * @param {String} text
+ * @returns {Integer} id
+ */
+export const getSupplierIdByName = (suppliers, text) => {
+  const trimmedText = text.trim()
+
+  const matchedSupplier = suppliers.find(
+    supplier => supplier.name === trimmedText,
+  )
+
+  return (matchedSupplier && matchedSupplier.id) || null
+}

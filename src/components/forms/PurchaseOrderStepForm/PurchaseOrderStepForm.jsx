@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { Field, reduxForm } from 'redux-form'
+import { Field, Form, reduxForm } from 'redux-form'
 import {
   TextField,
   AutoComplete,
@@ -15,6 +15,12 @@ import FlatButton from 'material-ui/FlatButton'
 import Divider from 'material-ui/Divider'
 
 import {
+  SUPPLIER_STEP,
+  PRICE_STEP,
+  TRACKING_STEP,
+  FINISHED_STEP,
+} from '../../../constants/PurchaseOrder'
+import {
   searchSupply,
   getSupplySearchResult,
   getSupplyDataSource,
@@ -23,16 +29,16 @@ import {
   searchSuppliers,
   getSupplierSearchResult,
   getSupplierDataSource,
+  getSupplierIdByName,
 } from '../../../redux/supplier'
 import styles from './PurchaseOrderStepForm.css'
 import formStyles from '../../../styles/form.css'
 
-const SUPPLIER_STEP = 0
-const PRICE_STEP = 1
-const TRACKING_STEP = 2
-const FINISHED_STEP = 3
-
 const STEPS = ['Supplier', 'Price', 'Tracking', 'Finished']
+
+const validate = values => {
+  console.log('BRYAN: validation', values)
+}
 
 /**
  * steppers:
@@ -57,17 +63,40 @@ class PurchaseOrderForm extends Component {
     this.state = {
       finished: false,
       stepIndex: SUPPLIER_STEP,
+      selectedSupplierId: null,
+
+      // step locks
+      stepOneLock: true,
+    }
+  }
+
+  componentDidMount = () => {
+    const { onMount } = this.props
+
+    if (onMount) {
+      onMount()
     }
   }
 
   onNext = () => {
     // if step < 3, increase step number.
-    const { stepIndex } = this.state
+    const {
+      stepIndex,
+    } = this.state
+
+    const {
+      onStepProceed,
+      submit,
+    } = this.props
+
+    onStepProceed(stepIndex)
 
     this.setState({
       stepIndex: stepIndex + 1,
       finished: stepIndex >= FINISHED_STEP,
     })
+
+    submit('purchaseOrderForm')
   }
 
   onPrev = () => {
@@ -84,11 +113,11 @@ class PurchaseOrderForm extends Component {
     // search supplier id based on searchText.
     const { suppliersData } = this.props
 
-    const trimmedSearchText = searchText.trim()
+    const supplierId = getSupplierIdByName(suppliersData, searchText)
 
-    const selectedSupplier = suppliersData.find(supplier => supplier.name === trimmedSearchText)
-
-    this.setState({ selectedSupplier })
+    this.setState({
+      selectedSupplierId: supplierId,
+    })
   }
 
   onInputSupplier = evt => {
@@ -108,18 +137,14 @@ class PurchaseOrderForm extends Component {
   onInputSupply = evt => {
     const { searchSupply } = this.props
 
-    const { selectedSupplier } = this.state
+    const { selectedSupplierId } = this.state
 
     const { value } = evt.target
 
     // get the current supply id.
-    if (value.length > 1 && !!selectedSupplier) {
-      searchSupply(selectedSupplier.id, value)
+    if (value.length > 1 && !!selectedSupplierId) {
+      searchSupply(selectedSupplierId, value)
     }
-  }
-
-  onSave = values => {
-    console.log('values', values)
   }
 
   renderFinishedContent = () => (
@@ -131,19 +156,19 @@ class PurchaseOrderForm extends Component {
   renderStepContent = stepIndex => {
     switch (stepIndex) {
       case SUPPLIER_STEP:
-        return this.renderSupplierStep()
+        return this.renderSupplierStep(SUPPLIER_STEP)
       case PRICE_STEP:
-        return this.renderPriceStep()
+        return this.renderPriceStep(PRICE_STEP)
       case TRACKING_STEP:
-        return this.renderTrackingStep()
+        return this.renderTrackingStep(TRACKING_STEP)
       case FINISHED_STEP:
-        return this.renderFinishedContent()
+        return this.renderFinishedContent(FINISHED_STEP)
       default:
-        return this.renderSupplierStep()
+        return this.renderSupplierStep(SUPPLIER_STEP)
     }
   }
 
-  renderSupplierStep = () => {
+  renderSupplierStep = step => {
     const {
       suppliersDataSource,
       supplyDataSource,
@@ -167,7 +192,7 @@ class PurchaseOrderForm extends Component {
           <blockquote>
             <Field
               onInput={this.onInputSupplier}
-              name="supplierId"
+              name="supplier"
               hintText="Supplier"
               filter={AutoComplete.fuzzyFilter}
               fullWidth
@@ -179,12 +204,13 @@ class PurchaseOrderForm extends Component {
             {/* disable supply field when supplier is undecided */}
             <Field
               onInput={this.onInputSupply}
-              name="internalSku"
+              name="productName"
               hintText="Supply"
               filter={AutoComplete.fuzzyFilter}
               fullWidth
               component={AutoComplete}
               dataSource={supplyDataSource}
+              onNewRequest={this.onNewRequestSupply}
             />
           </blockquote>
         </div>
@@ -192,7 +218,7 @@ class PurchaseOrderForm extends Component {
     )
   }
 
-  renderPriceStep = () => (
+  renderPriceStep = step => (
     <div>
       {/* Quantity */}
       <div className={formStyles.fieldContainer}>
@@ -201,6 +227,7 @@ class PurchaseOrderForm extends Component {
           hintText="Quantity"
           underlineShow={false}
           component={TextField}
+          // validate={[(...args) => { console.log('args', args, step) }]}
         />
       </div>
       <Divider />
@@ -277,6 +304,7 @@ class PurchaseOrderForm extends Component {
 
     const {
       handleSubmit,
+      onSubmitCallback,
     } = this.props
 
     return (
@@ -295,8 +323,8 @@ class PurchaseOrderForm extends Component {
         </Stepper>
 
         {/* step content */}
-        <form
-          onSubmit={handleSubmit}
+        <Form
+          onSubmit={handleSubmit(onSubmitCallback)}
           className={formStyles.form}
         >
           <div className={styles.content}>
@@ -318,7 +346,6 @@ class PurchaseOrderForm extends Component {
                       onTouchTap={this.onPrev}
                     />
                     <RaisedButton
-                      type="submit"
                       label={
                         stepIndex === TRACKING_STEP
                           ? 'Confirm'
@@ -331,7 +358,7 @@ class PurchaseOrderForm extends Component {
                 )
             }
           </div>
-        </form>
+        </Form>
       </div>
     )
   }
@@ -339,20 +366,57 @@ class PurchaseOrderForm extends Component {
 
 PurchaseOrderForm.propTypes = {
   handleSubmit: PropTypes.func,
+
   searchSuppliers: PropTypes.func,
   searchSupply: PropTypes.func,
+  submit: PropTypes.func,
   suppliersData: PropTypes.array,
   suppliersDataSource: PropTypes.array,
+
   supplyData: PropTypes.array,
   supplyDataSource: PropTypes.array,
+
+  onMount: PropTypes.func,
+  onStepProceed: PropTypes.func,
+  onSubmitCallback: PropTypes.func,
+
 }
 
-const mapStateToProps = state => ({
-  suppliersData: getSupplierSearchResult(state),
-  suppliersDataSource: getSupplierDataSource(state),
-  supplyData: getSupplySearchResult(state),
-  supplyDataSource: getSupplyDataSource(state),
-})
+const mapStateToProps = state => {
+  const { formData = {} } = state.initFormData
+
+  /**
+   * @TODO jot down the problem when:
+   *  supply = null || supplier = null
+   *
+   *  const {
+   *    supplier: {
+   *      name: null
+   *    } = {},
+   *    supply: {
+   *      name: null
+   *    } = {}
+   *  }
+   *
+   *  won't work.
+   */
+  const {
+    supplier,
+    supply,
+  } = formData
+
+  return {
+    suppliersData: getSupplierSearchResult(state),
+    suppliersDataSource: getSupplierDataSource(state),
+    supplyData: getSupplySearchResult(state),
+    supplyDataSource: getSupplyDataSource(state),
+    initialValues: {
+      ...formData,
+      supplier: (supplier && supplier.name) || null,
+      productName: (supply && supply.product_name) || null,
+    },
+  }
+}
 
 export default connect(mapStateToProps, {
   searchSuppliers,
@@ -360,5 +424,7 @@ export default connect(mapStateToProps, {
 })(
   reduxForm({
     form: 'purchaseOrderForm',
+    enableReinitialize: true,
+    validate,
   })(PurchaseOrderForm)
 )

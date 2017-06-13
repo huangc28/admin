@@ -6,10 +6,15 @@ import {
 
 export const {
   storeInitFormData,
+  editInitFormData,
   deleteInitFormData,
 } = createActions({
   STORE_INIT_FORM_DATA: formData => ({
     formData,
+  }),
+  EDIT_INIT_FORM_DATA: (attribute, value) => ({
+    attribute,
+    value,
   }),
 }, 'DELETE_INIT_FORM_DATA')
 

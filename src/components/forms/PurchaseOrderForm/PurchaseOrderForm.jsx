@@ -163,16 +163,19 @@ PurchaseOrderForm.propTypes = {
 }
 
 const mapStateToProps = state => {
-  const { formData } = state.initFormData
+  const { formData = {} } = state.initFormData
+
+  const {
+    supplier,
+    supply,
+  } = formData
 
   return {
     initialValues: {
       ...formData,
-      supplier: (
-        formData &&
-        formData.ideaSample &&
-        formData.ideaSample.supplier
-      ) || null,
+      // @TODO there should be a better way to do it.
+      supplier: (supplier && supplier.name) || null,
+      productName: (supply && supply.product_name) || null,
     },
   }
 }

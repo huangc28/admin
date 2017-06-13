@@ -11,7 +11,10 @@ import IconButton from 'material-ui/IconButton'
 import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
 
-import * as poStatus from '../../constants/purchaseOrder'
+import {
+  PURCHASE_ORDER_UNFULFILLED,
+  PURCHASE_ORDER_FULFILLED,
+} from '../../constants/purchaseOrder'
 import { fetchPurchaseOrders } from '../../redux/purchaseOrder'
 
 const HEADERS = [
@@ -38,8 +41,8 @@ const HEADERS = [
 ]
 
 const statusText = {
-  [poStatus.PURCHASE_ORDER_UNFULFILLED]: 'unfulfilled',
-  [poStatus.PURCHASE_ORDER_FULFILLED]: 'fulfilled',
+  [PURCHASE_ORDER_UNFULFILLED]: 'unfulfilled',
+  [PURCHASE_ORDER_FULFILLED]: 'fulfilled',
 }
 
 /**

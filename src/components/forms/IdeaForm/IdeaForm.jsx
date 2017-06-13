@@ -15,7 +15,6 @@ import { getLargeSizeImageUrl } from '../../../utils/images.js'
 /**
  * @param {Object} values
  * @returns {Object} errors
- *
  */
 const validate = values => {
   const errors = {}
