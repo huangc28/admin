@@ -14,7 +14,7 @@ import { browserHistory } from 'react-router'
 import {
   PURCHASE_ORDER_UNFULFILLED,
   PURCHASE_ORDER_FULFILLED,
-} from '../../constants/purchaseOrder'
+} from '../../constants/purchaseOrderStatus'
 import { fetchPurchaseOrders } from '../../redux/purchaseOrder'
 
 const HEADERS = [

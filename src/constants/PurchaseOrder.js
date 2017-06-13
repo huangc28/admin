@@ -1,2 +1,0 @@
-export const PURCHASE_ORDER_UNFULFILL = 1
-export const PURCHASE_ORDER_FULFILL = 2

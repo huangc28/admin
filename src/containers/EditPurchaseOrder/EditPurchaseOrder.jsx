@@ -14,7 +14,7 @@ import {
   SUPPLIER_STEP,
   PRICE_STEP,
   TRACKING_STEP,
-} from '../../constants/PurchaseOrder'
+} from '../../constants/PurchaseOrderStatus'
 import {
   fetchPurchaseOrder,
   editPurchaseOrder,

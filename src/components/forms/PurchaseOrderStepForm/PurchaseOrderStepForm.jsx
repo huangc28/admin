@@ -19,7 +19,7 @@ import {
   PRICE_STEP,
   TRACKING_STEP,
   FINISHED_STEP,
-} from '../../../constants/PurchaseOrder'
+} from '../../../constants/PurchaseOrderStatus'
 import {
   searchSupply,
   getSupplySearchResult,
