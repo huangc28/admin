@@ -3,12 +3,6 @@ import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
 
 import {
-  getSupplierSearchResult,
-} from '../../redux/supplier'
-import {
-  getSupplySearchResult,
-} from '../../redux/supply'
-import {
   SUPPLIER_STEP,
   PRICE_STEP,
   TRACKING_STEP,
@@ -35,8 +29,6 @@ class PurchaseOrder extends Component {
         orderId,
       },
       editPurchaseOrder,
-      // suppliersData,
-      // supplyData,
     } = this.props
 
     const {
@@ -141,16 +133,9 @@ PurchaseOrder.propTypes = {
   params: PropTypes.shape({
     orderId: PropTypes.string,
   }),
-  suppliersData: PropTypes.array,
-  supplyData: PropTypes.array,
 }
 
-const mapStateToProps = state => ({
-  suppliersData: getSupplierSearchResult(state),
-  supplyData: getSupplySearchResult(state),
-})
-
-export default connect(mapStateToProps, {
+export default connect(null, {
   fetchPurchaseOrder,
   editPurchaseOrder,
 })(PurchaseOrder)

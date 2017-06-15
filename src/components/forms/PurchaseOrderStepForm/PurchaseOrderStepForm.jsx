@@ -83,8 +83,6 @@ class PurchaseOrderForm extends Component {
   }
 
   componentDidMount = () => {
-    // console.log('BRYAN, this state', this.state)
-
     const { onMount } = this.props
 
     if (onMount) {
@@ -249,6 +247,33 @@ class PurchaseOrderForm extends Component {
     })
   }
 
+  onInputShippingCarrier = evt => {
+    this.setState({
+      initialValues: {
+        ...this.state.initialValues,
+        shippingCarrier: evt.target.value,
+      },
+    })
+  }
+
+  onInputTrackingNumber = evt => {
+    this.setState({
+      initialValues: {
+        ...this.state.initialValues,
+        trackingNumber: evt.target.value,
+      },
+    })
+  }
+
+  onInputTransactionNumber = evt => {
+    this.setState({
+      initialValues: {
+        ...this.state.initialValues,
+        transactionNumber: evt.target.value,
+      },
+    })
+  }
+
   validateStepOne = text => {
     if (!text || !text.length) {
       this.setState({
@@ -302,10 +327,6 @@ class PurchaseOrderForm extends Component {
         },
       },
     } = this.state
-
-    // console.log('is null', approverUserId === null)
-    // console.log('is undefined', approverUserId === undefined)
-    // console.log('name', name)
 
     return (
       <div>
@@ -424,6 +445,7 @@ class PurchaseOrderForm extends Component {
               hintText="Shipping Carrier"
               fullWidth
               value={shippingCarrier}
+              onInput={this.onInputShippingCarrier}
             />
 
             <TextField
@@ -431,6 +453,7 @@ class PurchaseOrderForm extends Component {
               hintText="Tracking Number"
               fullWidth
               value={trackingNumber}
+              onInput={this.onInputTrackingNumber}
             />
           </blockquote>
         </div>
@@ -444,6 +467,7 @@ class PurchaseOrderForm extends Component {
               hintText="Transaction Number"
               fullWidth
               value={transactionNumber}
+              onInput={this.onInputTransactionNumber}
             />
           </blockquote>
         </div>
