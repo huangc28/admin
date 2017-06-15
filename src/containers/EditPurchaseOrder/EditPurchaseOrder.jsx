@@ -4,11 +4,9 @@ import { browserHistory } from 'react-router'
 
 import {
   getSupplierSearchResult,
-  getSupplierIdByName,
 } from '../../redux/supplier'
 import {
   getSupplySearchResult,
-  getSupplyIdByProductName,
 } from '../../redux/supply'
 import {
   SUPPLIER_STEP,
@@ -37,8 +35,8 @@ class PurchaseOrder extends Component {
         orderId,
       },
       editPurchaseOrder,
-      suppliersData,
-      supplyData,
+      // suppliersData,
+      // supplyData,
     } = this.props
 
     const {
@@ -50,16 +48,20 @@ class PurchaseOrder extends Component {
       // if page refreshed, selectedSupplierId and selectedSupplyId
       // will be refreshed. Thus, we have to retrieve both id from text
       // again.
-
       const {
-        supplier,
-        productName,
+        supplier: {
+          id: supplierId,
+        } = {},
+        supply: {
+          id: supplyId,
+        } = {},
       } = values
+
       editPurchaseOrder({
         id: orderId,
         step,
-        supplierId: getSupplierIdByName(suppliersData, supplier),
-        supplyId: getSupplyIdByProductName(supplyData, productName),
+        supplierId,
+        supplyId,
       })
     }
 
@@ -89,9 +91,6 @@ class PurchaseOrder extends Component {
         transactionNumber,
       } = values
 
-      // shipping_carrier
-      // tracking_number
-      // transaction_number
       editPurchaseOrder({
         id: orderId,
         step,
@@ -128,7 +127,7 @@ class PurchaseOrder extends Component {
 
         <PurchaseOrderStepForm
           onMount={this.onMount}
-          onSubmitCallback={this.onSubmit}
+          onSubmit={this.onSubmit}
           onStepProceed={this.onStepProceed}
         />
       </div>

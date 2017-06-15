@@ -162,9 +162,7 @@ const reducer = handleActions({
       ...state.data.filter(po => (
         po.id === action.payload.order.id
       )),
-      normalizedPurchaseOrder(
-        action.payload.order
-      ),
+      action.payload.order,
     ],
   }),
   [fetchPurchaseOrderFailed]: (state, action) => ({
@@ -179,7 +177,7 @@ const reducer = handleActions({
   [fetchPurchaseOrdersSuccess]: (state, action) => ({
     ...state,
     loading: loadingStatus.READY,
-    data: normalizedPurchaseOrder(action.payload.orders),
+    data: action.payload.orders,
   }),
   [fetchPurchaseOrdersFailed]: (state, action) => ({
     ...state,

@@ -6,6 +6,80 @@ import { appendSupplierSearchResults } from '../redux/supplier'
 import { appendSupplySearchResults } from '../redux/supply'
 import * as apis from '../apis/purchaseOrder'
 
+// normalize purchase order data.
+/**
+ * @issue https://github.com/twisty/formsy-react-components/issues/66
+ *
+ * Normalize empty attributes in purchase order object to string instead of null
+ *
+ * For example:
+ *
+ * {
+ *  name: null
+ * }
+ *
+ * to:
+ *
+ * {
+ *  name: '',
+ * }
+ *
+ * The reason for that is to prevent warning from react, check the github issue above.
+ *
+ * Normalize the following fields:
+ *
+ *    approverUserId: '',
+ *    supplier: {
+ *      name: '',
+ *      id: '',
+ *    },
+ *    supply: {
+ *      product_name: '',
+ *      id: '',
+ *    },
+ *    quantity: '',
+ *    price: '',
+ *    shippingCost: '',
+ *    shippingCarrier: '',
+ *    trackingNumber: '',
+ *    transactionNumber: '',
+ *
+ * @param {Object} purchaseOrder
+ */
+export const normalizePurchaseOrderEmptyValue = purchaseOrder => {
+  const normalizedPurchaseOrder = purchaseOrder
+
+  // fields of the initial value that needs to be normalized.
+  const fieldList = [
+    'approver_user_id',
+    'quantity',
+    'price',
+    'supply',
+    'supplier',
+    'shipping_cost',
+    'shipping_carrier',
+    'tracking_number',
+    'transaction_number',
+  ]
+
+  fieldList.forEach(field => {
+    if (field === 'supply' || field === 'supplier') {
+      Object.keys(purchaseOrder[field]).forEach(attr => {
+        if (purchaseOrder[field][attr] === null) {
+          normalizedPurchaseOrder[field][attr] = ''
+        }
+      })
+    }
+
+    // makesure field in the list exists and the value is null
+    if (purchaseOrder[field] === null) {
+      normalizedPurchaseOrder[field] = ''
+    }
+  })
+
+  return normalizedPurchaseOrder
+}
+
 export function * fetchPurchaseOrderFlow (action) {
   const { orderId } = action.payload
 
@@ -18,8 +92,6 @@ export function * fetchPurchaseOrderFlow (action) {
 
     yield put(actions.fetchPurchaseOrderSuccess(response.data))
 
-    console.log('response data', response.data)
-
     // append fetch result to supplier search result
     yield put(appendSupplierSearchResults([
       response.data.supplier || {},
@@ -30,9 +102,10 @@ export function * fetchPurchaseOrderFlow (action) {
       response.data.supply || {},
     ]))
 
-    yield put(storeInitFormData(response.data))
+    yield put(storeInitFormData(
+      normalizePurchaseOrderEmptyValue(response.data)
+    ))
   } catch (err) {
-    console.log(err)
     yield put(actions.fetchPurchaseOrderFailed(err.errorMessage))
   }
 }
