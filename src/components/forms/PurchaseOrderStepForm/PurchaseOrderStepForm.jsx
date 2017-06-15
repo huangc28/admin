@@ -60,6 +60,8 @@ class PurchaseOrderForm extends Component {
 
       // step lock
       stepOneLock: false,
+      stepTwoLock: false,
+      stepThreeLock: false,
 
       // stores the values of purchase order data.
       initialValues: {
@@ -176,8 +178,6 @@ class PurchaseOrderForm extends Component {
     const { value } = evt.target
 
     // if value is empty, lock step 1 confirm button
-    this.validateStepOne(value)
-
     this.setState({
       initialValues: {
         ...this.state.initialValues,
@@ -186,7 +186,7 @@ class PurchaseOrderForm extends Component {
           name: value,
         },
       },
-    })
+    }, () => this.validateStepOne())
 
     // search suppliers, store them into supplier reducer.
     if (value.length > 1) {
@@ -208,8 +208,6 @@ class PurchaseOrderForm extends Component {
 
     const { value } = evt.target
 
-    this.validateStepOne(value)
-
     this.setState({
       initialValues: {
         ...this.state.initialValues,
@@ -218,7 +216,7 @@ class PurchaseOrderForm extends Component {
           product_name: value,
         },
       },
-    })
+    }, () => this.validateStepOne())
 
     // get the current supply id.
     if (value.length > 1 && !!supplierId) {
@@ -232,7 +230,7 @@ class PurchaseOrderForm extends Component {
         ...this.state.initialValues,
         quantity: evt.target.value,
       },
-    })
+    }, () => this.validateStepTwo())
   }
 
   onInputPrice = evt => {
@@ -241,7 +239,7 @@ class PurchaseOrderForm extends Component {
         ...this.state.initialValues,
         price: evt.target.value,
       },
-    })
+    }, () => this.validateStepTwo())
   }
 
   onInputShippingCost = evt => {
@@ -250,7 +248,7 @@ class PurchaseOrderForm extends Component {
         ...this.state.initialValues,
         shippingCost: evt.target.value,
       },
-    })
+    }, () => this.validateStepTwo())
   }
 
   onInputShippingCarrier = evt => {
@@ -259,7 +257,7 @@ class PurchaseOrderForm extends Component {
         ...this.state.initialValues,
         shippingCarrier: evt.target.value,
       },
-    })
+    }, () => this.validateStepThree())
   }
 
   onInputTrackingNumber = evt => {
@@ -268,7 +266,7 @@ class PurchaseOrderForm extends Component {
         ...this.state.initialValues,
         trackingNumber: evt.target.value,
       },
-    })
+    }, () => this.validateStepThree())
   }
 
   onInputTransactionNumber = evt => {
@@ -277,11 +275,22 @@ class PurchaseOrderForm extends Component {
         ...this.state.initialValues,
         transactionNumber: evt.target.value,
       },
-    })
+    }, () => this.validateStepThree())
   }
 
-  validateStepOne = text => {
-    if (!text || !text.length) {
+  validateStepOne = () => {
+    const {
+      initialValues: {
+        supplier: {
+          name,
+        },
+        supply: {
+          product_name: productName,
+        },
+      },
+    } = this.state
+
+    if (!name || name === '' || !productName || productName === '') {
       this.setState({
         stepOneLock: true,
       })
@@ -291,6 +300,54 @@ class PurchaseOrderForm extends Component {
 
     this.setState({
       stepOneLock: false,
+    })
+  }
+
+  validateStepTwo = () => {
+    const {
+      initialValues: {
+        quantity,
+        price,
+        shippingCost,
+      },
+    } = this.state
+
+    if (quantity === '' || price === '' || shippingCost === '') {
+      this.setState({
+        stepTwoLock: true,
+      })
+
+      return
+    }
+
+    this.setState({
+      stepTwoLock: false,
+    })
+  }
+
+  validateStepThree = () => {
+    const {
+      initialValues: {
+        shippingCarrier,
+        trackingNumber,
+        transactionNumber,
+      },
+    } = this.state
+
+    if (
+      shippingCarrier !== '' ||
+      trackingNumber !== '' ||
+      transactionNumber !== ''
+    ) {
+      this.setState({
+        stepThreeLock: true,
+      })
+
+      return
+    }
+
+    this.setState({
+      stepThreeLock: false,
     })
   }
 
@@ -486,6 +543,8 @@ class PurchaseOrderForm extends Component {
       finished,
       stepIndex,
       stepOneLock,
+      stepTwoLock,
+      stepThreeLock,
     } = this.state
 
     return (
@@ -529,7 +588,7 @@ class PurchaseOrderForm extends Component {
                           ? 'Confirm'
                           : 'Next'
                       }
-                      disabled={stepOneLock}
+                      disabled={ stepOneLock || stepTwoLock || stepThreeLock }
                       primary
                       onTouchTap={this.onNext}
                     />
