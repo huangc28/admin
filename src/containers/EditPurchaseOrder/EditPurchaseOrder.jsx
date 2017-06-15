@@ -51,7 +51,7 @@ class PurchaseOrder extends Component {
 
       editPurchaseOrder({
         id: orderId,
-        step,
+        step: step + 1,
         supplierId,
         supplyId,
       })
@@ -69,7 +69,7 @@ class PurchaseOrder extends Component {
       // shippingCost
       editPurchaseOrder({
         id: orderId,
-        step,
+        step: step + 1,
         price,
         quantity,
         shippingCost,
@@ -85,7 +85,7 @@ class PurchaseOrder extends Component {
 
       editPurchaseOrder({
         id: orderId,
-        step,
+        step: step + 1,
         shippingCarrier,
         trackingNumber,
         transactionNumber,

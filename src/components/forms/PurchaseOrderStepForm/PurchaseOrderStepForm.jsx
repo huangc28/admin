@@ -96,6 +96,9 @@ class PurchaseOrderForm extends Component {
     if (nextProps.initialValues !== this.props.initialValues) {
       this.setState({
         initialValues: nextProps.initialValues,
+
+        // always display step next to the current step.
+        stepIndex: nextProps.initialValues.step,
       })
     }
   }
