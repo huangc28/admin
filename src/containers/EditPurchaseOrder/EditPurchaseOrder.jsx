@@ -93,7 +93,7 @@ class PurchaseOrder extends Component {
     }
   }
 
-  onStepProceed = step => {
+  onStepChange = step => {
     this.setState({ step })
   }
 
@@ -120,7 +120,7 @@ class PurchaseOrder extends Component {
         <PurchaseOrderStepForm
           onMount={this.onMount}
           onSubmit={this.onSubmit}
-          onStepProceed={this.onStepProceed}
+          onStepChange={this.onStepChange}
         />
       </div>
     )

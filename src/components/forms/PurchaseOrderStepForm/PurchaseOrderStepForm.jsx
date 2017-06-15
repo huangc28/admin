@@ -107,11 +107,11 @@ class PurchaseOrderForm extends Component {
     const nextStep = this.state.stepIndex + 1
 
     const {
-      onStepProceed,
+      onStepChange,
       onSubmit,
     } = this.props
 
-    onStepProceed(nextStep)
+    onStepChange(nextStep)
 
     this.setState({
       stepIndex: nextStep,
@@ -124,10 +124,16 @@ class PurchaseOrderForm extends Component {
   onPrev = () => {
     const { stepIndex } = this.state
 
+    const { onStepChange } = this.props
+
     if (stepIndex > 0) {
+      const prevStep = stepIndex - 1
+
       this.setState({
-        stepIndex: stepIndex - 1,
+        stepIndex: prevStep,
       })
+
+      onStepChange(prevStep)
     }
   }
 
@@ -550,7 +556,7 @@ PurchaseOrderForm.propTypes = {
   supplyDataSource: PropTypes.array,
 
   onMount: PropTypes.func,
-  onStepProceed: PropTypes.func,
+  onStepChange: PropTypes.func,
   onSubmit: PropTypes.func,
   onSubmitCallback: PropTypes.func,
 
@@ -574,10 +580,6 @@ const mapStateToProps = state => {
    *
    *  won't work.
    */
-  // const {
-  //   supplier,
-  //   supply,
-  // } = formData
 
   return {
     suppliersData: getSupplierSearchResult(state),
