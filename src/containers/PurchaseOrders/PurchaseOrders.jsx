@@ -20,7 +20,7 @@ import { fetchPurchaseOrders } from '../../redux/purchaseOrder'
 const HEADERS = [
   {
     title: 'Product Name',
-    field: 'product_name',
+    field: 'supplyName',
   },
   {
     title: 'Thumbnail',

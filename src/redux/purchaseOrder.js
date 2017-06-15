@@ -16,28 +16,49 @@ export const normalizedPurchaseOrder = orders => {
   // if orders is an array, loop through each
   // and normalize data
   // else, normalize single object
-  function flatIdeaSampleData (order) {
+  // function flatIdeaSampleData (order) {
+  //   const {
+  //     ideaSample: {
+  //       supplier,
+  //       product_name,
+  //       image,
+  //     } = {},
+  //   } = order
+
+  //   return {
+  //     ...order,
+  //     supplier,
+  //     product_name,
+  //     image,
+  //   }
+  // }
+
+  function flattenData (order) {
     const {
-      ideaSample: {
-        supplier,
-        product_name,
-        image,
-      } = {},
+      supplier: {
+        name: supplierName,
+        id: supplierId,
+      },
+      supply: {
+        product_name: supplyName,
+        id: supplyId,
+      },
     } = order
 
     return {
       ...order,
-      supplier,
-      product_name,
-      image,
+      supplierName,
+      supplierId,
+      supplyName,
+      supplyId,
     }
   }
 
   if (orders instanceof Array) {
-    return orders.map(flatIdeaSampleData)
+    return orders.map(flattenData)
   }
 
-  return flatIdeaSampleData(orders)
+  return flattenData(orders)
 }
 
 // Action Creators
@@ -162,7 +183,7 @@ const reducer = handleActions({
       ...state.data.filter(po => (
         po.id === action.payload.order.id
       )),
-      action.payload.order,
+      normalizedPurchaseOrder(action.payload.order),
     ],
   }),
   [fetchPurchaseOrderFailed]: (state, action) => ({
@@ -177,7 +198,7 @@ const reducer = handleActions({
   [fetchPurchaseOrdersSuccess]: (state, action) => ({
     ...state,
     loading: loadingStatus.READY,
-    data: action.payload.orders,
+    data: normalizedPurchaseOrder(action.payload.orders),
   }),
   [fetchPurchaseOrdersFailed]: (state, action) => ({
     ...state,

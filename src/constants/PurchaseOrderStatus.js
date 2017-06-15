@@ -1,5 +1,5 @@
-export const PURCHASE_ORDER_UNFULFILL = 1
-export const PURCHASE_ORDER_FULFILL = 2
+export const PURCHASE_ORDER_UNFULFILLED = 1
+export const PURCHASE_ORDER_FULFILLED = 2
 
 // create purchase order steps
 export const SUPPLIER_STEP = 0
