@@ -83,7 +83,7 @@ export const getSupplierDataSource = state => (
  * Get supplier id by matching
  *
  * @param {String} text
- * @returns {Integer} id
+ * @returns {Integer} id || null
  */
 export const getSupplierIdByName = (suppliers, text) => {
   const trimmedText = text.trim()

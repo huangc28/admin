@@ -146,13 +146,9 @@ export function * editPurchaseOrderFlow (action) {
   // `po` stands for purchase order.
   const { po } = action.payload
 
-  // console.log('po', po)
-
   try {
     // request api.
     const response = yield call(apis.editPurchaseOrder, po)
-
-    // console.log('editPurchaseOrderFlow, response', response)
 
     if (response.error) {
       throw new Error(response.error)

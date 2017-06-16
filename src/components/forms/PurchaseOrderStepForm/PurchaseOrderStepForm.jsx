@@ -5,11 +5,11 @@ import {
   Stepper,
   StepLabel,
 } from 'material-ui/Stepper'
-import AutoComplete from 'material-ui/AutoComplete'
-import TextField from 'material-ui/TextField'
-import RaisedButton from 'material-ui/RaisedButton'
-import FlatButton from 'material-ui/FlatButton'
-import Divider from 'material-ui/Divider'
+
+import PoStepOne from './PoStepOne'
+import PoStepTwo from './PoStepTwo'
+import PoStepThree from './PoStepThree'
+import PoStepFour from './PoStepFour'
 
 import {
   SUPPLIER_STEP,
@@ -17,20 +17,6 @@ import {
   TRACKING_STEP,
   FINISHED_STEP,
 } from '../../../constants/PurchaseOrderStatus'
-import {
-  searchSupply,
-  getSupplySearchResult,
-  getSupplyDataSource,
-  getSupplyIdByProductName,
-} from '../../../redux/supply'
-import {
-  searchSuppliers,
-  getSupplierSearchResult,
-  getSupplierDataSource,
-  getSupplierIdByName,
-} from '../../../redux/supplier'
-import styles from './PurchaseOrderStepForm.css'
-import formStyles from '../../../styles/form.css'
 
 const STEPS = ['Supplier', 'Price', 'Tracking', 'Finished']
 
@@ -55,28 +41,23 @@ class PurchaseOrderForm extends Component {
     super()
 
     this.state = {
-      finished: false,
       stepIndex: SUPPLIER_STEP,
 
-      // step lock
-      stepOneLock: false,
-      stepTwoLock: false,
-      stepThreeLock: false,
-
-      // stores the values of purchase order data.
-      initialValues: {
+      stepOneData: {
         approverUserId: '',
-        supplier: {
-          name: '',
-          id: '',
-        },
-        supply: {
-          product_name: '',
-          id: '',
-        },
+        supplierName: '',
+        supplierId: '',
+        supplyName: '',
+        supplyId: '',
+      },
+
+      stepTwoData: {
         quantity: '',
         price: '',
         shippingCost: '',
+      },
+
+      stepThreeData: {
         shippingCarrier: '',
         trackingNumber: '',
         transactionNumber: '',
@@ -94,460 +75,71 @@ class PurchaseOrderForm extends Component {
 
   componentWillReceiveProps = nextProps => {
     if (nextProps.initialValues !== this.props.initialValues) {
-      this.setState({
-        initialValues: nextProps.initialValues,
+      const {
+        id,
+        approverUserId,
+        supplier: {
+          name: supplierName,
+          id: supplierId,
+        },
+        supply: {
+          product_name: supplyName,
+          id: supplyId,
+        },
+        quantity,
+        price,
+        shippingCost,
+        shippingCarrier,
+        trackingNumber,
+        transactionNumber,
+      } = nextProps.initialValues
 
-        // always display step next to the current step.
-        stepIndex: nextProps.initialValues.step,
+      this.setState({
+        stepOneData: {
+          id,
+          approverUserId,
+          supplierName,
+          supplierId,
+          supplyName,
+          supplyId,
+        },
+
+        stepTwoData: {
+          id,
+          quantity,
+          price,
+          shippingCost,
+        },
+
+        stepThreeData: {
+          id,
+          shippingCarrier,
+          trackingNumber,
+          transactionNumber,
+        },
       })
     }
   }
 
   onNext = () => {
     // if step < 3, increase step number.
-    const {
-      stepIndex,
-    } = this.state
-
-    const nextStep = this.state.stepIndex + 1
-
-    const {
-      onStepChange,
-      onSubmit,
-    } = this.props
-
-    onStepChange(nextStep)
-
     this.setState({
-      stepIndex: nextStep,
-      finished: stepIndex >= FINISHED_STEP,
+      stepIndex: this.state.stepIndex + 1,
     })
-
-    onSubmit(this.state.initialValues)
   }
 
   onPrev = () => {
-    const { stepIndex } = this.state
-
-    const { onStepChange } = this.props
-
-    if (stepIndex > 0) {
-      const prevStep = stepIndex - 1
-
-      this.setState({
-        stepIndex: prevStep,
-      })
-
-      onStepChange(prevStep)
-    }
-  }
-
-  onNewRequestSupplier = searchText => {
-    // search supplier id based on searchText.
-    const { suppliersData } = this.props
-
     this.setState({
-      initialValues: {
-        ...this.state.initialValues,
-        supplier: {
-          ...this.state.initialValues.supplier,
-          name: searchText,
-          id: getSupplierIdByName(suppliersData, searchText),
-        },
-      },
+      stepIndex: this.state.stepIndex - 1,
     })
-  }
-
-  onNewRequestSupply = searchText => {
-    const { supplyData } = this.props
-
-    this.setState({
-      initialValues: {
-        ...this.state.initialValues,
-        supply: {
-          ...this.state.initialValues.supplier,
-          product_name: searchText,
-          id: getSupplyIdByProductName(supplyData, searchText),
-        },
-      },
-    })
-  }
-
-  onInputSupplier = evt => {
-    const {
-      searchSuppliers,
-    } = this.props
-
-    const { value } = evt.target
-
-    // if value is empty, lock step 1 confirm button
-    this.setState({
-      initialValues: {
-        ...this.state.initialValues,
-        supplier: {
-          ...this.state.initialValues.supplier,
-          name: value,
-        },
-      },
-    }, () => this.validateStepOne())
-
-    // search suppliers, store them into supplier reducer.
-    if (value.length > 1) {
-      searchSuppliers(value)
-    }
-  }
-
-  // @TODO bugs!
-  onInputSupply = evt => {
-    const { searchSupply } = this.props
-
-    const {
-      initialValues: {
-        supplier: {
-          id: supplierId,
-        },
-      },
-    } = this.state
-
-    const { value } = evt.target
-
-    this.setState({
-      initialValues: {
-        ...this.state.initialValues,
-        supply: {
-          ...this.state.initialValues.supply,
-          product_name: value,
-        },
-      },
-    }, () => this.validateStepOne())
-
-    // get the current supply id.
-    if (value.length > 1 && !!supplierId) {
-      searchSupply(supplierId, value)
-    }
-  }
-
-  onInputQuantity = evt => {
-    this.setState({
-      initialValues: {
-        ...this.state.initialValues,
-        quantity: evt.target.value,
-      },
-    }, () => this.validateStepTwo())
-  }
-
-  onInputPrice = evt => {
-    this.setState({
-      initialValues: {
-        ...this.state.initialValues,
-        price: evt.target.value,
-      },
-    }, () => this.validateStepTwo())
-  }
-
-  onInputShippingCost = evt => {
-    this.setState({
-      initialValues: {
-        ...this.state.initialValues,
-        shippingCost: evt.target.value,
-      },
-    }, () => this.validateStepTwo())
-  }
-
-  onInputShippingCarrier = evt => {
-    this.setState({
-      initialValues: {
-        ...this.state.initialValues,
-        shippingCarrier: evt.target.value,
-      },
-    }, () => this.validateStepThree())
-  }
-
-  onInputTrackingNumber = evt => {
-    this.setState({
-      initialValues: {
-        ...this.state.initialValues,
-        trackingNumber: evt.target.value,
-      },
-    }, () => this.validateStepThree())
-  }
-
-  onInputTransactionNumber = evt => {
-    this.setState({
-      initialValues: {
-        ...this.state.initialValues,
-        transactionNumber: evt.target.value,
-      },
-    }, () => this.validateStepThree())
-  }
-
-  validateStepOne = () => {
-    const {
-      initialValues: {
-        supplier: {
-          name,
-        },
-        supply: {
-          product_name: productName,
-        },
-      },
-    } = this.state
-
-    if (!name || name === '' || !productName || productName === '') {
-      this.setState({
-        stepOneLock: true,
-      })
-
-      return
-    }
-
-    this.setState({
-      stepOneLock: false,
-    })
-  }
-
-  validateStepTwo = () => {
-    const {
-      initialValues: {
-        quantity,
-        price,
-        shippingCost,
-      },
-    } = this.state
-
-    if (quantity === '' || price === '' || shippingCost === '') {
-      this.setState({
-        stepTwoLock: true,
-      })
-
-      return
-    }
-
-    this.setState({
-      stepTwoLock: false,
-    })
-  }
-
-  validateStepThree = () => {
-    const {
-      initialValues: {
-        shippingCarrier,
-        trackingNumber,
-        transactionNumber,
-      },
-    } = this.state
-
-    if (
-      shippingCarrier !== '' ||
-      trackingNumber !== '' ||
-      transactionNumber !== ''
-    ) {
-      this.setState({
-        stepThreeLock: true,
-      })
-
-      return
-    }
-
-    this.setState({
-      stepThreeLock: false,
-    })
-  }
-
-  renderFinishedContent = () => (
-    <div className={styles.fulfilledSign}>
-      FULFILLED
-    </div>
-  )
-
-  renderStepContent = stepIndex => {
-    switch (stepIndex) {
-      case SUPPLIER_STEP:
-        return this.renderSupplierStep(SUPPLIER_STEP)
-      case PRICE_STEP:
-        return this.renderPriceStep(PRICE_STEP)
-      case TRACKING_STEP:
-        return this.renderTrackingStep(TRACKING_STEP)
-      case FINISHED_STEP:
-        return this.renderFinishedContent(FINISHED_STEP)
-      default:
-        return this.renderSupplierStep(SUPPLIER_STEP)
-    }
-  }
-
-  renderSupplierStep = step => {
-    const {
-      suppliersDataSource,
-      supplyDataSource,
-    } = this.props
-
-    // destruct initialValues from initalValues
-    const {
-      initialValues: {
-        approverUserId,
-        supplier: {
-          name,
-        },
-        supply: {
-          product_name: productName,
-        },
-      },
-    } = this.state
-
-    return (
-      <div>
-        {/* approve */}
-        <div className={formStyles.fieldContainer}>
-          <h3>
-            Approver: { approverUserId }
-          </h3>
-        </div>
-
-        <div>
-          <h3> Place order from </h3>
-          <blockquote>
-            <AutoComplete
-              name="supplier"
-              onInput={this.onInputSupplier}
-              hintText="Supplier"
-              fullWidth
-              dataSource={suppliersDataSource}
-              onNewRequest={this.onNewRequestSupplier}
-              value={name}
-            />
-
-            {/* disable supply field when supplier is undecided */}
-            <AutoComplete
-              name="supply"
-              onInput={this.onInputSupply}
-              hintText="Supply"
-              fullWidth
-              dataSource={supplyDataSource}
-              onNewRequest={this.onNewRequestSupply}
-              value={productName}
-            />
-          </blockquote>
-        </div>
-      </div>
-    )
-  }
-
-  renderPriceStep = step => {
-    const {
-      initialValues: {
-        quantity,
-        price,
-        shippingCost,
-      },
-    } = this.state
-
-    const getTotalPrice = (quantity, price, shippingCost) => (
-      (parseInt(quantity, 10) * parseInt(price, 10)) + parseInt(shippingCost, 10)
-    )
-
-    return (
-      <div>
-        {/* Quantity */}
-        <div className={formStyles.fieldContainer}>
-          <TextField
-            name="quantity"
-            hintText="Quantity"
-            underlineShow={false}
-            value={quantity}
-            onInput={this.onInputQuantity}
-          />
-        </div>
-        <Divider />
-
-        {/* Price */}
-        <div className={formStyles.fieldContainer}>
-          <TextField
-            name="price"
-            hintText="Price"
-            underlineShow={false}
-            value={price}
-            onInput={this.onInputPrice}
-          />
-        </div>
-        <Divider />
-
-        {/* Shipping Fee */}
-        <div className={formStyles.fieldContainer}>
-          <TextField
-            name="shippingCost"
-            hintText="Shipping Cost"
-            underlineShow={false}
-            value={shippingCost}
-            onInput={this.onInputShippingCost}
-          />
-        </div>
-        <Divider />
-        <div className={styles.cost}>
-          {
-            getTotalPrice(quantity, price, shippingCost)
-          }
-        </div>
-      </div>
-    )
-  }
-
-  renderTrackingStep = () => {
-    const {
-      initialValues: {
-        shippingCarrier,
-        trackingNumber,
-        transactionNumber,
-      },
-    } = this.state
-
-    return (
-      <div>
-        {/* shipping */}
-        <div>
-          <h3> Shipping </h3>
-          <blockquote>
-            <TextField
-              name="shippingCarrier"
-              hintText="Shipping Carrier"
-              fullWidth
-              value={shippingCarrier}
-              onInput={this.onInputShippingCarrier}
-            />
-
-            <TextField
-              name="trackingNumber"
-              hintText="Tracking Number"
-              fullWidth
-              value={trackingNumber}
-              onInput={this.onInputTrackingNumber}
-            />
-          </blockquote>
-        </div>
-
-        {/* transaction number */}
-        <div>
-          <h3> Transaction </h3>
-          <blockquote>
-            <TextField
-              name="transactionNumber"
-              hintText="Transaction Number"
-              fullWidth
-              value={transactionNumber}
-              onInput={this.onInputTransactionNumber}
-            />
-          </blockquote>
-        </div>
-      </div>
-    )
   }
 
   render () {
     const {
-      finished,
       stepIndex,
-      stepOneLock,
-      stepTwoLock,
-      stepThreeLock,
+      stepOneData,
+      stepTwoData,
+      stepThreeData,
     } = this.state
 
     return (
@@ -566,40 +158,40 @@ class PurchaseOrderForm extends Component {
         </Stepper>
 
         {/* step content */}
-        <form className={formStyles.form}>
-          <div className={styles.content}>
-            {
-              finished
-                ? this.renderFinishedContent()
-                : this.renderStepContent(stepIndex)
-            }
+        {
+          stepIndex === SUPPLIER_STEP
+            ? (<PoStepOne
+              formData={stepOneData}
+              onNext={this.onNext}
+            />)
+            : ''
+        }
 
-            {/* control buttons */}
-            {
-              stepIndex === FINISHED_STEP
-                ? ''
-                : (
-                  <div className={styles.btnBar}>
-                    <FlatButton
-                      label="Back"
-                      disabled={stepIndex === SUPPLIER_STEP}
-                      onTouchTap={this.onPrev}
-                    />
-                    <RaisedButton
-                      label={
-                        stepIndex === TRACKING_STEP
-                          ? 'Confirm'
-                          : 'Next'
-                      }
-                      disabled={ stepOneLock || stepTwoLock || stepThreeLock }
-                      primary
-                      onTouchTap={this.onNext}
-                    />
-                  </div>
-                )
-            }
-          </div>
-        </form>
+        {
+          stepIndex === PRICE_STEP
+            ? (<PoStepTwo
+              formData={stepTwoData}
+              onNext={this.onNext}
+              onPrev={this.onPrev}
+            />)
+            : ''
+        }
+
+        {
+          stepIndex === TRACKING_STEP
+            ? (<PoStepThree
+              formData={stepThreeData}
+              onNext={this.onNext}
+              onPrev={this.onPrev}
+            />)
+            : ''
+        }
+
+        {
+          stepIndex === FINISHED_STEP
+            ? (<PoStepFour />)
+            : ''
+        }
       </div>
     )
   }
@@ -608,51 +200,15 @@ class PurchaseOrderForm extends Component {
 PurchaseOrderForm.propTypes = {
   initialValues: PropTypes.object,
 
-  searchSuppliers: PropTypes.func,
-  searchSupply: PropTypes.func,
   submit: PropTypes.func,
-  suppliersData: PropTypes.array,
-  suppliersDataSource: PropTypes.array,
-
-  supplyData: PropTypes.array,
-  supplyDataSource: PropTypes.array,
 
   onMount: PropTypes.func,
   onStepChange: PropTypes.func,
   onSubmit: PropTypes.func,
-  onSubmitCallback: PropTypes.func,
-
 }
 
-const mapStateToProps = state => {
-  const { formData = {} } = state.initFormData
+const mapStateToProps = state => ({
+  initialValues: state.initFormData.formData,
+})
 
-  /**
-   * @TODO jot down the problem when:
-   *  supply = null || supplier = null
-   *
-   *  const {
-   *    supplier: {
-   *      name: null
-   *    } = {},
-   *    supply: {
-   *      name: null
-   *    } = {}
-   *  }
-   *
-   *  won't work.
-   */
-
-  return {
-    suppliersData: getSupplierSearchResult(state),
-    suppliersDataSource: getSupplierDataSource(state),
-    supplyData: getSupplySearchResult(state),
-    supplyDataSource: getSupplyDataSource(state),
-    initialValues: formData,
-  }
-}
-
-export default connect(mapStateToProps, {
-  searchSuppliers,
-  searchSupply,
-})(PurchaseOrderForm)
+export default connect(mapStateToProps, null)(PurchaseOrderForm)
