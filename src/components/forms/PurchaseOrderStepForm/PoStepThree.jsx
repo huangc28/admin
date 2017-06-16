@@ -16,12 +16,13 @@ class PoStepThree extends Component {
     shippingCarrier: '',
     trackingNumber: '',
     transactionNumber: '',
+    lock: true,
   }
 
   componentDidMount = () => {
     this.setState({
       ...this.props.formData,
-    })
+    }, () => this.validateLock())
   }
 
   onSubmit = () => {
@@ -52,18 +53,38 @@ class PoStepThree extends Component {
   onInputShippingCarrier = evt => {
     this.setState({
       shippingCarrier: evt.target.value,
-    })
+    }, () => this.validateLock())
   }
 
   onInputTrackingNumber = evt => {
     this.setState({
       trackingNumber: evt.target.value,
-    })
+    }, () => this.validateLock())
   }
 
   onInputTransactionNumber = evt => {
     this.setState({
       transactionNumber: evt.target.value,
+    }, () => this.validateLock())
+  }
+
+  validateLock = () => {
+    const {
+      shippingCarrier,
+      trackingNumber,
+      transactionNumber,
+    } = this.state
+
+    if (!shippingCarrier || !trackingNumber || !transactionNumber) {
+      this.setState({
+        lock: true,
+      })
+
+      return
+    }
+
+    this.setState({
+      lock: false,
     })
   }
 
@@ -72,6 +93,7 @@ class PoStepThree extends Component {
       shippingCarrier,
       trackingNumber,
       transactionNumber,
+      lock,
     } = this.state
 
     const { onPrev } = this.props
@@ -125,6 +147,7 @@ class PoStepThree extends Component {
               label="Confirm"
               primary
               onTouchTap={this.onSubmit}
+              disabled={lock}
             />
           </div>
         </div>
