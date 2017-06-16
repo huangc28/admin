@@ -92,9 +92,11 @@ class PurchaseOrderForm extends Component {
         shippingCarrier,
         trackingNumber,
         transactionNumber,
+        step,
       } = nextProps.initialValues
 
       this.setState({
+        stepIndex: step,
         stepOneData: {
           id,
           approverUserId,
