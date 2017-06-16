@@ -5,6 +5,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import { connect } from 'react-redux'
 
 import styles from './PurchaseOrderStepForm.css'
+import SkuInfo from '../../../components/SkuInfo'
 import {
   searchSuppliers,
   getSupplierSearchResult,
@@ -104,6 +105,8 @@ class PoStepOne extends Component {
     this.setState({
       supplierName: value,
       supplierId: '',
+      supplyName: '',
+      supplyId: '',
     }, () => this.validateLock())
 
     // search suppliers, store them into supplier reducer.
@@ -188,6 +191,7 @@ class PoStepOne extends Component {
 
   render () {
     const {
+      supplyId,
       approverUserId,
       supplierName,
       supplyName,
@@ -232,6 +236,12 @@ class PoStepOne extends Component {
                 onNewRequest={this.onNewRequestSupply}
                 value={supplyName}
               />
+
+              {
+                supplyId && supplyId !== ''
+                  ? <SkuInfo supplyId={supplyId} />
+                  : ''
+              }
             </blockquote>
           </div>
 

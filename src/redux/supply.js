@@ -69,15 +69,39 @@ export const getSupplyDataSource = state => (
 
 /**
  * @param {Array} supplies
- * @param {String} text
- * @returns {Integer} || null
+ * @param {Number} id
+ * @returns {Object}
  */
-export const getSupplyIdByProductName = (supplies, text) => {
+export const getSupplyByProductId = (supplies, id) => {
+  const matchedSupply = supplies.find(
+    supply => supply.id === id
+  )
+
+  return matchedSupply || {}
+}
+
+/**
+ * @param {Array} supplies
+ * @param {String} text
+ * @returns {Object} || null
+ */
+export const getSupplyByProductName = (supplies, text) => {
   const trimmedText = text.trim()
 
   const matchedSupply = supplies.find(
     supply => supply.product_name === trimmedText
   )
 
-  return (matchedSupply && matchedSupply.id) || null
+  return matchedSupply || null
+}
+
+/**
+ * @param {Array} supplies
+ * @param {String} text
+ * @returns {Integer} || null
+ */
+export const getSupplyIdByProductName = (supplies, text) => {
+  const supply = getSupplyByProductName(supplies, text)
+
+  return (supply && supply.id) || null
 }

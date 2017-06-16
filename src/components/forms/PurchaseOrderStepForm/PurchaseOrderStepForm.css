@@ -1,5 +1,5 @@
 @value bold from '../../../styles/font.css';
-@value aquamarine from '../../../styles/colors.css';
+@value aquamarine, alabaster from '../../../styles/colors.css';
 
 .content {
   display: flex;

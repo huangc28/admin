@@ -15,7 +15,6 @@ export function * searchSupplyFlow (action) {
 
     yield put(actions.searchSupplySuccess(response.data))
   } catch (error) {
-    console.log('error', error)
     yield put(actions.searchSupplyFailed(error.errorMessage))
   }
 }

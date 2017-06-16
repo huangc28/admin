@@ -80,17 +80,31 @@ export const getSupplierDataSource = state => (
 )
 
 /**
- * Get supplier id by matching
+ * Get supplier data by name
  *
+ * @param {Array} suppliers
  * @param {String} text
- * @returns {Integer} id || null
+ * @param {Object} || null
  */
-export const getSupplierIdByName = (suppliers, text) => {
+export const getSupplierByName = (suppliers, text) => {
   const trimmedText = text.trim()
 
   const matchedSupplier = suppliers.find(
     supplier => supplier.name === trimmedText,
   )
 
-  return (matchedSupplier && matchedSupplier.id) || null
+  return matchedSupplier || null
+}
+
+/**
+ * Get supplier id by matching
+ *
+ * @param {Array} suppliers
+ * @param {String} text
+ * @returns {Integer} id || null
+ */
+export const getSupplierIdByName = (suppliers, text) => {
+  const supplier = getSupplierByName(suppliers, text)
+
+  return (supplier && supplier.id) || null
 }

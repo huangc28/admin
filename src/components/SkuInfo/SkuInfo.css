@@ -1,0 +1,16 @@
+@value alabaster from '../../styles/colors.css';
+
+.container {
+  padding: 0.25rem;
+  background-color: alabaster;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+}
+
+.container ul {
+  list-style: none;
+  padding: 0;
+}
+
+.container li {
+  padding: 0.125rem;
+}
