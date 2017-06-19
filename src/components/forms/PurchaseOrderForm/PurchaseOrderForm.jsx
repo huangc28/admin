@@ -5,7 +5,6 @@ import Divider from 'material-ui/Divider'
 
 import { getTotalPrice } from '../PurchaseOrderStepForm/PoStepTwo'
 import formStyles from '../../../styles/form.css'
-import { deleteInitFormData } from '../../../redux/initFormData'
 import styles from './PurchaseOrderForm.css'
 
 class PurchaseOrderForm extends Component {
@@ -195,7 +194,6 @@ class PurchaseOrderForm extends Component {
 }
 
 PurchaseOrderForm.propTypes = {
-  deleteInitFormData: PropTypes.func,
   disabled: PropTypes.bool,
   handleSubmit: PropTypes.func,
   initialValues: PropTypes.object,
@@ -207,6 +205,4 @@ const mapStateToProps = state => ({
   initialValues: state.initFormData.formData,
 })
 
-export default connect(mapStateToProps, {
-  deleteInitFormData,
-})(PurchaseOrderForm)
+export default connect(mapStateToProps, null)(PurchaseOrderForm)
