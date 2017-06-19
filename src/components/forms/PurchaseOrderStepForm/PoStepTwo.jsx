@@ -10,11 +10,31 @@ import { PRICE_STEP } from '../../../constants/PurchaseOrderStatus'
 import formStyles from '../../../styles/form.css'
 import { editPurchaseOrder } from '../../../redux/purchaseOrder'
 
-const getTotalPrice = (quantity, price, shippingCost) => (
-  (
-    parseFloat(quantity).toPrecision(10) * parseFloat(price, 10).toPrecision(10)
-  ) + parseFloat(shippingCost).toPrecision(10)
-)
+/**
+ * @param {Float} quantity
+ * @param {Float} price
+ * @param {Integer} shippingCost
+ * @returns {Float}
+ */
+export const getTotalPrice = (quantity = 0, price = 0, shippingCost = 0) => {
+  const pQuantity = (typeof quantity === 'string')
+    ? parseFloat(quantity)
+    : quantity
+
+  const pPrice = (typeof price === 'string')
+    ? parseFloat(price)
+    : price
+
+  const pShippingCost = (typeof shippingCost === 'string')
+    ? parseFloat(shippingCost)
+    : shippingCost
+
+  const result = (pQuantity * pPrice) + pShippingCost
+
+  const rounded = Math.round(result * 100) / 100
+
+  return rounded
+}
 
 class PoStepTwo extends Component {
 

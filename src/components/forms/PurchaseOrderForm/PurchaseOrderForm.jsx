@@ -1,14 +1,26 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { Field, Form, reduxForm } from 'redux-form'
-import { TextField } from 'redux-form-material-ui'
+import TextField from 'material-ui/TextField'
 import Divider from 'material-ui/Divider'
 
+import { getTotalPrice } from '../PurchaseOrderStepForm/PoStepTwo'
 import formStyles from '../../../styles/form.css'
 import { deleteInitFormData } from '../../../redux/initFormData'
 import styles from './PurchaseOrderForm.css'
 
 class PurchaseOrderForm extends Component {
+
+  state = {
+    approverUserId: '',
+    supplierName: '',
+    supplyName: '',
+    quantity: '',
+    price: '',
+    shippingCost: '',
+    shippingCarrier: '',
+    trackingNumber: '',
+    transactionNumber: '',
+  }
 
   componentDidMount = () => {
     const { onMount } = this.props
@@ -18,30 +30,65 @@ class PurchaseOrderForm extends Component {
     }
   }
 
-  componentWillUnmount = () => {
-    this.props.deleteInitFormData()
+  componentWillReceiveProps = nextProps => {
+    if (nextProps.initialValues !== this.props.initialValues) {
+      // initialize purchase order form
+      const {
+        approverUserId,
+        supplier: {
+          name: supplierName,
+        },
+        supply: {
+          product_name: supplyName,
+        },
+        quantity,
+        price,
+        shippingCost,
+        shippingCarrier,
+        trackingNumber,
+        transactionNumber,
+      } = nextProps.initialValues
+
+      this.setState({
+        approverUserId,
+        supplierName,
+        supplyName,
+        quantity,
+        price,
+        shippingCost,
+        shippingCarrier,
+        trackingNumber,
+        transactionNumber,
+      })
+    }
   }
 
   render () {
     const {
       disabled,
-      handleSubmit,
-      onSubmitCallback,
     } = this.props
 
+    const {
+      approverUserId,
+      supplierName,
+      supplyName,
+      quantity,
+      price,
+      shippingCost,
+      shippingCarrier,
+      trackingNumber,
+      transactionNumber,
+    } = this.state
+
     return (
-      <Form
-        className={formStyles.form}
-        onSubmit={handleSubmit(onSubmitCallback)}
-      >
+      <form className={formStyles.form}>
         {/* approver */}
         <div className={formStyles.fieldContainer}>
-          <Field
-            disabled
-            name="approverId"
+          <TextField
+            disabled={disabled}
             hintText="Approver"
             fullWidth
-            component={TextField}
+            value={approverUserId}
           />
         </div>
 
@@ -49,22 +96,18 @@ class PurchaseOrderForm extends Component {
         <div>
           <h3> Place order from </h3>
           <blockquote>
-            <Field
+            <TextField
               disabled={disabled}
-              onInput={this.onInputSupplier}
-              name="supplier"
               hintText="Supplier"
               fullWidth
-              component={TextField}
+              value={supplierName}
             />
 
-            <Field
+            <TextField
               disabled={disabled}
-              onInput={this.onInputSupply}
-              name="internalSku"
               hintText="Supply"
               fullWidth
-              component={TextField}
+              value={supplyName}
             />
           </blockquote>
         </div>
@@ -75,41 +118,41 @@ class PurchaseOrderForm extends Component {
           <blockquote>
             {/* Quantity */}
             <div className={formStyles.fieldContainer}>
-              <Field
+              <TextField
                 disabled={disabled}
                 name="quantity"
                 hintText="Quantity"
                 underlineShow={false}
-                component={TextField}
+                value={quantity}
               />
             </div>
             <Divider />
 
             {/* Price */}
             <div className={formStyles.fieldContainer}>
-              <Field
+              <TextField
                 disabled={disabled}
-                name="price"
                 hintText="Price"
                 underlineShow={false}
-                component={TextField}
+                value={price}
               />
             </div>
             <Divider />
 
             {/* Shipping Fee */}
             <div className={formStyles.fieldContainer}>
-              <Field
+              <TextField
                 disabled={disabled}
-                name="shippingCost"
                 hintText="Shipping Cost"
                 underlineShow={false}
-                component={TextField}
+                value={shippingCost}
               />
             </div>
             <Divider />
             <div className={styles.cost}>
-              Total: 100
+              {
+                getTotalPrice(quantity, price, shippingCost)
+              }
             </div>
           </blockquote>
         </div>
@@ -118,20 +161,18 @@ class PurchaseOrderForm extends Component {
         <div>
           <h3> Shipping </h3>
           <blockquote>
-            <Field
+            <TextField
               disabled={disabled}
-              name="shippingCarrier"
               hintText="Shipping Carrier"
               fullWidth
-              component={TextField}
+              value={shippingCarrier}
             />
 
-            <Field
+            <TextField
               disabled={disabled}
-              name="trackingNumber"
               hintText="Tracking Number"
               fullWidth
-              component={TextField}
+              value={trackingNumber}
             />
           </blockquote>
         </div>
@@ -140,16 +181,15 @@ class PurchaseOrderForm extends Component {
         <div>
           <h3> Transaction </h3>
           <blockquote>
-            <Field
+            <TextField
               disabled={disabled}
-              name="orderNumber"
               hintText="Transaction Number"
               fullWidth
-              component={TextField}
+              value={transactionNumber}
             />
           </blockquote>
         </div>
-      </Form>
+      </form>
     )
   }
 }
@@ -158,33 +198,15 @@ PurchaseOrderForm.propTypes = {
   deleteInitFormData: PropTypes.func,
   disabled: PropTypes.bool,
   handleSubmit: PropTypes.func,
+  initialValues: PropTypes.object,
   onMount: PropTypes.func,
   onSubmitCallback: PropTypes.func,
 }
 
-const mapStateToProps = state => {
-  const { formData = {} } = state.initFormData
-
-  const {
-    supplier,
-    supply,
-  } = formData
-
-  return {
-    initialValues: {
-      ...formData,
-      // @TODO there should be a better way to do it.
-      supplier: (supplier && supplier.name) || null,
-      productName: (supply && supply.product_name) || null,
-    },
-  }
-}
+const mapStateToProps = state => ({
+  initialValues: state.initFormData.formData,
+})
 
 export default connect(mapStateToProps, {
   deleteInitFormData,
-})(
-  reduxForm({
-    form: 'purchaseOrderForm',
-    enableReinitialize: true,
-  })(PurchaseOrderForm)
-)
+})(PurchaseOrderForm)
