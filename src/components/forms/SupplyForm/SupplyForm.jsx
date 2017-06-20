@@ -71,6 +71,7 @@ class SupplyForm extends Component {
           />
         </div>
 
+        {/* @issue auto complete dataSourceConfig: https://stackoverflow.com/questions/37924167/react-material-ui-autocomplete-how-to-assign-id-as-a-value-in-onnewrequest */}
         {/* supplier name */}
         <div className={formStyles.fieldContainer}>
           <Field
