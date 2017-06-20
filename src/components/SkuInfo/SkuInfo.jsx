@@ -2,13 +2,14 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 
 import {
+  ONLINE_PAYMENT,
+  OFFLINE_PAYMENT,
+} from '../../constants/supply'
+import {
   getSupplySearchResult,
   getSupplyByProductId,
 } from '../../redux/supply'
 import styles from './SkuInfo.css'
-
-const ONLINE_PAYMENT = 1
-const OFFLINE_PAYMENT = 2
 
 const PAYMENT_GATEWAY_TEXT = {
   [ONLINE_PAYMENT]: 'online',

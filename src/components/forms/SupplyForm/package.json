@@ -1,0 +1,6 @@
+{
+  "name": "SupplyForm",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./SupplyForm.jsx"
+}

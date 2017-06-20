@@ -5,6 +5,8 @@ import RaisedButton from 'material-ui/RaisedButton'
 import { connect } from 'react-redux'
 
 import styles from './PurchaseOrderStepForm.css'
+import CreateSupplierModal from '../../../components/CreateSupplierModal'
+import CreateSupplyModal from '../../../components/CreateSupplyModal'
 import SkuInfo from '../../../components/SkuInfo'
 import {
   searchSuppliers,
@@ -216,32 +218,44 @@ class PoStepOne extends Component {
           <div>
             <h3> Place order from </h3>
             <blockquote>
-              <AutoComplete
-                name="supplier"
-                onInput={this.onInputSupplier}
-                hintText="Supplier"
-                fullWidth
-                dataSource={supplierDataSource}
-                onNewRequest={this.onNewRequestSupplier}
-                value={supplierName}
-              />
+              <div>
+                <AutoComplete
+                  name="supplier"
+                  onInput={this.onInputSupplier}
+                  hintText="Supplier"
+                  fullWidth
+                  dataSource={supplierDataSource}
+                  onNewRequest={this.onNewRequestSupplier}
+                  value={supplierName}
+                />
 
-              {/* disable supply field when supplier is undecided */}
-              <AutoComplete
-                name="supply"
-                onInput={this.onInputSupply}
-                hintText="Supply"
-                fullWidth
-                dataSource={supplyDataSource}
-                onNewRequest={this.onNewRequestSupply}
-                value={supplyName}
-              />
+                {/* create supplier button */}
+                <CreateSupplierModal />
+              </div>
 
-              {
-                supplyId && supplyId !== ''
-                  ? <SkuInfo supplyId={supplyId} />
-                  : ''
-              }
+              <div>
+                {/* disable supply field when supplier is undecided */}
+                <AutoComplete
+                  name="supply"
+                  onInput={this.onInputSupply}
+                  hintText="Supply"
+                  fullWidth
+                  dataSource={supplyDataSource}
+                  onNewRequest={this.onNewRequestSupply}
+                  value={supplyName}
+                />
+
+                {/* create supply button */}
+                <CreateSupplyModal />
+
+                <div className={styles.skuContainer}>
+                  {
+                    supplyId && supplyId !== ''
+                      ? <SkuInfo supplyId={supplyId} />
+                      : ''
+                  }
+                </div>
+              </div>
             </blockquote>
           </div>
 

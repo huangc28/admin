@@ -1,0 +1,6 @@
+{
+  "name": "CreateSupplierModal",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./CreateSupplierModal.jsx"
+}

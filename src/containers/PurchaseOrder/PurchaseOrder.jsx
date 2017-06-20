@@ -19,10 +19,6 @@ class PurchaseOrder extends Component {
     fetchPurchaseOrder(orderId)
   }
 
-  submit = values => {
-    console.log('Purchase order form')
-  }
-
   render () {
     const {
       params: {
@@ -40,7 +36,6 @@ class PurchaseOrder extends Component {
         />
 
         <PurchaseOrderForm
-          onSubmitCallback={this.submit}
           onMount={this.onMount}
           disabled
         />

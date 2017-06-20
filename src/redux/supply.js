@@ -6,11 +6,23 @@ import {
 import * as loadingStatus from '../constants/loadingState'
 
 export const {
+  createSupply,
+  createSupplySuccess,
+  createSupplyFailed,
   searchSupply,
   searchSupplySuccess,
   searchSupplyFailed,
   appendSupplySearchResults,
 } = createActions({
+  CREATE_SUPPLY: supply => ({
+    supply,
+  }),
+  CREATE_SUPPLY_SUCCESS: supply => ({
+    supply,
+  }),
+  CREATE_SUPPLY_FAILED: errorMessage => ({
+    errorMessage,
+  }),
   SEARCH_SUPPLY: (supplierId, name) => ({
     supplierId,
     name,

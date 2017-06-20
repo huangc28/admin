@@ -198,7 +198,6 @@ PurchaseOrderForm.propTypes = {
   handleSubmit: PropTypes.func,
   initialValues: PropTypes.object,
   onMount: PropTypes.func,
-  onSubmitCallback: PropTypes.func,
 }
 
 const mapStateToProps = state => ({

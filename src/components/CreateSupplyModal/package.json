@@ -1,0 +1,6 @@
+{
+  "name": "CreateSupplyModal",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./CreateSupplyModal.jsx"
+}

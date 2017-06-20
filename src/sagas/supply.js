@@ -3,6 +3,28 @@ import { all, takeLatest, call, put } from 'redux-saga/effects'
 import * as apis from '../apis/supply'
 import * as actions from '../redux/supply'
 
+export function * createSupply (action) {
+  const { supply } = action.payload
+
+  console.log('createSupply supply saga', supply)
+
+  try {
+    const response = yield call(apis.createSupply, supply)
+
+    if (response.error) {
+      throw new Error(response.error.message)
+    }
+
+    console.log('response', response)
+
+    yield put(actions.createSupplySuccess(response.data))
+  } catch (err) {
+    console.log('err', err)
+
+    yield put(actions.createSupplyFailed(err.message))
+  }
+}
+
 export function * searchSupplyFlow (action) {
   const { supplierId, name } = action.payload
 
@@ -22,5 +44,6 @@ export function * searchSupplyFlow (action) {
 export default function * supplyFlow () {
   yield all([
     takeLatest(actions.searchSupply().type, searchSupplyFlow),
+    takeLatest(actions.createSupply().type, createSupply),
   ])
 }

@@ -10,11 +10,23 @@ import * as loadingStatus from '../constants/loadingState'
  * fetchSuppliers ---> used for rendering, data manipulation
  */
 export const {
+  createSupplier,
+  createSupplierSuccess,
+  createSupplierFailed,
   searchSuppliers,
   searchSuppliersSuccess,
   searchSuppliersFailed,
   appendSupplierSearchResults,
 } = createActions({
+  CREATE_SUPPLIER: data => ({
+    data,
+  }),
+  CREATE_SUPPLIER_SUCCESS: data => ({
+    data,
+  }),
+  CREATE_SUPPLIER_FAILED: errorMessage => ({
+    errorMessage,
+  }),
   SEARCH_SUPPLIERS: name => ({
     name,
   }),
@@ -35,10 +47,27 @@ export const {
 
 const INITIAL_STATE = {
   searchResult: [],
+  data: [],
   searchLoading: loadingStatus.EMPTY,
+  loading: loadingStatus.EMPTY,
+  errorMessage: null,
 }
 
 const reducer = handleActions({
+  [createSupplier]: (state, action) => ({
+    ...state,
+    loading: loadingStatus.LOADING,
+  }),
+  [createSupplierSuccess]: (state, action) => ({
+    ...state,
+    loading: loadingStatus.READY,
+    data: state.data.concat(action.payload.data),
+  }),
+  [createSupplierFailed]: (state, action) => ({
+    ...state,
+    loading: loadingStatus.ERROR,
+    errorMessage: action.payload.errorMessage,
+  }),
   [searchSuppliers]: (state, action) => ({
     ...state,
     searchLoading: loadingStatus.LOADING,

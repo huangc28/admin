@@ -1,0 +1,6 @@
+{
+  "name": "SupplierForm",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./SupplierForm.jsx"
+}
