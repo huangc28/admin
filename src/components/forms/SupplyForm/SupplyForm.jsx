@@ -58,8 +58,6 @@ class SupplyForm extends Component {
       supplierData,
     } = this.props
 
-    console.log('supplierData', supplierData)
-
     return (
       <Form onSubmit={handleSubmit(onSubmitCallback)}>
         {/* name */}
