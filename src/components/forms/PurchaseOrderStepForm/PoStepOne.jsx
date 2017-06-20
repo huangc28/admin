@@ -14,7 +14,7 @@ import {
   getSupplierDataSource,
   getSupplierIdByName,
 } from '../../../redux/supplier'
-import { SUPPLIER_STEP } from '../../../constants/PurchaseOrderStatus'
+import { SUPPLIER_STEP } from '../../../constants/purchaseOrderStatus'
 import { editPurchaseOrder } from '../../../redux/purchaseOrder'
 import {
   searchSupply,

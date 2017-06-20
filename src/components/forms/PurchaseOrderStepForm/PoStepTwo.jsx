@@ -6,7 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import Divider from 'material-ui/Divider'
 
 import styles from './PurchaseOrderStepForm.css'
-import { PRICE_STEP } from '../../../constants/PurchaseOrderStatus'
+import { PRICE_STEP } from '../../../constants/purchaseOrderStatus'
 import formStyles from '../../../styles/form.css'
 import { editPurchaseOrder } from '../../../redux/purchaseOrder'
 

@@ -4,7 +4,7 @@ import TextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
 
-import { TRACKING_STEP } from '../../../constants/PurchaseOrderStatus'
+import { TRACKING_STEP } from '../../../constants/purchaseOrderStatus'
 import styles from './PurchaseOrderStepForm.css'
 import formStyles from '../../../styles/form.css'
 import { editPurchaseOrder } from '../../../redux/purchaseOrder'
