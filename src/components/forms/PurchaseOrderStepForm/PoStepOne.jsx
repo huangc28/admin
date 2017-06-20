@@ -203,8 +203,6 @@ class PoStepOne extends Component {
       supplyData,
     } = this.props
 
-    console.log('supplyData', supplyData)
-
     return (
       <form className={formStyles.form}>
         <div className={styles.content}>
