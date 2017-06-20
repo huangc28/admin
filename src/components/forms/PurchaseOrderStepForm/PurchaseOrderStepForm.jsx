@@ -16,7 +16,7 @@ import {
   PRICE_STEP,
   TRACKING_STEP,
   FINISHED_STEP,
-} from '../../../constants/PurchaseOrderStatus'
+} from '../../../constants/purchaseOrderStatus'
 
 const STEPS = ['Supplier', 'Price', 'Tracking', 'Finished']
 
