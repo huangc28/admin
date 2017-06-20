@@ -11,16 +11,12 @@ import SkuInfo from '../../../components/SkuInfo'
 import {
   searchSuppliers,
   getSupplierSearchResult,
-  getSupplierDataSource,
-  getSupplierIdByName,
 } from '../../../redux/supplier'
 import { SUPPLIER_STEP } from '../../../constants/purchaseOrderStatus'
 import { editPurchaseOrder } from '../../../redux/purchaseOrder'
 import {
   searchSupply,
   getSupplySearchResult,
-  getSupplyDataSource,
-  getSupplyIdByProductName,
 } from '../../../redux/supply'
 import formStyles from '../../../styles/form.css'
 
@@ -75,24 +71,26 @@ class PoStepOne extends Component {
     })
   }
 
-  onNewRequestSupplier = searchText => {
+  onNewRequestSupplier = selectedObj => {
     // search supplier id based on searchText.
-    const { supplierData } = this.props
 
     this.setState({
-      supplierName: searchText,
-      supplierId: getSupplierIdByName(supplierData, searchText),
+      supplierName: selectedObj.name,
+      supplierId: selectedObj.id,
     })
 
     this.validateLock()
   }
 
-  onNewRequestSupply = searchText => {
-    const { supplyData } = this.props
+  onNewRequestSupply = selectedObj => {
+    const {
+      product_name: productName,
+      id: supplyId,
+    } = selectedObj
 
     this.setState({
-      supplyName: searchText,
-      supplyId: getSupplyIdByProductName(supplyData, searchText),
+      supplyName: productName,
+      supplyId,
     })
 
     this.validateLock()
@@ -201,9 +199,11 @@ class PoStepOne extends Component {
     } = this.state
 
     const {
-      supplierDataSource,
-      supplyDataSource,
+      supplierData,
+      supplyData,
     } = this.props
+
+    console.log('supplyData', supplyData)
 
     return (
       <form className={formStyles.form}>
@@ -224,7 +224,11 @@ class PoStepOne extends Component {
                   onInput={this.onInputSupplier}
                   hintText="Supplier"
                   fullWidth
-                  dataSource={supplierDataSource}
+                  dataSource={supplierData}
+                  dataSourceConfig={{
+                    text: 'name',
+                    value: 'id',
+                  }}
                   onNewRequest={this.onNewRequestSupplier}
                   value={supplierName}
                 />
@@ -240,7 +244,11 @@ class PoStepOne extends Component {
                   onInput={this.onInputSupply}
                   hintText="Supply"
                   fullWidth
-                  dataSource={supplyDataSource}
+                  dataSource={supplyData}
+                  dataSourceConfig={{
+                    text: 'product_name',
+                    value: 'id',
+                  }}
                   onNewRequest={this.onNewRequestSupply}
                   value={supplyName}
                 />
@@ -298,22 +306,14 @@ PoStepOne.propTypes = {
 
   searchSuppliers: PropTypes.func,
   searchSupply: PropTypes.func,
-
   supplierData: PropTypes.array,
-  supplierDataSource: PropTypes.array,
-
   supplyData: PropTypes.array,
-  supplyDataSource: PropTypes.array,
-
   onNext: PropTypes.func,
 }
 
 const mapStateToProps = state => ({
   supplierData: getSupplierSearchResult(state),
   supplyData: getSupplySearchResult(state),
-
-  supplierDataSource: getSupplierDataSource(state),
-  supplyDataSource: getSupplyDataSource(state),
 })
 
 export default connect(mapStateToProps, {

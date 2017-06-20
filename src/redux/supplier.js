@@ -124,16 +124,3 @@ export const getSupplierByName = (suppliers, text) => {
 
   return matchedSupplier || null
 }
-
-/**
- * Get supplier id by matching
- *
- * @param {Array} suppliers
- * @param {String} text
- * @returns {Integer} id || null
- */
-export const getSupplierIdByName = (suppliers, text) => {
-  const supplier = getSupplierByName(suppliers, text)
-
-  return (supplier && supplier.id) || null
-}

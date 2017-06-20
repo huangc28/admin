@@ -106,14 +106,3 @@ export const getSupplyByProductName = (supplies, text) => {
 
   return matchedSupply || null
 }
-
-/**
- * @param {Array} supplies
- * @param {String} text
- * @returns {Integer} || null
- */
-export const getSupplyIdByProductName = (supplies, text) => {
-  const supply = getSupplyByProductName(supplies, text)
-
-  return (supply && supply.id) || null
-}
