@@ -17,6 +17,25 @@ import {
 } from '../../../constants/supply'
 import formStyles from '../../../styles/form.css'
 
+const validate = values => {
+  const errors = {}
+
+  const isRequired = [
+    'productName',
+    'externalSku',
+    'internalSku',
+    'price',
+  ]
+
+  isRequired.forEach(field => {
+    if (!values[field]) {
+      errors[field] = 'is required'
+    }
+  })
+
+  return errors
+}
+
 /**
  * 1. product_name
  * 2. external_sku
@@ -310,5 +329,6 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, null)(
   reduxForm({
     form: 'supplyForm',
+    validate,
   })(SupplyForm)
 )
