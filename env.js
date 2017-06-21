@@ -5,9 +5,9 @@ const devEnv = {
 }
 
 const prodEnv = {
-  CLIENT_API_HOST: 'http://ndserp.com:3005/api',
-  ERP_API_HOST: 'http://ndserp.com:3001',
-  IMAGE_HOST: 'http://ndserp.com:3001/clientImgs/gallery',
+  CLIENT_API_HOST: 'http://qa.ndserp.com:3005/api',
+  ERP_API_HOST: 'http://qa.ndserp.com:3001',
+  IMAGE_HOST: 'http://qa.ndserp.com:3001/clientImgs/gallery',
 }
 
 export default function env () {
