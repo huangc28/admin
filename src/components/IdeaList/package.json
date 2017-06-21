@@ -1,0 +1,6 @@
+{
+  "name": "IdeaList",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./IdeaList.jsx"
+}

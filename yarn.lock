@@ -6276,7 +6276,7 @@ rcloader@=0.1.2:
     lodash "~2.4.1"
     rcfinder "~0.1.6"
 
-react-addons-create-fragment@^15.4.0:
+react-addons-create-fragment@^15.0.0, react-addons-create-fragment@^15.4.0:
   version "15.5.3"
   resolved "https://registry.yarnpkg.com/react-addons-create-fragment/-/react-addons-create-fragment-15.5.3.tgz#d0025675a9e98b2591240382c73b491251066109"
   dependencies:
@@ -6399,6 +6399,15 @@ react-native-tab-view@^0.0.57:
     react-native-drawer-layout-polyfill "^1.0.4"
     react-native-tab-view "^0.0.57"
 
+react-paginate@^4.4.3:
+  version "4.4.3"
+  resolved "https://registry.yarnpkg.com/react-paginate/-/react-paginate-4.4.3.tgz#11817ece628fa59c54a2df7968c854ed64b99077"
+  dependencies:
+    classnames "^2.2.5"
+    prop-types "^15.5.7"
+    react "^15.0.0"
+    react-addons-create-fragment "^15.0.0"
+
 react-redux@4.4.5, react-redux@^4.0.0:
   version "4.4.5"
   resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-4.4.5.tgz#f509a2981be2252d10c629ef7c559347a4aec457"
@@ -6441,7 +6450,7 @@ react-tap-event-plugin@^2.0.1:
   dependencies:
     fbjs "^0.8.6"
 
-react@15.4.1:
+react@15.4.1, react@^15.0.0:
   version "15.4.1"
   resolved "https://registry.yarnpkg.com/react/-/react-15.4.1.tgz#498e918602677a3983cd0fd206dfe700389a0dd6"
   dependencies:
