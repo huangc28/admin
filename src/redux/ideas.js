@@ -30,7 +30,7 @@ export const {
   GET_IDEAS: queries => ({
     queries,
   }),
-  GET_IDEAS_SUCCESS: ideas => ({ ideas }),
+  GET_IDEAS_SUCCESS: ideasData => ({ ideasData }),
   GET_IDEAS_FAILED: errorMessage => ({ errorMessage }),
   GET_IDEA: id => ({ id }),
   GET_IDEA_SUCCESS: idea => ({ idea }),
@@ -67,11 +67,16 @@ const ideasReducer = handleActions({
     loading: loadingStatus.LOADING,
     status: action.payload.status,
   }),
-  [getIdeasSuccess]: (state, action) => ({
-    ...state,
-    data: action.payload.ideas,
-    loading: loadingStatus.READY,
-  }),
+  [getIdeasSuccess]: (state, action) => {
+    const { data, status } = action.payload.ideasData
+
+    return {
+      ...state,
+      data,
+      status,
+      loading: loadingStatus.READY,
+    }
+  },
   [getIdeasFailed]: (state, action) => ({
     ...state,
     errorMessage: action.payload.errorMessage,

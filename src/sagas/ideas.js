@@ -36,7 +36,12 @@ export function * watchGetIdeasFlow (action) {
       throw Error(ideas.message)
     }
 
-    yield put(actions.getIdeasSuccess(ideas.data))
+    yield put(actions.getIdeasSuccess(
+      {
+        data: ideas.data,
+        status,
+      })
+    )
   } catch (err) {
     yield put(actions.getIdeasFailed(err.message))
   }
