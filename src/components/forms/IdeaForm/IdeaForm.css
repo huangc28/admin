@@ -12,9 +12,12 @@
   display: flex;
 }
 
+.previewContainer {
+  text-align: center;
+}
+
 .previewImg {
-  max-width: 22.5rem;
-  max-height: 22.5rem
+  text-align: center;
 }
 
 .hidden {

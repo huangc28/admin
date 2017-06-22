@@ -38,6 +38,8 @@ class EditIdea extends Component {
   }
 
   onSubmit = value => {
+    let mergedFormData = value
+
     const {
       submitType,
     } = this.state
@@ -45,15 +47,25 @@ class EditIdea extends Component {
     const {
       editIdea,
       saveAndSubmitIdea,
+      image,
     } = this.props
 
+    // here, have to get the name of just uploaded image.
+    // and submit it alone with other form data.
+    if (image) {
+      mergedFormData = {
+        ...value,
+        image,
+      }
+    }
+
     if (submitType === SAVE) {
-      editIdea(value)
+      editIdea(mergedFormData)
 
       return
     }
 
-    saveAndSubmitIdea(value)
+    saveAndSubmitIdea(mergedFormData)
   }
 
   onEdit = () => {
@@ -126,6 +138,7 @@ EditIdea.propTypes = {
   editIdea: PropTypes.func,
   getIdea: PropTypes.func,
   ideaId: PropTypes.number,
+  image: PropTypes.string,
   params: PropTypes.shape({
     ideaId: PropTypes.string,
   }),
@@ -136,6 +149,7 @@ EditIdea.propTypes = {
 
 const mapStateToProps = (state, ownProps) => ({
   status: getIdeaStatus(state, ownProps.params.ideaId),
+  image: state.photo.image,
 })
 
 export default connect(mapStateToProps, {

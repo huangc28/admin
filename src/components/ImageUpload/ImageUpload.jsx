@@ -1,26 +1,14 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { Field } from 'redux-form'
 import RaisedButton from 'material-ui/RaisedButton'
 import { translate } from 'react-i18next'
 
 import styles from './ImageUpload.css'
+
 import { uploadPhoto } from '../../redux/photo'
-import { getLargeSizeImageUrl } from '../../utils/images'
-
-const renderPreviewImageField = field => {
-  const src = field.src || getLargeSizeImageUrl(field.input.value)
-
-  return (
-    <div className={styles.fieldContainer}>
-      <img className={styles.previewImg} src={src} />
-    </div>
-  )
-}
 
 class ImageUpload extends Component {
   state = {
-    previewImage: null,
     photoFiles: [],
   }
 
@@ -35,9 +23,7 @@ class ImageUpload extends Component {
       const reader = new FileReader()
 
       reader.onload = evt => {
-        this.setState({
-          previewImage: evt.target.result,
-        })
+        this.props.onPreview(evt.target.result)
       }
 
       reader.readAsDataURL(evt.target.files[0])
@@ -46,7 +32,6 @@ class ImageUpload extends Component {
 
   onRemovePreviewImage = () => {
     this.setState({
-      previewImage: null,
       photoFiles: [],
     })
   }
@@ -58,19 +43,10 @@ class ImageUpload extends Component {
   }
 
   render () {
-    const { previewImage } = this.state
-
     const { translation } = this.props
 
     return (
       <div>
-        {/* image preview */}
-        <Field
-          name="image"
-          src={previewImage}
-          component={renderPreviewImageField}
-        />
-
         <div className={styles.btns}>
           {/* select photo button */}
           <div className={styles.btn}>
@@ -112,6 +88,7 @@ class ImageUpload extends Component {
 ImageUpload.propTypes = {
   translation: PropTypes.func,
   uploadPhoto: PropTypes.func,
+  onPreview: PropTypes.func,
 }
 
 export default translate(null, { translateFuncName: 'translation' })(

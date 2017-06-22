@@ -9,6 +9,7 @@ export const {
   uploadPhoto,
   uploadPhotoSuccess,
   uploadPhotoFailed,
+  clearUploadedPhoto,
 } = createActions({
 
   /**
@@ -24,6 +25,7 @@ export const {
   UPLOAD_PHOTO_FAILED: errorMessage => ({
     errorMessage,
   }),
+  CLEAR_UPLOADED_PHOTO: () => ({}),
 })
 
 /**
@@ -46,6 +48,10 @@ const photoReducer = handleActions({
   [uploadPhotoFailed]: (state, action) => ({
     loading: loadingStatus.ERROR,
     errorMessage: action.payload.errorMessage,
+  }),
+  [clearUploadedPhoto]: (state, action) => ({
+    ...state,
+    image: null,
   }),
 }, INIT_STATE)
 

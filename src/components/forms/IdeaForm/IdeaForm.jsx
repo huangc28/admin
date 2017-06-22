@@ -8,6 +8,8 @@ import {
 import { translate } from 'react-i18next'
 
 import styles from './IdeaForm.css'
+import { clearUploadedPhoto } from '../../../redux/photo'
+import LargeImage, { getLargeSizeImageUrl } from '../../images/Large'
 import ImageUpload from '../../ImageUpload'
 
 /**
@@ -39,6 +41,25 @@ const validate = values => {
   return errors
 }
 
+const renderPreviewImageField = field => {
+  // field.src contains the newly selected image to be previewed
+  // where field.input.value contains the original image that
+  // comes with the asset.
+
+  const src = (
+    field.src &&
+    field.src !== ''
+  )
+    ? field.src
+    : getLargeSizeImageUrl(field.input.value)
+
+  return (
+    <div className={styles.previewContainer}>
+      <LargeImage src={src} />
+    </div>
+  )
+}
+
 /**
  * product name - string
  * image - string
@@ -52,6 +73,10 @@ const validate = values => {
  * editor / creator
  */
 class IdeaForm extends Component {
+  state = {
+    preview: '',
+  }
+
   componentDidMount = () => {
     const {
       onMount,
@@ -62,6 +87,16 @@ class IdeaForm extends Component {
     }
   }
 
+  componentWillUnmount = () => {
+    this.props.clearUploadedPhoto()
+  }
+
+  onPreview = imgDataUrl => {
+    this.setState({
+      preview: imgDataUrl,
+    })
+  }
+
   render () {
     const {
       handleSubmit,
@@ -69,6 +104,8 @@ class IdeaForm extends Component {
       disabled,
       translation,
     } = this.props
+
+    const { preview } = this.state
 
     return (
       <Form
@@ -86,8 +123,19 @@ class IdeaForm extends Component {
           />
         </div>
 
+        {/* image preview */}
+        <div className={styles.previewImg}>
+          <Field
+            name="image"
+            src={preview}
+            component={renderPreviewImageField}
+          />
+        </div>
+
         {/* image upload */}
-        <ImageUpload />
+        <ImageUpload
+          onPreview={this.onPreview}
+        />
 
         <div className={styles.fieldContainer}>
           <Field
@@ -240,6 +288,7 @@ class IdeaForm extends Component {
 }
 
 IdeaForm.propTypes = {
+  clearUploadedPhoto: PropTypes.func,
   disabled: PropTypes.bool,
   handleSubmit: PropTypes.func,
 
@@ -268,7 +317,9 @@ const mapStateToProps = state => ({
 })
 
 export default translate(null, { translateFuncName: 'translation' })(
-  connect(mapStateToProps, null)(
+  connect(mapStateToProps, {
+    clearUploadedPhoto,
+  })(
     reduxForm({
       form: 'ideaForm',
       enableReinitialize: true,

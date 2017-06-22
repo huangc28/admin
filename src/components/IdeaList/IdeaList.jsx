@@ -13,7 +13,7 @@ import IconButton from 'material-ui/IconButton'
 
 import { browserHistory } from 'react-router'
 
-import { getThumbnailUrl } from '../../utils/images'
+import Thumbnail from '../images/Thumbnail'
 import { deleteIdea } from '../../redux/ideas'
 import {
   NEW,
@@ -188,11 +188,13 @@ class IdeaList extends Component {
               <TableRow key={index}>
                 {
                   ideaDataHeaders.map((header, index) => ( // eslint-disable-line no-confusing-arrow
-                    <TableRowColumn>
+                    <TableRowColumn key={index}>
                       {
                         header.field === 'image'
                           ? (
-                            <img src={getThumbnailUrl(idea[header.field])} />
+                            <Thumbnail
+                              imgName={idea[header.field]}
+                            />
                           )
                           : idea[header.field]
                       }
