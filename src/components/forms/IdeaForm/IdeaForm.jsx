@@ -133,10 +133,7 @@ class IdeaForm extends Component {
         </div>
 
         {/* image upload */}
-        <ImageUpload
-          // onPreview={this.onPreview}
-          onSelected={this.onSelected}
-        />
+        <ImageUpload onSelected={this.onSelected} />
 
         <div className={styles.fieldContainer}>
           <Field

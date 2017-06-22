@@ -30,12 +30,6 @@ class ImageUpload extends Component {
     }
   }
 
-  onRemovePreviewImage = () => {
-    this.setState({
-      photoFiles: [],
-    })
-  }
-
   onImageUpload = () => {
     const { photoFiles } = this.state
 
@@ -68,15 +62,6 @@ class ImageUpload extends Component {
               label={translation('Upload')}
               primary
               onTouchTap={this.onImageUpload}
-            />
-          </div>
-
-          {/* remove preview button */}
-          <div className={styles.btn}>
-            <RaisedButton
-              label={translation('Remove Preview')}
-              secondary
-              onTouchTap={this.onRemovePreviewImage}
             />
           </div>
         </div>
