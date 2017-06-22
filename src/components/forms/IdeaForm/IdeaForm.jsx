@@ -91,7 +91,7 @@ class IdeaForm extends Component {
     this.props.clearUploadedPhoto()
   }
 
-  onPreview = imgDataUrl => {
+  onSelected = imgDataUrl => {
     this.setState({
       preview: imgDataUrl,
     })
@@ -134,7 +134,8 @@ class IdeaForm extends Component {
 
         {/* image upload */}
         <ImageUpload
-          onPreview={this.onPreview}
+          // onPreview={this.onPreview}
+          onSelected={this.onSelected}
         />
 
         <div className={styles.fieldContainer}>

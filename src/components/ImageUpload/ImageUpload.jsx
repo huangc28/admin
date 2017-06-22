@@ -23,7 +23,7 @@ class ImageUpload extends Component {
       const reader = new FileReader()
 
       reader.onload = evt => {
-        this.props.onPreview(evt.target.result)
+        this.props.onSelected(evt.target.result)
       }
 
       reader.readAsDataURL(evt.target.files[0])
@@ -88,7 +88,7 @@ class ImageUpload extends Component {
 ImageUpload.propTypes = {
   translation: PropTypes.func,
   uploadPhoto: PropTypes.func,
-  onPreview: PropTypes.func,
+  onSelected: PropTypes.func,
 }
 
 export default translate(null, { translateFuncName: 'translation' })(
