@@ -3,8 +3,11 @@ import { connect } from 'react-redux'
 import { Tabs, Tab } from 'material-ui/Tabs'
 import RaisedButton from 'material-ui/RaisedButton'
 import { browserHistory } from 'react-router'
+import ReactPaginate from 'react-paginate'
 import { translate } from 'react-i18next'
 
+import paginationStyle from '../../styles/pagination.css'
+import styles from './ideas.css'
 import IdeaList from '../../components/IdeaList'
 import ControllButtonBar from '../../components/ControllButtonBar'
 import { getIdeas } from '../../redux/ideas'
@@ -15,6 +18,8 @@ import {
   REWORK,
   REJECT,
   PENDING,
+  PER_PAGE,
+  TOTAL_RECORDS,
 } from '../../constants/ideas'
 
 const sortingTabs = [
@@ -51,16 +56,40 @@ class Ideas extends Component {
       activeTab,
     } = this.props
 
-    getIdeas(activeTab)
+    getIdeas({
+      status: activeTab,
+      searchText: '',
+      offset: 0,
+      limit: PER_PAGE,
+    })
   }
 
   onTapCreate = () => {
     browserHistory.push('/erp/procurement/ideas/create')
   }
 
+  onPageChange = ({ selected }) => {
+    const {
+      getIdeas,
+      activeTab,
+    } = this.props
+
+    // page number * per page = offset
+    const offset = Math.ceil(selected * PER_PAGE)
+
+    // get ideas
+    getIdeas({
+      status: activeTab,
+      searchText: '',
+      offset,
+      limit: PER_PAGE,
+    })
+  }
+
   render () {
     const {
       ideas,
+      pageCount,
       getIdeas,
       activeTab,
       router: {
@@ -86,7 +115,14 @@ class Ideas extends Component {
                 value={tab.sortby}
                 key={index}
                 onActive={
-                  () => { getIdeas(tab.sortby) }
+                  () => {
+                    getIdeas({
+                      status: tab.sortby,
+                      searchText: '',
+                      offset: 0,
+                      limit: PER_PAGE,
+                    })
+                  }
                 }
                 label={translation(tab.title)}
               />
@@ -101,6 +137,22 @@ class Ideas extends Component {
         />
 
         <IdeaList ideas={ideas} />
+
+        <div className={styles.paginationContainer}>
+          <ReactPaginate
+            previousLabel="previous"
+            nextLabel="next"
+            breakLabel={<a href="">...</a>}
+            pageCount={pageCount}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            onPageChange={this.onPageChange}
+            containerClassName={paginationStyle.pagination}
+            subContainerClassName={'pages pagination'}
+            activeClassName={paginationStyle.active}
+            disabledClassName={paginationStyle.disabled}
+          />
+        </div>
       </div>
     )
   }
@@ -110,6 +162,7 @@ Ideas.propTypes = {
   activeTab: PropTypes.node,
   getIdeas: PropTypes.func,
   ideas: PropTypes.array,
+  pageCount: PropTypes.number,
   router: PropTypes.shape({
     goBack: PropTypes.func,
   }),
@@ -122,6 +175,7 @@ const mapStateToProps = state => {
 
   return {
     ideas: data,
+    pageCount: Math.ceil(TOTAL_RECORDS / PER_PAGE),
     activeTab: status,
   }
 }

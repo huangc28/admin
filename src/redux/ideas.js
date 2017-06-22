@@ -27,16 +27,8 @@ export const {
   rejectIdea,
   approveIdea,
 } = createActions({
-  GET_IDEAS: (
-    status = '', // default to retrieve all
-    searchText = '',
-    offset = '',
-    limit = '',
-  ) => ({
-    status,
-    searchText,
-    offset,
-    limit,
+  GET_IDEAS: queries => ({
+    queries,
   }),
   GET_IDEAS_SUCCESS: ideas => ({ ideas }),
   GET_IDEAS_FAILED: errorMessage => ({ errorMessage }),

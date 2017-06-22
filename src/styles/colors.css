@@ -20,6 +20,7 @@
 @value alto: #e0e0e0;
 @value silver: #ddd;
 @value alabaster: #f7f7f7;
+@value boulder: #777;
 
 /* Light Grey */
 @value lightGrey: #ebece7;
@@ -80,6 +81,7 @@
 @value deepOcean: #2791a4;
 @value seafoam: #8aebe7;
 @value eggblue: #00BCD4;
+@value astral: #337ab7;
 
 /* Accent color: Bermuda */
 @value bermudaPrimary: #6dcbc4;

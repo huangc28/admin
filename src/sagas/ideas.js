@@ -16,10 +16,12 @@ import {
  */
 export function * watchGetIdeasFlow (action) {
   const {
-    status,
-    searchText,
-    offset,
-    limit,
+    queries: {
+      status,
+      searchText,
+      offset,
+      limit,
+    },
   } = action.payload
 
   try {

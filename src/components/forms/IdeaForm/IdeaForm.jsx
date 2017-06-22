@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Form, Field, reduxForm } from 'redux-form'
-import RaisedButton from 'material-ui/RaisedButton'
 import {
   Checkbox,
   TextField,
@@ -9,8 +8,7 @@ import {
 import { translate } from 'react-i18next'
 
 import styles from './IdeaForm.css'
-import { uploadPhoto } from '../../../redux/photo'
-import { getLargeSizeImageUrl } from '../../../utils/images.js'
+import ImageUpload from '../../ImageUpload'
 
 /**
  * @param {Object} values
@@ -41,16 +39,6 @@ const validate = values => {
   return errors
 }
 
-const renderPreviewImageField = field => {
-  const src = field.src || getLargeSizeImageUrl(field.input.value)
-
-  return (
-    <div className={styles.fieldContainer}>
-      <img className={styles.previewImg} src={src} />
-    </div>
-  )
-}
-
 /**
  * product name - string
  * image - string
@@ -64,15 +52,6 @@ const renderPreviewImageField = field => {
  * editor / creator
  */
 class IdeaForm extends Component {
-  constructor () {
-    super()
-
-    this.state = {
-      previewImage: null,
-      photoFiles: [],
-    }
-  }
-
   componentDidMount = () => {
     const {
       onMount,
@@ -83,39 +62,6 @@ class IdeaForm extends Component {
     }
   }
 
-  onPhotoChange = evt => {
-    evt.persist()
-
-    if (evt.target.files && evt.target.files[0]) {
-      this.setState({
-        photoFiles: evt.target.files,
-      })
-
-      const reader = new FileReader()
-
-      reader.onload = evt => {
-        this.setState({
-          previewImage: evt.target.result,
-        })
-      }
-
-      reader.readAsDataURL(evt.target.files[0])
-    }
-  }
-
-  onRemovePreviewImage = () => {
-    this.setState({
-      previewImage: null,
-      photoFiles: [],
-    })
-  }
-
-  onImageUpload = () => {
-    const { photoFiles } = this.state
-
-    this.props.uploadPhoto(photoFiles[0])
-  }
-
   render () {
     const {
       handleSubmit,
@@ -123,10 +69,6 @@ class IdeaForm extends Component {
       disabled,
       translation,
     } = this.props
-
-    const {
-      previewImage,
-    } = this.state
 
     return (
       <Form
@@ -144,40 +86,8 @@ class IdeaForm extends Component {
           />
         </div>
 
-        {/* image preview */}
-        <Field
-          name="image"
-          src={previewImage}
-          component={renderPreviewImageField}
-        />
-
-        <div className={styles.imgFieldContainer}>
-          {/* select photo button */}
-          <RaisedButton
-            containerElement="label"
-            label={translation('Select Photo')}
-          >
-            <input
-              type="file"
-              style={{ display: 'none' }}
-              onChange={this.onPhotoChange}
-            />
-          </RaisedButton>
-
-          {/* upload photo button */}
-          <RaisedButton
-            label={translation('Upload')}
-            primary
-            onTouchTap={this.onImageUpload}
-          />
-
-          {/* remove preview button */}
-          <RaisedButton
-            label={translation('Remove Preview')}
-            secondary
-            onTouchTap={this.onRemovePreviewImage}
-          />
-        </div>
+        {/* image upload */}
+        <ImageUpload />
 
         <div className={styles.fieldContainer}>
           <Field
@@ -344,7 +254,6 @@ IdeaForm.propTypes = {
    */
   status: PropTypes.number,
   translation: PropTypes.func,
-  uploadPhoto: PropTypes.func,
   onMount: PropTypes.func,
 
   /**
@@ -359,9 +268,7 @@ const mapStateToProps = state => ({
 })
 
 export default translate(null, { translateFuncName: 'translation' })(
-  connect(mapStateToProps, {
-    uploadPhoto,
-  })(
+  connect(mapStateToProps, null)(
     reduxForm({
       form: 'ideaForm',
       enableReinitialize: true,
