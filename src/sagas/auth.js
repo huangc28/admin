@@ -6,10 +6,10 @@ import * as APIS from '../apis/auth'
 import * as actions from '../redux/auth'
 
 export function * watchLoginFlow (action) {
-  const { payload: { email, password } } = action
+  const { payload: { phone, password } } = action
 
   try {
-    const response = yield call(APIS.authorize, email, password)
+    const response = yield call(APIS.authorize, phone, password)
 
     if (response.error) {
       throw new Error(response.error.message)

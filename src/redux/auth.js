@@ -13,8 +13,8 @@ export const {
   logout,
   clearAccessToken,
 } = createActions({
-  LOGIN: (email, password) => ({
-    email,
+  LOGIN: (phone, password) => ({
+    phone,
     password,
   }),
   LOGIN_FAILED: errorMessage => ({

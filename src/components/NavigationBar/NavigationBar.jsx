@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { browserHistory } from 'react-router'
 import Drawer from 'material-ui/Drawer'
-import MenuItem from 'material-ui/MenuItem'
+import Collapsible from 'react-collapsible'
 import { translate } from 'react-i18next'
 
 import styles from './NavigationBar.css'
@@ -61,32 +61,28 @@ class NavigationBar extends Component {
   renderMenuItem = (menuItem, index) => {
     const { title, submenu } = menuItem
 
-    const { subMenuOpenState } = this.state
-
     const { translation } = this.props
 
-    const selectedName = getMenuItemName(menuItem.title)
     // If submenu open status equals to false, hide submenu.
-
     return (
-      <MenuItem
+      <Collapsible
         key={index}
-        onTouchTap={evt => this.showSubmenu(evt, title)}
-      >
-        {translation(title)}
-
-        {
-          subMenuOpenState[selectedName]
-            ? (
-              <ul className={styles.subMenu}>
-                {
-                  submenu.map((submenuItem, index) => this.renderSubmenuItem(submenuItem, index))
-                }
-              </ul>
-            )
-            : ''
+        trigger={
+          <div className={styles.menuItem}>
+            {
+              translation(title)
+            }
+          </div>
         }
-      </MenuItem>
+        transitionTime={200}
+        classParentString={styles.collapsible}
+        contentOuterClassName={styles.menuContent}
+        contentInnerClassName={styles.menuContentInner}
+      >
+        {
+          submenu.map((submenuItem, index) => this.renderSubmenuItem(submenuItem, index))
+        }
+      </Collapsible>
     )
   }
 
@@ -99,7 +95,8 @@ class NavigationBar extends Component {
     } = this.props
 
     return (
-      <MenuItem
+      <label
+        className={styles.submenuItem}
         key={index}
         onTouchTap={() => {
           browserHistory.push(link)
@@ -107,7 +104,7 @@ class NavigationBar extends Component {
         }}
       >
         {translation(title)}
-      </MenuItem>
+      </label>
     )
   }
 
@@ -130,15 +127,11 @@ class NavigationBar extends Component {
           <div>
             Bryan Huang
           </div>
-
-          {/* status */}
-          <div>
-            system status: admin
-          </div>
         </header>
 
+        {/* side bar menu */}
         {
-          menuList.map((menuItem, index) => this.renderMenuItem(menuItem, index))
+            menuList.map((menuItem, index) => this.renderMenuItem(menuItem, index))
         }
       </Drawer>
     )

@@ -9,10 +9,7 @@ import { translate } from 'react-i18next'
 import styles from './Login.css'
 import { login } from '../../redux/auth'
 
-const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ // eslint-disable-line
-
-const EMAIL_EMPTY_ERROR = 'email can not be empty'
-const EMAIL_PATTERN_ERROR = 'email pattern is not matched'
+const PHONE_EMPTY_ERROR = 'phone can not be empty'
 const PASSWORD_EMPTY_ERROR = 'password can not be empty'
 
 class Login extends Component {
@@ -20,9 +17,9 @@ class Login extends Component {
     super()
 
     this.state = {
-      email: '',
+      phone: '',
       password: '',
-      emailErrorText: '',
+      phoneErrorText: '',
       passwordErrorText: '',
     }
   }
@@ -32,10 +29,10 @@ class Login extends Component {
     return { muiTheme: getMuiTheme(baseTheme) }
   }
 
-  onInputEmail = evt => {
+  onInputPhone = evt => {
     this.setState({
-      email: evt.currentTarget.value,
-      emailErrorText: '',
+      phone: evt.target.value,
+      phoneErrorText: '',
     })
   }
 
@@ -48,39 +45,30 @@ class Login extends Component {
 
   onSubmit = () => {
     const {
-      email,
+      phone,
       password,
     } = this.state
 
-    this.validateEmail()
+    this.validatePhone()
 
     this.validatePassword()
 
-    this.props.login(email, password)
+    this.props.login(phone, password)
   }
 
-  validateEmail = () => {
-    const { email } = this.state
+  validatePhone = () => {
+    const { phone } = this.state
 
-    if (email === '') {
+    if (phone === '') {
       this.setState({
-        emailErrorText: EMAIL_EMPTY_ERROR,
-      })
-
-      return
-    }
-
-    // validate email pattern
-    if (!EMAIL_REGEX.test(email)) {
-      this.setState({
-        emailErrorText: EMAIL_PATTERN_ERROR,
+        phoneErrorText: PHONE_EMPTY_ERROR,
       })
 
       return
     }
 
     this.setState({
-      emailErrorText: '',
+      phoneErrorText: '',
     })
   }
 
@@ -102,9 +90,9 @@ class Login extends Component {
 
   render () {
     const {
-      email,
+      phone,
       password,
-      emailErrorText,
+      phoneErrorText,
       passwordErrorText,
     } = this.state
 
@@ -125,12 +113,12 @@ class Login extends Component {
           <div className={styles.cardContent}>
             <div className={styles.text}>
               <TextField
-                hintText={translation('email')}
+                hintText="phone"
                 fullWidth
-                onInput={this.onInputEmail}
-                errorText={emailErrorText}
-                value={email}
-                onBlur={this.validateEmail}
+                onInput={this.onInputPhone}
+                errorText={phoneErrorText}
+                value={phone}
+                onBlur={this.validatePhone}
               />
             </div>
 

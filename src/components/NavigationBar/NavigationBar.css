@@ -1,5 +1,5 @@
 @value outerspace, lightGrey, limedspruce, silverchalice, alto, eggblue from '../../styles/colors.css';
-@value size24 from '../../styles/font.css';
+@value size12, size24 from '../../styles/font.css';
 
 .header {
   background-color: outerspace;
@@ -28,21 +28,31 @@
 }
 
 .menuItem {
-  composes: size24;
-  color: alto !important;
+  padding: 1.625rem;
+}
+
+.submenuItem {
+  padding: 1.625rem;
+  cursor: pointer;
 }
 
 .menuItem:hover {
-  background-color: eggblue !important;
+  background-color: #212e41 !important;
 }
 
-.subMenu {
-  padding: 0;
+.menuContent {
+  background: #15a4fa;
+  color: #eef4fa;
+}
+
+.menuContentInner {
+  display: flex;
+  flex-direction: column;
+}
+
+.collapsible {
   text-align: center;
-  background-color: silverchalice;
-}
-
-.subMenuLink {
-  text-decoration: none;
-  color: white;
+  background: #293649;
+  color: #eef4fa;
+  cursor: pointer;
 }
