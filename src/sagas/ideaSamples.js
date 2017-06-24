@@ -2,18 +2,11 @@ import { call, put, takeLatest, all } from 'redux-saga/effects'
 import { browserHistory } from 'react-router'
 
 import config from '../config'
+import { getCurrentRoute } from './location'
 import * as APIS from '../apis/ideaSamples'
 import { storeInitFormData } from '../redux/initFormData'
+import { storeImage } from '../redux/photo'
 import * as actions from '../redux/ideaSamples'
-
-// @TODO should extract this to a location saga.
-const getCurrentRoute = state => (
-  (
-    state.routing &&
-    state.routing.locationBeforeTransitions &&
-    state.routing.locationBeforeTransitions.pathname
-  ) || ''
-)
 
 export function * watchFetchIdeaSamplesFlow (action) {
   const {
@@ -47,6 +40,9 @@ export function * watchFetchIdeaSampleFlow (action) {
 
     yield put(actions.fetchSampleSuccess(response.data))
 
+    // append the current image onto photo reducer
+    yield put(storeImage(response.data.image))
+
     yield put(storeInitFormData(response.data))
   } catch (err) {
     yield put(actions.fetchSampleFailed(err.message))
@@ -65,6 +61,7 @@ export function * watchEditIdeaSampleFlow (action) {
 
     yield put(actions.editIdeaSampleSuccess(response.data))
 
+    // @TODO should extract this to a location saga.
     browserHistory.push(
       getCurrentRoute(config.store.getState())
     )

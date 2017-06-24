@@ -4,6 +4,8 @@ import { Form, Field, reduxForm } from 'redux-form'
 import { TextField } from 'redux-form-material-ui'
 
 import styles from './IdeaSampleForm.css'
+import ImageUpload from '../../../components/ImageUpload'
+import PreviewImageField from '../fields/PreviewImage'
 
 const validate = values => {
   const errors = {}
@@ -34,6 +36,10 @@ const validate = values => {
 }
 
 class IdeaSampleForm extends Component {
+  state = {
+    preview: '',
+  }
+
   componentDidMount = () => {
     const { onMount } = this.props
 
@@ -42,12 +48,20 @@ class IdeaSampleForm extends Component {
     }
   }
 
+  onSelected = imgDataUrl => {
+    this.setState({
+      preview: imgDataUrl,
+    })
+  }
+
   render () {
     const {
       handleSubmit,
       onSubmitCallback,
       disabled,
     } = this.props
+
+    const { preview } = this.state
 
     return (
       <Form
@@ -75,6 +89,18 @@ class IdeaSampleForm extends Component {
             component={TextField}
           />
         </div>
+
+        {/* image preview */}
+        <div className={styles.imagePreivew}>
+          <Field
+            name="image"
+            src={preview}
+            component={PreviewImageField}
+          />
+        </div>
+
+        {/* image upload */}
+        <ImageUpload onSelected={this.onSelected} />
 
         <div className={styles.fieldContainer}>
           <Field

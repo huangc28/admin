@@ -3,6 +3,7 @@ import { browserHistory } from 'react-router'
 
 import * as APIS from '../apis/ideas'
 import * as actions from '../redux/ideas'
+import { storeImage } from '../redux/photo'
 import { storeInitFormData } from '../redux/initFormData'
 import {
   PENDING,
@@ -64,6 +65,8 @@ export function * watchGetIdeaFlow (action) {
 
     // @TODO api has not been fixed yet, still in camel case.
     yield put(storeInitFormData(idea.data))
+
+    yield put(storeImage(idea.data.image))
   } catch (e) {
     yield put(actions.getIdeaFailed(e.message))
   }

@@ -9,7 +9,7 @@ import { translate } from 'react-i18next'
 
 import styles from './IdeaForm.css'
 import { clearUploadedPhoto } from '../../../redux/photo'
-import LargeImage, { getLargeSizeImageUrl } from '../../images/Large'
+import PreviewImageField from '../fields/PreviewImage'
 import ImageUpload from '../../ImageUpload'
 
 /**
@@ -39,25 +39,6 @@ const validate = values => {
   })
 
   return errors
-}
-
-const renderPreviewImageField = field => {
-  // field.src contains the newly selected image to be previewed
-  // where field.input.value contains the original image that
-  // comes with the asset.
-
-  const src = (
-    field.src &&
-    field.src !== ''
-  )
-    ? field.src
-    : getLargeSizeImageUrl(field.input.value)
-
-  return (
-    <div className={styles.previewContainer}>
-      <LargeImage src={src} />
-    </div>
-  )
 }
 
 /**
@@ -128,7 +109,7 @@ class IdeaForm extends Component {
           <Field
             name="image"
             src={preview}
-            component={renderPreviewImageField}
+            component={PreviewImageField}
           />
         </div>
 

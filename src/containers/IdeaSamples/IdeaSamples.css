@@ -49,10 +49,6 @@
   overflow-x: scroll;
 }
 
-.submitGrid div:first-of-type {
-  margin-right: 0.25rem;
-}
-
 .btnBar {
   margin: 0.5rem 0;
   display: flex;

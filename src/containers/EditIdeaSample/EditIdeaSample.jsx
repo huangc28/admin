@@ -11,9 +11,15 @@ import Submitable from '../../components/Submitable/Submitable'
 
 class EditIdeaSample extends Component {
   onSubmit = value => {
-    const { editIdeaSample } = this.props
+    const {
+      editIdeaSample,
+      image,
+    } = this.props
 
-    editIdeaSample(value)
+    editIdeaSample({
+      ...value,
+      image,
+    })
   }
 
   onMount = () => {
@@ -57,6 +63,7 @@ class EditIdeaSample extends Component {
 EditIdeaSample.propTypes = {
   editIdeaSample: PropTypes.func,
   fetchSample: PropTypes.func,
+  image: PropTypes.string,
   params: PropTypes.shape({
     sampleId: PropTypes.string,
   }),
@@ -65,7 +72,11 @@ EditIdeaSample.propTypes = {
   }),
 }
 
-export default connect(null, {
+const mapStateToProps = state => ({
+  image: state.photo.image,
+})
+
+export default connect(mapStateToProps, {
   fetchSample,
   editIdeaSample,
 })(EditIdeaSample)

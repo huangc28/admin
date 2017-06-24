@@ -4,47 +4,29 @@ import { connect } from 'react-redux'
 import ControllButtonBar from '../../components/ControllButtonBar'
 import { deleteInitFormData } from '../../redux/initFormData'
 import { saveIdeaSample } from '../../redux/ideaSamples'
-import { SAVE } from '../../constants/generic'
 import IdeaSampleForm from '../../components/forms/IdeaSampleForm'
 import Submitable from '../../components/Submitable'
 
 class CreateIdeaSample extends Component {
-  constructor () {
-    super()
-
-    this.state = {
-      submitType: null,
-    }
-  }
-
   componentWillMount = () => {
     this.props.deleteInitFormData()
   }
 
   onSubmit = value => {
     const {
-      submitType,
-    } = this.state
-
-    const {
       saveIdeaSample,
       params: {
         ideaId,
       },
+      image,
     } = this.props
 
-    if (submitType === SAVE) {
-      // merge ideaId into submitting value.
-      saveIdeaSample(
-        Object.assign(value, { ideaId })
-      )
-    }
-  }
-
-  onSave = () => {
-    this.setState({
-      submitType: SAVE,
-    })
+    saveIdeaSample(
+      Object.assign(value, {
+        ideaId,
+        image,
+      })
+    )
   }
 
   render () {
@@ -62,7 +44,6 @@ class CreateIdeaSample extends Component {
 
         <Submitable
           formName="ideaSampleForm"
-          onSave={this.onSave}
           showSaveButton
           showResetButton
         />
@@ -73,6 +54,7 @@ class CreateIdeaSample extends Component {
 
 CreateIdeaSample.propTypes = {
   deleteInitFormData: PropTypes.func,
+  image: PropTypes.string,
   params: PropTypes.shape({
     ideaId: PropTypes.string,
   }),
@@ -82,7 +64,11 @@ CreateIdeaSample.propTypes = {
   saveIdeaSample: PropTypes.func,
 }
 
-export default connect(null, {
+const mapStateToProps = state => ({
+  image: state.photo.image,
+})
+
+export default connect(mapStateToProps, {
   deleteInitFormData,
   saveIdeaSample,
 })(CreateIdeaSample)

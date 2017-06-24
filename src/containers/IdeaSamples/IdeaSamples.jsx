@@ -8,6 +8,7 @@ import * as ideaSampleStatus from '../../constants/ideaSamples'
 import ControllButtonBar from '../../components/ControllButtonBar'
 import IdeaSampleReworkModal from '../../components/IdeaSampleReworkModal'
 import IdeaSampleApproveModal from '../../components/IdeaSampleApproveModal'
+import Thumbnail from '../../components/images/Thumbnail'
 import {
   fetchSamples,
   approveIdeaSample,
@@ -200,9 +201,13 @@ class IdeaSamples extends Component {
                 key={index}
               >
                 {
-                  sampleKey === 'status'
-                    ? statusText[sample[sampleKey]] || ''
-                    : sample[sampleKey]
+                  /* eslint-disable */
+                  do {
+                    if (sampleKey === 'status') { statusText[sample[sampleKey]] || '' }
+                    else if (sampleKey === 'image') { <Thumbnail imgName={sample[sampleKey]} />}
+                    else { sample[sampleKey] }
+                  }
+                  /* eslint-enable */
                 }
               </div>
             ))
