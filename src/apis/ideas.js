@@ -3,14 +3,14 @@ import { buildApiUrl, fetchApi } from './utils'
 export const getIdeas = ({
   status,
   searchText,
-  offset,
-  limit,
+  page,
+  perpage,
 }) => (
   fetchApi(buildApiUrl('ideas', {
     status,
     searchText,
-    offset,
-    limit,
+    page,
+    perpage,
   }), 'GET', {
     credentials: 'same-origin',
   })

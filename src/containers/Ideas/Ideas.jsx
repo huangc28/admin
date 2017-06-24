@@ -19,7 +19,6 @@ import {
   REJECT,
   PENDING,
   PER_PAGE,
-  TOTAL_RECORDS,
 } from '../../constants/ideas'
 
 const sortingTabs = [
@@ -59,8 +58,8 @@ class Ideas extends Component {
     getIdeas({
       status: activeTab,
       searchText: '',
-      offset: 0,
-      limit: PER_PAGE,
+      page: 1, // default to get the first page
+      perpage: PER_PAGE,
     })
   }
 
@@ -74,15 +73,12 @@ class Ideas extends Component {
       activeTab,
     } = this.props
 
-    // page number * per page = offset
-    const offset = Math.ceil(selected * PER_PAGE)
-
     // get ideas
     getIdeas({
       status: activeTab,
       searchText: '',
-      offset,
-      limit: PER_PAGE,
+      page: selected + 1,
+      perpage: PER_PAGE,
     })
   }
 
@@ -171,11 +167,11 @@ Ideas.propTypes = {
 }
 
 const mapStateToProps = state => {
-  const { data, status } = state.ideas
+  const { data, status, total } = state.ideas
 
   return {
     ideas: data,
-    pageCount: Math.ceil(TOTAL_RECORDS / PER_PAGE),
+    pageCount: Math.ceil(total / PER_PAGE),
     activeTab: status,
   }
 }

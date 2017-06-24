@@ -56,6 +56,7 @@ export const {
  */
 const INIT_STATE = {
   status: ideaStatus.ALL,
+  total: 0,
   data: [],
   errorMessage: null,
   loading: loadingStatus.EMPTY,
@@ -68,12 +69,17 @@ const ideasReducer = handleActions({
     status: action.payload.status,
   }),
   [getIdeasSuccess]: (state, action) => {
-    const { data, status } = action.payload.ideasData
+    const {
+      data,
+      status,
+      total,
+    } = action.payload.ideasData
 
     return {
       ...state,
       data,
       status,
+      total,
       loading: loadingStatus.READY,
     }
   },

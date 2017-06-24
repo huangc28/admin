@@ -19,8 +19,8 @@ export function * watchGetIdeasFlow (action) {
     queries: {
       status,
       searchText,
-      offset,
-      limit,
+      page,
+      perpage,
     },
   } = action.payload
 
@@ -28,8 +28,8 @@ export function * watchGetIdeasFlow (action) {
     const ideas = yield call(APIS.getIdeas, {
       status,
       searchText,
-      offset,
-      limit,
+      page,
+      perpage,
     })
 
     if (ideas.error) {
@@ -38,7 +38,7 @@ export function * watchGetIdeasFlow (action) {
 
     yield put(actions.getIdeasSuccess(
       {
-        data: ideas.data,
+        ...ideas,
         status,
       })
     )
