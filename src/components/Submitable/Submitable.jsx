@@ -121,14 +121,17 @@ class Submitable extends Component {
   )
 
   renderResetButton = () => {
-    const { reset } = this.props
+    const {
+      reset,
+      formName,
+    } = this.props
 
     return (
       <div>
         <RaisedButton
           label={this.props.translation('Reset')}
           type="button"
-          onTouchTap={() => reset()}
+          onTouchTap={() => reset(formName)}
           default
         />
       </div>

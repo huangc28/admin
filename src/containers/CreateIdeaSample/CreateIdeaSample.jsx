@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 
+import ControllButtonBar from '../../components/ControllButtonBar'
 import { deleteInitFormData } from '../../redux/initFormData'
 import { saveIdeaSample } from '../../redux/ideaSamples'
 import { SAVE } from '../../constants/generic'
@@ -47,8 +48,16 @@ class CreateIdeaSample extends Component {
   }
 
   render () {
+    const {
+      router: {
+        goBack,
+      },
+    } = this.props
+
     return (
       <div>
+        <ControllButtonBar onBack={goBack} />
+
         <IdeaSampleForm onSubmitCallback={this.onSubmit} />
 
         <Submitable
@@ -66,6 +75,9 @@ CreateIdeaSample.propTypes = {
   deleteInitFormData: PropTypes.func,
   params: PropTypes.shape({
     ideaId: PropTypes.string,
+  }),
+  router: PropTypes.shape({
+    goBack: PropTypes.func,
   }),
   saveIdeaSample: PropTypes.func,
 }
