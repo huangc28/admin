@@ -63,7 +63,7 @@ export const normalizePurchaseOrderEmptyValue = purchaseOrder => {
   ]
 
   fieldList.forEach(field => {
-    if (field === 'supply' || field === 'supplier') {
+    if (field === 'supply' || field === 'supplier' || field === 'approver') {
       Object.keys(purchaseOrder[field]).forEach(attr => {
         if (purchaseOrder[field][attr] === null) {
           normalizedPurchaseOrder[field][attr] = ''
@@ -113,6 +113,8 @@ export function * fetchPurchaseOrderFlow (action) {
 export function * fetchPurchaseOrdersFlow (action) {
   try {
     const response = yield call(apis.fetchPurchaseOrders)
+
+    // console.log('fetchPurchaseOrdersFlow response', response)
 
     if (response.error) {
       throw new Error(response.error)

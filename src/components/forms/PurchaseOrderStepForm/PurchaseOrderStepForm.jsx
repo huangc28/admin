@@ -44,7 +44,8 @@ class PurchaseOrderForm extends Component {
       stepIndex: SUPPLIER_STEP,
 
       stepOneData: {
-        approverUserId: '',
+        approverId: '',
+        approverUsername: '',
         supplierName: '',
         supplierId: '',
         supplyName: '',
@@ -77,7 +78,10 @@ class PurchaseOrderForm extends Component {
     if (nextProps.initialValues !== this.props.initialValues) {
       const {
         id,
-        approverUserId,
+        approver: {
+          id: approverId,
+          username: approverUsername,
+        },
         supplier: {
           name: supplierName,
           id: supplierId,
@@ -99,7 +103,8 @@ class PurchaseOrderForm extends Component {
         stepIndex: step,
         stepOneData: {
           id,
-          approverUserId,
+          approverId,
+          approverUsername,
           supplierName,
           supplierId,
           supplyName,

@@ -10,7 +10,8 @@ import styles from './PurchaseOrderForm.css'
 class PurchaseOrderForm extends Component {
 
   state = {
-    approverUserId: '',
+    approverId: '',
+    approverUsername: '',
     supplierName: '',
     supplyName: '',
     quantity: '',
@@ -33,7 +34,11 @@ class PurchaseOrderForm extends Component {
     if (nextProps.initialValues !== this.props.initialValues) {
       // initialize purchase order form
       const {
-        approverUserId,
+        // approverUserId,
+        approver: {
+          id: approverId,
+          username: approverUsername,
+        },
         supplier: {
           name: supplierName,
         },
@@ -49,7 +54,8 @@ class PurchaseOrderForm extends Component {
       } = nextProps.initialValues
 
       this.setState({
-        approverUserId,
+        approverId,
+        approverUsername,
         supplierName,
         supplyName,
         quantity,
@@ -68,7 +74,7 @@ class PurchaseOrderForm extends Component {
     } = this.props
 
     const {
-      approverUserId,
+      approverUsername,
       supplierName,
       supplyName,
       quantity,
@@ -87,7 +93,7 @@ class PurchaseOrderForm extends Component {
             disabled={disabled}
             hintText="Approver"
             fullWidth
-            value={approverUserId}
+            value={approverUsername}
           />
         </div>
 

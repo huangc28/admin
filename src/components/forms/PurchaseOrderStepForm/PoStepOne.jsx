@@ -26,7 +26,8 @@ class PoStepOne extends Component {
     lock: false,
 
     id: '', // purchase order id
-    approverUserId: '',
+    approverId: '',
+    approverUsername: '',
     supplierName: '',
     supplierId: '',
     supplyName: '',
@@ -55,7 +56,7 @@ class PoStepOne extends Component {
 
     const {
       id,
-      approverUserId,
+      approverId,
       supplierId,
       supplyId,
     } = this.state
@@ -65,7 +66,7 @@ class PoStepOne extends Component {
     editPurchaseOrder({
       step: SUPPLIER_STEP + 1,
       id,
-      approverUserId,
+      approverId,
       supplierId,
       supplyId,
     })
@@ -192,7 +193,7 @@ class PoStepOne extends Component {
   render () {
     const {
       supplyId,
-      approverUserId,
+      approverUsername,
       supplierName,
       supplyName,
       lock,
@@ -209,7 +210,7 @@ class PoStepOne extends Component {
           {/* approve */}
           <div className={formStyles.fieldContainer}>
             <h3>
-              Approver: { approverUserId }
+              Approver: { approverUsername }
             </h3>
           </div>
 
@@ -290,7 +291,7 @@ PoStepOne.propTypes = {
    * step one form data in a form like:
    *
    * {
-   *   approveUserId
+   *   approveId
    *   supplier
    *   supplierId
    *   supply

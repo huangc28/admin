@@ -4,63 +4,6 @@ import {
 } from 'redux-actions'
 
 import * as loadingStatus from '../constants/loadingState'
-
-/**
- * Bring out product_name, image out
- * to the first level of an object.
- *
- * @param {Array} || {Object} orders
- * @returns {Array} || {Object}
- */
-export const normalizedPurchaseOrder = orders => {
-  // if orders is an array, loop through each
-  // and normalize data
-  // else, normalize single object
-  // function flatIdeaSampleData (order) {
-  //   const {
-  //     ideaSample: {
-  //       supplier,
-  //       product_name,
-  //       image,
-  //     } = {},
-  //   } = order
-
-  //   return {
-  //     ...order,
-  //     supplier,
-  //     product_name,
-  //     image,
-  //   }
-  // }
-
-  function flattenData (order) {
-    const {
-      supplier: {
-        name: supplierName,
-        id: supplierId,
-      },
-      supply: {
-        product_name: supplyName,
-        id: supplyId,
-      },
-    } = order
-
-    return {
-      ...order,
-      supplierName,
-      supplierId,
-      supplyName,
-      supplyId,
-    }
-  }
-
-  if (orders instanceof Array) {
-    return orders.map(flattenData)
-  }
-
-  return flattenData(orders)
-}
-
 // Action Creators
 
 /**
@@ -183,7 +126,7 @@ const reducer = handleActions({
       ...state.data.filter(po => (
         po.id === action.payload.order.id
       )),
-      normalizedPurchaseOrder(action.payload.order),
+      action.payload.order,
     ],
   }),
   [fetchPurchaseOrderFailed]: (state, action) => ({
@@ -198,7 +141,7 @@ const reducer = handleActions({
   [fetchPurchaseOrdersSuccess]: (state, action) => ({
     ...state,
     loading: loadingStatus.READY,
-    data: normalizedPurchaseOrder(action.payload.orders),
+    data: action.payload.orders,
   }),
   [fetchPurchaseOrdersFailed]: (state, action) => ({
     ...state,
