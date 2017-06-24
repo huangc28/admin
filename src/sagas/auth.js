@@ -1,7 +1,7 @@
 import { call, put, all, takeLatest } from 'redux-saga/effects'
 import { browserHistory } from 'react-router'
 
-import { ACCESS_TOKEN } from '../constants/auth'
+import { AUTH } from '../constants/auth'
 import * as APIS from '../apis/auth'
 import * as actions from '../redux/auth'
 
@@ -15,11 +15,26 @@ export function * watchLoginFlow (action) {
       throw new Error(response.error.message)
     }
 
-    // store token into redux store
-    yield put(actions.loginSuccess(response.access_token))
+    const {
+      access_token: accessToken,
+      username,
+    } = response
 
-    // store token into session storage
-    sessionStorage.setItem(ACCESS_TOKEN, response.access_token)
+    // store token into redux store
+    yield put(actions.loginSuccess(
+      {
+        accessToken,
+        username,
+      }
+    ))
+
+    // store following things into session storage
+    // 1. accessToken
+    // 2. username
+    sessionStorage.setItem(AUTH, JSON.stringify({
+      accessToken,
+      username,
+    }))
 
     // redirect to dashboard page
     browserHistory.push('/erp')
@@ -31,7 +46,7 @@ export function * watchLoginFlow (action) {
 export function * watchLogoutFlow () {
   yield put(actions.clearAccessToken())
 
-  sessionStorage.removeItem(ACCESS_TOKEN)
+  sessionStorage.removeItem(AUTH)
 
   browserHistory.push('/login')
 }

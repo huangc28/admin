@@ -23,7 +23,14 @@ export const {
   ACCESS_TOKEN_UNAUTHORIZED: errorMessage => ({
     errorMessage,
   }),
-  LOGIN_SUCCESS: token => ({ token }),
+  LOGIN_SUCCESS: info => {
+    const { accessToken, username } = info
+
+    return {
+      accessToken,
+      username,
+    }
+  },
 }, 'LOGOUT', 'CLEAR_ACCESS_TOKEN')
 
 /**
@@ -31,6 +38,7 @@ export const {
  */
 const INIT_STATE = {
   loading: loadingStatus.EMPTY,
+  username: '',
   accessToken: null,
   errorMessage: null,
 }
@@ -40,20 +48,27 @@ const authReducer = handleActions({
     ...state,
     loading: loadingStatus.LOADING,
   }),
-  [loginSuccess]: (state, action) => ({
-    ...state,
-    errorMessage: null,
-    accessToken: action.payload.token,
-  }),
+  [loginSuccess]: (state, action) => {
+    const { accessToken, username } = action.payload
+
+    return {
+      ...state,
+      errorMessage: null,
+      accessToken,
+      username,
+    }
+  },
   [loginFailed]: (state, action) => ({
     ...state,
     errorMessage: action.payload.errorMessage,
     accessToken: null,
+    username: '',
   }),
   [logout]: (state, action) => ({
     ...state,
     errorMessage: null,
     accessToken: null,
+    username: '',
   }),
   [clearAccessToken]: (state, action) => ({
     ...state,

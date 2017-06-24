@@ -10,18 +10,21 @@ import { I18nextProvider } from 'react-i18next'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 
 import i18n from './i18n'
-import { ACCESS_TOKEN } from './constants/auth'
+import { AUTH } from './constants/auth'
 import configureStore from './store/configureStore'
 import rootReducer from './redux/reducers'
 import routes from './routes'
 import { init } from './config'
 
-let accessToken
+let auth = {}
 
-// restore accessToken from session storage
-// if session key exists.
+// try to restore auth info from session storage.
 if (__CLIENT__ && sessionStorage) {
-  accessToken = sessionStorage.getItem(ACCESS_TOKEN)
+  const authObj = sessionStorage.getItem(AUTH)
+
+  if (authObj) {
+    auth = JSON.parse(authObj)
+  }
 }
 
 // initialize material muiTheme object.
@@ -34,9 +37,7 @@ export const muiTheme = getMuiTheme(null, {
 if (__CLIENT__) {
   const initialState = {
     ...window.__INITIAL_STATE__,
-    auth: {
-      accessToken,
-    },
+    auth: { ...auth },
   }
 
   const store = configureStore(rootReducer, initialState)

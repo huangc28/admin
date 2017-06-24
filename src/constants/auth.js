@@ -1,1 +1,1 @@
-export const ACCESS_TOKEN = 'XIN_YI_ACCESS_TOKEN'
+export const AUTH = 'XIN_YI_AUTH'

@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
 import Drawer from 'material-ui/Drawer'
 import Collapsible from 'react-collapsible'
@@ -112,6 +113,7 @@ class NavigationBar extends Component {
     const {
       open,
       onClose,
+      username,
     } = this.props
 
     return (
@@ -125,7 +127,7 @@ class NavigationBar extends Component {
         <header className={styles.header}>
           {/* name */}
           <div>
-            Bryan Huang
+            { username }
           </div>
         </header>
 
@@ -145,7 +147,14 @@ NavigationBar.defaultProps = {
 NavigationBar.propTypes = {
   open: PropTypes.bool,
   translation: PropTypes.func,
+  username: PropTypes.string,
   onClose: PropTypes.func,
 }
 
-export default translate(null, { translateFuncName: 'translation' })(NavigationBar)
+const mapStateToProps = state => ({
+  username: state.auth.username,
+})
+
+export default translate(null, { translateFuncName: 'translation' })(
+  connect(mapStateToProps, null)(NavigationBar)
+)
