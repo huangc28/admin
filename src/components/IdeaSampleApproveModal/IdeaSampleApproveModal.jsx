@@ -1,8 +1,12 @@
 import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
 import classnames from 'classnames/bind'
+import AutoComplete from 'material-ui/AutoComplete'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 
+import { isInteger } from '../../utils/validations'
+import { searchUsers } from '../../redux/users'
 import styles from './IdeaSampleApproveModal.css'
 
 const cx = classnames.bind(styles)
@@ -11,27 +15,42 @@ const cx = classnames.bind(styles)
  * @TODO integrate redux form instead of writing form manually.
  */
 class IdeaSampleApproveModal extends Component {
-  constructor () {
-    super()
+  state = {
+    // submit button disabled
+    disabled: true,
 
-    this.state = {
-      showModal: true,
-      showAnimation: true,
-      assignee: '',
-      quantity: 1,
-    }
+    showModal: true,
+    showAnimation: true,
+    assignee: '',
+    assigneeId: '',
+    quantity: 1,
   }
 
   onInputAssignee = evt => {
+    const { searchUsers } = this.props
+
+    const { value } = evt.target
+
     this.setState({
       assignee: evt.target.value,
-    })
+      assigneeId: '',
+    }, () => this.verifyInput())
+
+    searchUsers(value)
+  }
+
+  onNewRequestAssignee = selected => {
+    const { id } = selected
+
+    this.setState({
+      assigneeId: id,
+    }, () => this.verifyInput())
   }
 
   onInputQuantity = evt => {
     this.setState({
       quantity: evt.target.value,
-    })
+    }, () => this.verifyInput())
   }
 
   onClose = () => {
@@ -63,13 +82,45 @@ class IdeaSampleApproveModal extends Component {
     this.onClose()
   }
 
+  verifyInput = () => {
+    console.log('trigger verify input')
+
+    const {
+      assigneeId,
+      quantity,
+    } = this.state
+
+    if (!assigneeId || assigneeId === '') {
+      this.setState({
+        disabled: true,
+      })
+
+      return
+    }
+
+    if (!isInteger(quantity) || quantity === 0 || quantity === '0') {
+      this.setState({
+        disabled: true,
+      })
+
+      return
+    }
+
+    this.setState({
+      disabled: false,
+    })
+  }
+
   render () {
     const {
       showAnimation,
       showModal,
       assignee,
       quantity,
+      disabled,
     } = this.state
+
+    const { searchResult } = this.props
 
     return (
       <div
@@ -89,11 +140,17 @@ class IdeaSampleApproveModal extends Component {
 
           {/* assignee */}
           <div className={styles.container}>
-            <TextField
+            <AutoComplete
               hintText="Assignee"
               floatingLabelText="Assignee"
               value={assignee}
               onInput={this.onInputAssignee}
+              dataSource={searchResult}
+              dataSourceConfig={{
+                text: 'username',
+                value: 'id',
+              }}
+              onNewRequest={this.onNewRequestAssignee}
             />
           </div>
 
@@ -113,6 +170,7 @@ class IdeaSampleApproveModal extends Component {
                 primary
                 label="submit"
                 onTouchTap={this.onSubmit}
+                disabled={disabled}
               />
             </div>
           </div>
@@ -123,8 +181,16 @@ class IdeaSampleApproveModal extends Component {
 }
 
 IdeaSampleApproveModal.propTypes = {
+  searchResult: PropTypes.array,
+  searchUsers: PropTypes.func,
   onClose: PropTypes.func,
   onSubmit: PropTypes.func,
 }
 
-export default IdeaSampleApproveModal
+const mapStateToProps = state => ({
+  searchResult: state.users.searchResult,
+})
+
+export default connect(mapStateToProps, {
+  searchUsers,
+})(IdeaSampleApproveModal)

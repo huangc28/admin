@@ -11,6 +11,7 @@ import photo from './photo'
 import purchaseOrder from './purchaseOrder'
 import suppliers from './supplier'
 import supply from './supply'
+import users from './users'
 
 const rootReducer = combineReducers({
   auth,
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
   purchaseOrder,
   suppliers,
   supply,
+  users,
 })
 
 export default rootReducer

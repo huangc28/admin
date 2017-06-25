@@ -8,6 +8,7 @@ import ideasSaga from './ideas'
 import purchaseOrderSaga from './purchaseOrder'
 import suppilers from './suppliers'
 import supply from './supply'
+import users from './users'
 
 export default function * root () {
   yield all([
@@ -19,5 +20,6 @@ export default function * root () {
     call(purchaseOrderSaga),
     call(suppilers),
     call(supply),
+    call(users),
   ])
 }

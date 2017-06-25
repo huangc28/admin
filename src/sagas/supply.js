@@ -6,8 +6,6 @@ import * as actions from '../redux/supply'
 export function * createSupply (action) {
   const { supply } = action.payload
 
-  console.log('createSupply supply saga', supply)
-
   try {
     const response = yield call(apis.createSupply, supply)
 
@@ -15,12 +13,8 @@ export function * createSupply (action) {
       throw new Error(response.error.message)
     }
 
-    console.log('response', response)
-
     yield put(actions.createSupplySuccess(response.data))
   } catch (err) {
-    console.log('err', err)
-
     yield put(actions.createSupplyFailed(err.message))
   }
 }

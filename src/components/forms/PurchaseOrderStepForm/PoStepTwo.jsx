@@ -5,6 +5,7 @@ import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
 import Divider from 'material-ui/Divider'
 
+import { isInteger, isFloat } from '../../../utils/validations'
 import styles from './PurchaseOrderStepForm.css'
 import { PRICE_STEP } from '../../../constants/purchaseOrderStatus'
 import formStyles from '../../../styles/form.css'
@@ -105,36 +106,6 @@ class PoStepTwo extends Component {
       price,
       shippingCost,
     } = this.state
-
-    const isInteger = num => {
-      const parsedNum = parseInt(num, 10)
-
-      if (
-        num &&
-        !isNaN(parsedNum) &&
-        Number(num) === parsedNum &&
-        num % 1 === 0
-      ) {
-        return true
-      }
-
-      return false
-    }
-
-    const isFloat = num => {
-      const parsedNum = parseFloat(num)
-
-      if (
-        num &&
-        !isNaN(parsedNum) &&
-        Number(num) === parsedNum &&
-        num % 1 !== 0
-      ) {
-        return true
-      }
-
-      return false
-    }
 
     // check quantity is integer and exists
     if (!isInteger(quantity)) {
