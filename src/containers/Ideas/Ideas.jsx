@@ -7,7 +7,7 @@ import ReactPaginate from 'react-paginate'
 import { translate } from 'react-i18next'
 
 import paginationStyle from '../../styles/pagination.css'
-import styles from './ideas.css'
+import styles from './Ideas.css'
 import IdeaList from '../../components/IdeaList'
 import ControllButtonBar from '../../components/ControllButtonBar'
 import { getIdeas } from '../../redux/ideas'
