@@ -4,6 +4,11 @@ import {
 } from 'redux-actions'
 
 import * as loadingStatus from '../constants/loadingState'
+
+export const FETCH_PURCHASE_ORDERS = 'FETCH_PURCHASE_ORDERS'
+export const FETCH_PURCHASE_ORDERS_SUCCESS = 'FETCH_PURCHASE_ORDERS_SUCCESS'
+export const FETCH_PURCHASE_ORDERS_FAILED = 'FETCH_PURCHASE_ORDERS_FAILED'
+
 // Action Creators
 
 /**
@@ -60,17 +65,24 @@ export const {
   FETCH_PURCHASE_ORDER_FAILED: errorMessage => ({
     errorMessage,
   }),
-  FETCH_PURCHASE_ORDERS_SUCCESS: orders => ({
-    orders,
+  [FETCH_PURCHASE_ORDERS_SUCCESS]: ({ data, total }) => ({
+    data,
+    total,
   }),
-  FETCH_PURCHASE_ORDERS_FAILED: errorMessage => ({
+  [FETCH_PURCHASE_ORDERS_FAILED]: errorMessage => ({
     errorMessage,
   }),
-}, 'FETCH_PURCHASE_ORDERS')
+  [FETCH_PURCHASE_ORDERS]: ({ page, perpage, status }) => ({
+    page,
+    perpage,
+    status,
+  }),
+})
 
 // Reducer
 const INITIAL_STATE = {
   data: [],
+  total: 0,
   errorMessage: null,
   loading: loadingStatus.EMPTY,
 }
@@ -138,11 +150,19 @@ const reducer = handleActions({
     ...state,
     loading: loadingStatus.LOADING,
   }),
-  [fetchPurchaseOrdersSuccess]: (state, action) => ({
-    ...state,
-    loading: loadingStatus.READY,
-    data: action.payload.orders,
-  }),
+  [fetchPurchaseOrdersSuccess]: (state, action) => {
+    const {
+      data,
+      total,
+    } = action.payload
+
+    return {
+      ...state,
+      loading: loadingStatus.READY,
+      data,
+      total,
+    }
+  },
   [fetchPurchaseOrdersFailed]: (state, action) => ({
     ...state,
     loading: loadingStatus.ERROR,

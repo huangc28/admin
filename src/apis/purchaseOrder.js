@@ -22,8 +22,13 @@ export const editPurchaseOrder = po => (
   .then(res => res.json())
 )
 
-export const fetchPurchaseOrders = () => (
-  fetchApi(buildApiUrl('purchaseOrders'))
+/**
+ * @param {Number} page
+ * @param {Number} perpage
+ * @param {Number} status
+ */
+export const fetchPurchaseOrders = ({ page, perpage, status }) => (
+  fetchApi(buildApiUrl(`purchaseOrders?page=${page}&perpage=${perpage}&status=${status}`))
   .then(res => res.json())
 )
 

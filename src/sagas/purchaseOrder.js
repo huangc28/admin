@@ -111,16 +111,32 @@ export function * fetchPurchaseOrderFlow (action) {
 }
 
 export function * fetchPurchaseOrdersFlow (action) {
-  try {
-    const response = yield call(apis.fetchPurchaseOrders)
+  const {
+    page,
+    perpage,
+    status,
+  } = action.payload
 
-    // console.log('fetchPurchaseOrdersFlow response', response)
+  try {
+    const response = yield call(apis.fetchPurchaseOrders, {
+      page,
+      perpage,
+      status,
+    })
 
     if (response.error) {
       throw new Error(response.error)
     }
 
-    yield put(actions.fetchPurchaseOrdersSuccess(response.data))
+    const {
+      data,
+      total,
+    } = response
+
+    yield put(actions.fetchPurchaseOrdersSuccess({
+      data,
+      total,
+    }))
   } catch (err) {
     yield put(actions.fetchPurchaseOrdersFailed(err.errorMessage))
   }
@@ -166,7 +182,7 @@ export function * editPurchaseOrderFlow (action) {
 export default function * purchaseOrderFlow () {
   yield all([
     takeLatest(actions.fetchPurchaseOrder().type, fetchPurchaseOrderFlow),
-    takeLatest(actions.fetchPurchaseOrders().type, fetchPurchaseOrdersFlow),
+    takeLatest(actions.FETCH_PURCHASE_ORDERS, fetchPurchaseOrdersFlow),
     takeLatest(actions.createPurchaseOrder().type, createPurchaseOrderFlow),
     takeLatest(actions.editPurchaseOrder().type, editPurchaseOrderFlow),
   ])

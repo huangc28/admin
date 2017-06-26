@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import { Tabs, Tab } from 'material-ui/Tabs'
 import {
   Table,
   TableBody,
@@ -14,6 +15,7 @@ import { browserHistory } from 'react-router'
 import {
   PURCHASE_ORDER_UNFULFILLED,
   PURCHASE_ORDER_FULFILLED,
+  PER_PAGE,
 } from '../../constants/purchaseOrderStatus'
 import { fetchPurchaseOrders } from '../../redux/purchaseOrder'
 
@@ -54,8 +56,12 @@ const statusText = {
  */
 class PurchaseOrders extends Component {
   componentWillMount = () => {
-    // fetch purchase orders
-    this.props.fetchPurchaseOrders()
+    // fetch unfulfilled purchase orders
+    this.props.fetchPurchaseOrders({
+      page: 1,
+      perpage: PER_PAGE,
+      status: PURCHASE_ORDER_UNFULFILLED,
+    })
   }
 
   // @TODO this part should
@@ -74,10 +80,45 @@ class PurchaseOrders extends Component {
   )
 
   render () {
-    const { orders } = this.props
+    const {
+      orders,
+      fetchPurchaseOrders,
+    } = this.props
 
     return (
       <div>
+        {/* tabs */}
+        <Tabs>
+          <Tab
+            value={PURCHASE_ORDER_UNFULFILLED}
+            onActive={
+              () => {
+                // get unfulfilled purchase orders
+                fetchPurchaseOrders({
+                  page: 1,
+                  perpage: PER_PAGE,
+                  status: PURCHASE_ORDER_UNFULFILLED,
+                })
+              }
+            }
+            label="fulfilled"
+          />
+          <Tab
+            value={PURCHASE_ORDER_FULFILLED}
+            onActive={
+              () => {
+                // get unfulfilled purchase orders
+                fetchPurchaseOrders({
+                  page: 1,
+                  perpage: PER_PAGE,
+                  status: PURCHASE_ORDER_FULFILLED,
+                })
+              }
+            }
+            label="unfufilled"
+          />
+        </Tabs>
+
         <Table>
           {/* data header */}
           <TableHeader>
