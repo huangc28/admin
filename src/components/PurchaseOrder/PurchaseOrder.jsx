@@ -60,7 +60,7 @@ const PurchaseOrder = ({ id, name, assignee, image, internalSku }) => (
 )
 
 PurchaseOrder.propTypes = {
-  assignee: PropTypes.number,
+  assignee: PropTypes.string,
   id: PropTypes.number,
   image: PropTypes.string,
   internalSku: PropTypes.string,

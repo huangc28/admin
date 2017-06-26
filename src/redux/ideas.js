@@ -12,6 +12,7 @@ export const {
   getIdeasFailed,
   getIdea,
   getIdeaSuccess,
+  getIdeaFailed,
   saveIdea,
   saveIdeaSuccess,
   saveIdeaFailed,
@@ -129,6 +130,10 @@ const ideasReducer = handleActions({
       ...state.data.filter(idea => idea.id !== action.payload.idea.id),
       action.payload.idea,
     ],
+  }),
+  [getIdeaFailed]: (state, action) => ({
+    ...state,
+    errorMessage: action.payload.errorMessage,
   }),
 }, INIT_STATE)
 

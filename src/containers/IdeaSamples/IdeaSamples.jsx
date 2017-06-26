@@ -201,13 +201,21 @@ class IdeaSamples extends Component {
                 key={index}
               >
                 {
-                  /* eslint-disable */
-                  do {
-                    if (sampleKey === 'status') { statusText[sample[sampleKey]] || '' }
-                    else if (sampleKey === 'image') { <Thumbnail imgName={sample[sampleKey]} />}
-                    else { sample[sampleKey] }
-                  }
-                  /* eslint-enable */
+                  sampleKey === 'status'
+                    ? statusText[sample[sampleKey]] || ''
+                    : ''
+                }
+
+                {
+                  sampleKey === 'image'
+                    ? <Thumbnail imgName={sample[sampleKey]} />
+                    : ''
+                }
+
+                {
+                  sampleKey !== 'image' && sampleKey !== 'status'
+                    ? sample[sampleKey]
+                    : ''
                 }
               </div>
             ))
