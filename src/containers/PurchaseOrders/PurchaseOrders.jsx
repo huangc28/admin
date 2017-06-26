@@ -99,13 +99,18 @@ class PurchaseOrders extends Component {
         <PurchaseOrderList>
           {
             orders.map((order, index) => {
+              console.log('BRYAN ORDER', order)
+
               const {
                 id,
                 // @TODO this should be assignee user name
-                assignee_user_id: assigneeUserId,
+                assignee: {
+                  username,
+                },
                 supply: {
                   internal_sku: internalSku,
                   product_name: productName,
+                  image,
                 },
               } = order
 
@@ -114,9 +119,9 @@ class PurchaseOrders extends Component {
                   key={index}
                   id={id}
                   name={productName}
-                  assignee={assigneeUserId}
+                  assignee={username}
                   internalSku={internalSku}
-                  image={''}
+                  image={image}
                 />
               )
             })

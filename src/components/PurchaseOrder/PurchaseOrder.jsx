@@ -6,6 +6,8 @@ import {
 } from 'material-ui/Table'
 import { browserHistory } from 'react-router'
 
+import Thumbnail from '../images/Thumbnail'
+
 const PurchaseOrder = ({ id, name, assignee, image, internalSku }) => (
   <TableRow>
     {/* supply name */}
@@ -15,7 +17,7 @@ const PurchaseOrder = ({ id, name, assignee, image, internalSku }) => (
 
     {/* thumbnail */}
     <TableRowColumn>
-      { image }
+      <Thumbnail imgName={name} />
     </TableRowColumn>
 
     {/* assignee */}
