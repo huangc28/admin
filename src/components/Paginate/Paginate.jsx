@@ -3,11 +3,6 @@ import ReactPaginate from 'react-paginate'
 
 import styles from '../../styles/pagination.css'
 
-/**
- * The purpose of this class is to unify the style
- * of pagination.
- *
- */
 const Paginate = ({ pageCount, onPageChange }) => (
   <ReactPaginate
     previousLabel="previous"

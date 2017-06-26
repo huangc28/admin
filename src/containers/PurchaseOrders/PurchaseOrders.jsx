@@ -2,8 +2,10 @@ import React, { Component, PropTypes } from 'react'
 import { Tabs, Tab } from 'material-ui/Tabs'
 import { connect } from 'react-redux'
 
+import styles from './PurchaseOrders.css'
 import PurchaseOrderList from '../../components/PurchaseOrderList'
 import PurchaseOrder from '../../components/PurchaseOrder'
+import Paginate from '../../components/Paginate'
 import {
   PURCHASE_ORDER_UNFULFILLED,
   PURCHASE_ORDER_FULFILLED,
@@ -19,19 +21,63 @@ import { fetchPurchaseOrders } from '../../redux/purchaseOrder'
  * 5. internal sku
  */
 class PurchaseOrders extends Component {
+  state = {
+    poStatus: PURCHASE_ORDER_UNFULFILLED,
+  }
+
   componentWillMount = () => {
     // fetch unfulfilled purchase orders
     this.props.fetchPurchaseOrders({
       page: 1,
       perpage: PER_PAGE,
+      status: this.state.poStatus,
+    })
+  }
+
+  onPageChange = selected => {
+    const { fetchPurchaseOrders } = this.props
+
+    fetchPurchaseOrders({
+      page: selected + 1,
+      perpage: PER_PAGE,
+      status: this.state.poStatus,
+    })
+  }
+
+  onActivePOUnfulfilled = () => {
+    const { fetchPurchaseOrders } = this.props
+
+    // get unfulfilled purchase orders
+    fetchPurchaseOrders({
+      page: 1,
+      perpage: PER_PAGE,
       status: PURCHASE_ORDER_UNFULFILLED,
+    })
+
+    this.setState({
+      poStatus: PURCHASE_ORDER_UNFULFILLED,
+    })
+  }
+
+  onActivePOFulfilled = () => {
+    const { fetchPurchaseOrders } = this.props
+
+    // get unfulfilled purchase orders
+    fetchPurchaseOrders({
+      page: 1,
+      perpage: PER_PAGE,
+      status: PURCHASE_ORDER_FULFILLED,
+    })
+
+    this.setState({
+      poStatus: PURCHASE_ORDER_FULFILLED,
     })
   }
 
   render () {
     const {
+      pageCount,
       orders,
-      fetchPurchaseOrders,
     } = this.props
 
     return (
@@ -40,31 +86,13 @@ class PurchaseOrders extends Component {
         <Tabs>
           <Tab
             value={PURCHASE_ORDER_UNFULFILLED}
-            onActive={
-              () => {
-                // get unfulfilled purchase orders
-                fetchPurchaseOrders({
-                  page: 1,
-                  perpage: PER_PAGE,
-                  status: PURCHASE_ORDER_UNFULFILLED,
-                })
-              }
-            }
-            label="fulfilled"
+            onActive={this.onActivePOUnfulfilled}
+            label="Unfulfilled"
           />
           <Tab
             value={PURCHASE_ORDER_FULFILLED}
-            onActive={
-              () => {
-                // get unfulfilled purchase orders
-                fetchPurchaseOrders({
-                  page: 1,
-                  perpage: PER_PAGE,
-                  status: PURCHASE_ORDER_FULFILLED,
-                })
-              }
-            }
-            label="unfufilled"
+            onActive={this.onActivePOFulfilled}
+            label="Fufilled"
           />
         </Tabs>
 
@@ -94,6 +122,14 @@ class PurchaseOrders extends Component {
             })
           }
         </PurchaseOrderList>
+
+        {/* pagination */}
+        <div className={styles.paginationContainer}>
+          <Paginate
+            pageCount={pageCount}
+            onPageChange={this.onPageChange}
+          />
+        </div>
       </div>
     )
   }
@@ -102,11 +138,17 @@ class PurchaseOrders extends Component {
 PurchaseOrders.propTypes = {
   fetchPurchaseOrders: PropTypes.func,
   orders: PropTypes.array,
+  pageCount: PropTypes.number,
 }
 
-const mapStateToProps = state => ({
-  orders: state.purchaseOrder.data,
-})
+const mapStateToProps = state => {
+  const { total } = state.purchaseOrder
+
+  return {
+    orders: state.purchaseOrder.data,
+    pageCount: Math.ceil(total / PER_PAGE),
+  }
+}
 
 export default connect(mapStateToProps, {
   fetchPurchaseOrders,
