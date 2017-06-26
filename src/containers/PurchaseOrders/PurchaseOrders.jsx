@@ -1,51 +1,15 @@
 import React, { Component, PropTypes } from 'react'
 import { Tabs, Tab } from 'material-ui/Tabs'
-import {
-  Table,
-  TableBody,
-  TableHeader,
-  TableHeaderColumn,
-  TableRow,
-  TableRowColumn,
-} from 'material-ui/Table'
-import IconButton from 'material-ui/IconButton'
 import { connect } from 'react-redux'
-import { browserHistory } from 'react-router'
 
+import PurchaseOrderList from '../../components/PurchaseOrderList'
+import PurchaseOrder from '../../components/PurchaseOrder'
 import {
   PURCHASE_ORDER_UNFULFILLED,
   PURCHASE_ORDER_FULFILLED,
   PER_PAGE,
 } from '../../constants/purchaseOrderStatus'
 import { fetchPurchaseOrders } from '../../redux/purchaseOrder'
-
-const HEADERS = [
-  {
-    title: 'Product Name',
-    field: 'supplyName',
-  },
-  {
-    title: 'Thumbnail',
-    field: 'image',
-  },
-  {
-    title: 'Assignee',
-    field: 'assignee_user_id',
-  },
-  {
-    title: 'Internal Sku',
-    field: 'internal_sku',
-  },
-  {
-    title: 'Status',
-    field: 'status',
-  },
-]
-
-const statusText = {
-  [PURCHASE_ORDER_UNFULFILLED]: 'unfulfilled',
-  [PURCHASE_ORDER_FULFILLED]: 'fulfilled',
-}
 
 /**
  * 1. product name
@@ -63,21 +27,6 @@ class PurchaseOrders extends Component {
       status: PURCHASE_ORDER_UNFULFILLED,
     })
   }
-
-  // @TODO this part should
-  renderOrder = (order, index) => (
-    HEADERS.map((header, index) => (
-      <TableRowColumn key={index}>
-        {
-          header.title === 'Status' // @TODO is there a better way of writing it?
-            ? statusText[
-              order[header.field]
-            ]
-            : order[header.field]
-        }
-      </TableRowColumn>
-    ))
-  )
 
   render () {
     const {
@@ -119,67 +68,32 @@ class PurchaseOrders extends Component {
           />
         </Tabs>
 
-        <Table>
-          {/* data header */}
-          <TableHeader>
-            <TableRow>
-              {
-                HEADERS.map((header, index) => (
-                  <TableHeaderColumn key={index}>
-                    { header.title }
-                  </TableHeaderColumn>
-                ))
-              }
+        <PurchaseOrderList>
+          {
+            orders.map((order, index) => {
+              const {
+                id,
+                // @TODO this should be assignee user name
+                assignee_user_id: assigneeUserId,
+                supply: {
+                  internal_sku: internalSku,
+                  product_name: productName,
+                },
+              } = order
 
-              <TableHeaderColumn>
-                Actions
-              </TableHeaderColumn>
-            </TableRow>
-          </TableHeader>
-
-          {/* orders data */}
-          <TableBody>
-            {
-              orders.map((order, index) => (
-                <TableRow key={index}>
-                  {
-                    this.renderOrder(order, index)
-                  }
-
-                  {
-                    // solve the problem of icon tooltip being hidden
-                    // by table row column: https://github.com/callemall/material-ui/issues/4671
-                    <TableRowColumn style={{ overflow: 'visible' }}>
-                      <IconButton
-                        iconClassName="material-icons"
-                        tooltip="View"
-                        onTouchTap={
-                          () => browserHistory.push(
-                            `/erp/procurement/purchase-order/${order.id}`
-                          )
-                        }
-                      >
-                        visibility
-                      </IconButton>
-
-                      <IconButton
-                        iconClassName="material-icons"
-                        tooltip="Edit"
-                        onTouchTap={
-                          () => browserHistory.push(
-                            `/erp/procurement/purchase-order/${order.id}/edit`
-                          )
-                        }
-                      >
-                        mode_edit
-                      </IconButton>
-                    </TableRowColumn>
-                  }
-                </TableRow>
-              ))
-            }
-          </TableBody>
-        </Table>
+              return (
+                <PurchaseOrder
+                  key={index}
+                  id={id}
+                  name={productName}
+                  assignee={assigneeUserId}
+                  internalSku={internalSku}
+                  image={''}
+                />
+              )
+            })
+          }
+        </PurchaseOrderList>
       </div>
     )
   }
