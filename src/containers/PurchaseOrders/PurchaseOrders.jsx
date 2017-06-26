@@ -99,8 +99,6 @@ class PurchaseOrders extends Component {
         <PurchaseOrderList>
           {
             orders.map((order, index) => {
-              console.log('BRYAN ORDER', order)
-
               const {
                 id,
                 // @TODO this should be assignee user name
