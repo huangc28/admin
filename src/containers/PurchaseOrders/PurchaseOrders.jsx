@@ -101,16 +101,14 @@ class PurchaseOrders extends Component {
             orders.length && orders.map((order, index) => {
               const {
                 id,
-                // @TODO this should be assignee user name
-                assignee: {
-                  username,
-                } = {},
-                supply: {
-                  internal_sku: internalSku,
-                  product_name: productName,
-                  image,
-                } = {},
+                assignee,
+                supply,
               } = order
+
+              const productName = (supply && supply.product_name) || ''
+              const internalSku = (supply && supply.internal_sku) || ''
+              const image = (supply && supply.image) || ''
+              const username = (assignee && assignee.username) || ''
 
               return (
                 <PurchaseOrder
