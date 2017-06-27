@@ -6,6 +6,33 @@ import {
 import * as loadingStatus from '../constants/loadingState'
 import * as ideaStatus from '../constants/ideas'
 
+export const GET_IDEAS = 'GET_IDEAS'
+export const GET_IDEAS_SUCCESS = 'GET_IDEAS_SUCCESS'
+export const GET_IDEAS_FAILED = 'GET_IDEAS_FAILED'
+
+export const GET_IDEA = 'GET_IDEA'
+export const GET_IDEA_SUCCESS = 'GET_IDEA_SUCCESS'
+export const GET_IDEA_FAILED = 'GET_IDEA_FAILED'
+
+export const SAVE_IDEA = 'SAVE_IDEA'
+export const SAVE_IDEA_SUCCESS = 'SAVE_IDEA_SUCCESS'
+export const SAVE_IDEA_FAILED = 'SAVE_IDEA_FAILED'
+
+export const EDIT_IDEA = 'EDIT_IDEA'
+export const EDIT_IDEA_SUCCESS = 'EDIT_IDEA_SUCCESS'
+export const EDIT_IDEA_FAILED = 'EDIT_IDEA_FAILED'
+
+export const SAVE_AND_SUBMIT_IDEA = 'SAVE_AND_SUBMIT_IDEA'
+export const SAVE_AND_SUBMIT_IDEA_SUCCESS = 'SAVE_AND_SUBMIT_IDEA_SUCCESS'
+export const SAVE_AND_SUBMIT_IDEA_FAILED = 'SAVE_AND_SUBMIT_IDEA_FAILED'
+
+export const DELETE_IDEA = 'DELETE_IDEA'
+export const DELETE_IDEA_SUCCESS = 'DELETE_IDEA_SUCCESS'
+export const DELETE_IDEA_FAILED = 'DELETE_IDEA_FAILED'
+
+export const REJECT_IDEA = 'REJECT_IDEA'
+export const APPROVE_IDEA = 'APPROVE_IDEA'
+
 export const {
   getIdeas,
   getIdeasSuccess,
@@ -28,28 +55,28 @@ export const {
   rejectIdea,
   approveIdea,
 } = createActions({
-  GET_IDEAS: queries => ({
+  [GET_IDEAS]: queries => ({
     queries,
   }),
-  GET_IDEAS_SUCCESS: ideasData => ({ ideasData }),
-  GET_IDEAS_FAILED: errorMessage => ({ errorMessage }),
-  GET_IDEA: id => ({ id }),
-  GET_IDEA_SUCCESS: idea => ({ idea }),
-  GET_IDEA_FAILED: errorMessage => ({ errorMessage }),
-  SAVE_IDEA: formData => ({ formData }),
-  SAVE_IDEA_SUCCESS: formData => ({ formData }),
-  SAVE_IDEA_FAILED: errorMessage => ({ errorMessage }),
-  EDIT_IDEA: formData => ({ formData }),
-  EDIT_IDEA_SUCCESS: formData => ({ formData }),
-  EDIT_IDEA_FAILED: errorMessage => ({ errorMessage }),
-  SAVE_AND_SUBMIT_IDEA: formData => ({ formData }),
-  SAVE_AND_SUBMIT_IDEA_SUCCESS: formData => ({ formData }),
-  SAVE_AND_SUBMIT_IDEA_FAILED: errorMessage => ({ errorMessage }),
-  DELETE_IDEA: id => ({ id }),
-  DELETE_IDEA_SUCCESS: id => ({ id }),
-  DELETE_IDEA_FAILED: errorMessage => ({ errorMessage }),
-  REJECT_IDEA: ideaId => ({ ideaId }),
-  APPROVE_IDEA: ideaId => ({ ideaId }),
+  [GET_IDEAS_SUCCESS]: ideasData => ({ ideasData }),
+  [GET_IDEAS_FAILED]: errorMessage => ({ errorMessage }),
+  [GET_IDEA]: id => ({ id }),
+  [GET_IDEA_SUCCESS]: idea => ({ idea }),
+  [GET_IDEA_FAILED]: errorMessage => ({ errorMessage }),
+  [SAVE_IDEA]: formData => ({ formData }),
+  [SAVE_IDEA_SUCCESS]: formData => ({ formData }),
+  [SAVE_IDEA_FAILED]: errorMessage => ({ errorMessage }),
+  [EDIT_IDEA]: formData => ({ formData }),
+  [EDIT_IDEA_SUCCESS]: formData => ({ formData }),
+  [EDIT_IDEA_FAILED]: errorMessage => ({ errorMessage }),
+  [SAVE_AND_SUBMIT_IDEA]: formData => ({ formData }),
+  [SAVE_AND_SUBMIT_IDEA_SUCCESS]: formData => ({ formData }),
+  [SAVE_AND_SUBMIT_IDEA_FAILED]: errorMessage => ({ errorMessage }),
+  [DELETE_IDEA]: id => ({ id }),
+  [DELETE_IDEA_SUCCESS]: id => ({ id }),
+  [DELETE_IDEA_FAILED]: errorMessage => ({ errorMessage }),
+  [REJECT_IDEA]: ideaId => ({ ideaId }),
+  [APPROVE_IDEA]: ideaId => ({ ideaId }),
 })
 
 /**

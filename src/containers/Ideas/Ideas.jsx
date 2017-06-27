@@ -3,10 +3,9 @@ import { connect } from 'react-redux'
 import { Tabs, Tab } from 'material-ui/Tabs'
 import RaisedButton from 'material-ui/RaisedButton'
 import { browserHistory } from 'react-router'
-import ReactPaginate from 'react-paginate'
 import { translate } from 'react-i18next'
 
-import paginationStyle from '../../styles/pagination.css'
+import Paginate from '../../components/Paginate'
 import styles from './Ideas.css'
 import IdeaList from '../../components/IdeaList'
 import ControllButtonBar from '../../components/ControllButtonBar'
@@ -135,18 +134,9 @@ class Ideas extends Component {
         <IdeaList ideas={ideas} />
 
         <div className={styles.paginationContainer}>
-          <ReactPaginate
-            previousLabel="previous"
-            nextLabel="next"
-            breakLabel={<a href="">...</a>}
+          <Paginate
             pageCount={pageCount}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={5}
             onPageChange={this.onPageChange}
-            containerClassName={paginationStyle.pagination}
-            subContainerClassName={'pages pagination'}
-            activeClassName={paginationStyle.active}
-            disabledClassName={paginationStyle.disabled}
           />
         </div>
       </div>

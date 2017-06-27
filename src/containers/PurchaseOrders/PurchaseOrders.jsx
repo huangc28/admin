@@ -104,12 +104,12 @@ class PurchaseOrders extends Component {
                 // @TODO this should be assignee user name
                 assignee: {
                   username,
-                },
+                } = {},
                 supply: {
                   internal_sku: internalSku,
                   product_name: productName,
                   image,
-                },
+                } = {},
               } = order
 
               return (
