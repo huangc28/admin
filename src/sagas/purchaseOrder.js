@@ -181,9 +181,9 @@ export function * editPurchaseOrderFlow (action) {
 
 export default function * purchaseOrderFlow () {
   yield all([
-    takeLatest(actions.fetchPurchaseOrder().type, fetchPurchaseOrderFlow),
+    takeLatest(actions.FETCH_PURCHASE_ORDER, fetchPurchaseOrderFlow),
     takeLatest(actions.FETCH_PURCHASE_ORDERS, fetchPurchaseOrdersFlow),
-    takeLatest(actions.createPurchaseOrder().type, createPurchaseOrderFlow),
-    takeLatest(actions.editPurchaseOrder().type, editPurchaseOrderFlow),
+    takeLatest(actions.CREATE_PURCHASE_ORDER, createPurchaseOrderFlow),
+    takeLatest(actions.EDIT_PURCHASE_ORDER, editPurchaseOrderFlow),
   ])
 }

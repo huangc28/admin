@@ -5,6 +5,15 @@ import {
 
 import * as loadingStatus from '../constants/loadingState'
 
+export const LOGIN = 'LOGIN'
+export const LOGIN_FAILED = 'LOGIN_FAILED'
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
+
+export const LOGOUT = 'LOGOUT'
+
+export const CLEAR_ACCESS_TOKEN = 'CLEAR_ACCESS_TOKEN'
+export const ACCESS_TOKEN_UNAUTHORIZED = 'ACCESS_TOKEN_UNAUTHORIZED'
+
 export const {
   login,
   loginSuccess,
@@ -13,17 +22,14 @@ export const {
   logout,
   clearAccessToken,
 } = createActions({
-  LOGIN: (phone, password) => ({
+  [LOGIN]: (phone, password) => ({
     phone,
     password,
   }),
-  LOGIN_FAILED: errorMessage => ({
+  [LOGIN_FAILED]: errorMessage => ({
     errorMessage,
   }),
-  ACCESS_TOKEN_UNAUTHORIZED: errorMessage => ({
-    errorMessage,
-  }),
-  LOGIN_SUCCESS: info => {
+  [LOGIN_SUCCESS]: info => {
     const { accessToken, username } = info
 
     return {
@@ -31,7 +37,10 @@ export const {
       username,
     }
   },
-}, 'LOGOUT', 'CLEAR_ACCESS_TOKEN')
+  [ACCESS_TOKEN_UNAUTHORIZED]: errorMessage => ({
+    errorMessage,
+  }),
+}, LOGOUT, CLEAR_ACCESS_TOKEN)
 
 /**
  * Reducer.

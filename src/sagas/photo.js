@@ -25,6 +25,6 @@ function * watchUploadFileFlow (action) {
 
 export default function * photoFlow () {
   yield all([
-    takeLatest(actions.uploadPhoto().type, watchUploadFileFlow),
+    takeLatest(actions.UPLOAD_PHOTO, watchUploadFileFlow),
   ])
 }

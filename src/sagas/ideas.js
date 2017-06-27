@@ -208,13 +208,13 @@ export function * watchApproveIdeaFlow (action) {
 
 export default function * ideasFlow () {
   yield all([
-    takeLatest(actions.getIdeas().type, watchGetIdeasFlow),
-    takeLatest(actions.getIdea().type, watchGetIdeaFlow),
-    takeLatest(actions.deleteIdea().type, watchDeleteIdeaFlow),
-    takeLatest(actions.saveIdea().type, watchSaveIdeaFlow),
-    takeLatest(actions.saveAndSubmitIdea().type, watchSaveIdeaAndSubmitFlow),
-    takeLatest(actions.editIdea().type, watchEditIdeaFlow),
-    takeLatest(actions.rejectIdea().type, watchRejectIdeaFlow),
-    takeLatest(actions.approveIdea().type, watchApproveIdeaFlow),
+    takeLatest(actions.GET_IDEAS, watchGetIdeasFlow),
+    takeLatest(actions.GET_IDEA, watchGetIdeaFlow),
+    takeLatest(actions.DELETE_IDEA, watchDeleteIdeaFlow),
+    takeLatest(actions.SAVE_IDEA, watchSaveIdeaFlow),
+    takeLatest(actions.SAVE_AND_SUBMIT_IDEA, watchSaveIdeaAndSubmitFlow),
+    takeLatest(actions.EDIT_IDEA, watchEditIdeaFlow),
+    takeLatest(actions.REJECT_IDEA, watchRejectIdeaFlow),
+    takeLatest(actions.APPROVE_IDEA, watchApproveIdeaFlow),
   ])
 }

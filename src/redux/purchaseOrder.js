@@ -5,6 +5,18 @@ import {
 
 import * as loadingStatus from '../constants/loadingState'
 
+export const CREATE_PURCHASE_ORDER = 'CREATE_PURCHASE_ORDER'
+export const CREATE_PURCHASE_ORDER_SUCCESS = 'CREATE_PURCHASE_ORDER_SUCCESS'
+export const CREATE_PURCHASE_ORDER_FAILED = 'CREATE_PURCHASE_ORDER_FAILED'
+
+export const EDIT_PURCHASE_ORDER = 'EDIT_PURCHASE_ORDER'
+export const EDIT_PURCHASE_ORDER_SUCCESS = 'EDIT_PURCHASE_ORDER_SUCCESS'
+export const EDIT_PURCHASE_ORDER_FAILED = 'EDIT_PURCHASE_ORDER_FAILED'
+
+export const FETCH_PURCHASE_ORDER = 'FETCH_PURCHASE_ORDER'
+export const FETCH_PURCHASE_ORDER_SUCCESS = 'FETCH_PURCHASE_ORDER_SUCCESS'
+export const FETCH_PURCHASE_ORDER_FAILED = 'FETCH_PURCHASE_ORDER_FAILED'
+
 export const FETCH_PURCHASE_ORDERS = 'FETCH_PURCHASE_ORDERS'
 export const FETCH_PURCHASE_ORDERS_SUCCESS = 'FETCH_PURCHASE_ORDERS_SUCCESS'
 export const FETCH_PURCHASE_ORDERS_FAILED = 'FETCH_PURCHASE_ORDERS_FAILED'
@@ -38,31 +50,31 @@ export const {
   fetchPurchaseOrdersFailed,
   fetchPurchaseOrders,
 } = createActions({
-  CREATE_PURCHASE_ORDER: po => ({
+  [CREATE_PURCHASE_ORDER]: po => ({
     po,
   }),
-  CREATE_PURCHASE_ORDER_SUCCESS: po => ({
+  [CREATE_PURCHASE_ORDER_SUCCESS]: po => ({
     po,
   }),
-  CREATE_PURCHASE_ORDER_FAILED: errorMessage => ({
+  [CREATE_PURCHASE_ORDER_FAILED]: errorMessage => ({
     errorMessage,
   }),
-  EDIT_PURCHASE_ORDER: po => ({
+  [EDIT_PURCHASE_ORDER]: po => ({
     po,
   }),
-  EDIT_PURCHASE_ORDER_SUCCESS: po => ({
+  [EDIT_PURCHASE_ORDER_SUCCESS]: po => ({
     po,
   }),
-  EDIT_PURCHASE_ORDER_FAILED: errorMessage => ({
+  [EDIT_PURCHASE_ORDER_FAILED]: errorMessage => ({
     errorMessage,
   }),
-  FETCH_PURCHASE_ORDER: orderId => ({
+  [FETCH_PURCHASE_ORDER]: orderId => ({
     orderId,
   }),
-  FETCH_PURCHASE_ORDER_SUCCESS: order => ({
+  [FETCH_PURCHASE_ORDER_SUCCESS]: order => ({
     order,
   }),
-  FETCH_PURCHASE_ORDER_FAILED: errorMessage => ({
+  [FETCH_PURCHASE_ORDER_FAILED]: errorMessage => ({
     errorMessage,
   }),
   [FETCH_PURCHASE_ORDERS_SUCCESS]: ({ data, total }) => ({

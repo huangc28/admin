@@ -21,6 +21,6 @@ export function * searchUser (action) {
 
 export default function * usersFlow () {
   yield all([
-    takeLatest(actions.searchUsers().type, searchUser),
+    takeLatest(actions.SEARCH_USERS, searchUser),
   ])
 }

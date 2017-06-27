@@ -1,4 +1,4 @@
-@value astral, boulder, silver from '../../styles/colors.css'
+@value astral, boulder, silver from '../../styles/colors.css';
 
 .pagination {
   display: inline-block;

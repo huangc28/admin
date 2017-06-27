@@ -41,7 +41,7 @@ export function * watchReworkIdeaFlow (action) {
 
 export default function * ideaCommentFlow () {
   yield all([
-    takeLatest(actions.fetchIdeaComment().type, watchFetchIdeaCommentflow),
-    takeLatest(actions.reworkIdea().type, watchReworkIdeaFlow),
+    takeLatest(actions.FETCH_IDEA_COMMENT, watchFetchIdeaCommentflow),
+    takeLatest(actions.REWORK_IDEA, watchReworkIdeaFlow),
   ])
 }

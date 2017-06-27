@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import ReactPaginate from 'react-paginate'
 
-import styles from '../../styles/pagination.css'
+import styles from './paginate.css'
 
 const Paginate = ({ pageCount, onPageChange }) => (
   <ReactPaginate

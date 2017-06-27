@@ -4,19 +4,23 @@ import {
   handleActions,
 } from 'redux-actions'
 
+export const STORE_INIT_FORM_DATA = 'STORE_INIT_FORM_DATA'
+export const EDIT_INIT_FORM_DATA = 'EDIT_INIT_FORM_DATA'
+export const DELETE_INIT_FORM_DATA = 'DELETE_INIT_FORM_DATA'
+
 export const {
   storeInitFormData,
   editInitFormData,
   deleteInitFormData,
 } = createActions({
-  STORE_INIT_FORM_DATA: formData => ({
+  [STORE_INIT_FORM_DATA]: formData => ({
     formData,
   }),
-  EDIT_INIT_FORM_DATA: (attribute, value) => ({
+  [EDIT_INIT_FORM_DATA]: (attribute, value) => ({
     attribute,
     value,
   }),
-}, 'DELETE_INIT_FORM_DATA')
+}, DELETE_INIT_FORM_DATA)
 
 /**
  * @param {object} formData

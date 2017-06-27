@@ -53,8 +53,8 @@ export function * watchLogoutFlow () {
 
 export default function * () {
   yield all([
-    takeLatest(actions.login().type, watchLoginFlow),
-    takeLatest(actions.logout().type, watchLogoutFlow),
-    takeLatest(actions.accessTokenUnauthorized().type, watchLogoutFlow),
+    takeLatest(actions.LOGIN, watchLoginFlow),
+    takeLatest(actions.LOGOUT, watchLogoutFlow),
+    takeLatest(actions.ACCESS_TOKEN_UNAUTHORIZED, watchLogoutFlow),
   ])
 }
