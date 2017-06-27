@@ -135,11 +135,11 @@ export function * watchApproveIdeaSampleFlow (action) {
 
 export default function * ideaSamplesFlow () {
   yield all([
-    takeLatest(actions.fetchSamples().type, watchFetchIdeaSamplesFlow),
-    takeLatest(actions.fetchSample().type, watchFetchIdeaSampleFlow),
-    takeLatest(actions.editIdeaSample().type, watchEditIdeaSampleFlow),
-    takeLatest(actions.saveIdeaSample().type, watchSaveIdeaSample),
-    takeLatest(actions.deleteIdeaSample().type, watchDeleteIdeaSampleFlow),
-    takeLatest(actions.approveIdeaSample().type, watchApproveIdeaSampleFlow),
+    takeLatest(actions.FETCH_SAMPLES, watchFetchIdeaSamplesFlow),
+    takeLatest(actions.FETCH_SAMPLE, watchFetchIdeaSampleFlow),
+    takeLatest(actions.EDIT_IDEA_SAMPLE, watchEditIdeaSampleFlow),
+    takeLatest(actions.SAVE_IDEA_SAMPLE, watchSaveIdeaSample),
+    takeLatest(actions.DELETE_IDEA_SAMPLE, watchDeleteIdeaSampleFlow),
+    takeLatest(actions.APPROVE_IDEA_SAMPLE, watchApproveIdeaSampleFlow),
   ])
 }

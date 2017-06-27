@@ -6,6 +6,30 @@ import {
 import * as loadingStatus from '../constants/loadingState'
 import * as sampleStatus from '../constants/ideaSamples'
 
+export const FETCH_SAMPLES = 'FETCH_SAMPLES'
+export const FETCH_SAMPLES_SUCCESS = 'FETCH_SAMPLES_SUCCESS'
+export const FETCH_SAMPLES_FAILED = 'FETCH_SAMPLES_FAILED'
+
+export const FETCH_SAMPLE = 'FETCH_SAMPLE'
+export const FETCH_SAMPLE_SUCCESS = 'FETCH_SAMPLE_SUCCESS'
+export const FETCH_SAMPLE_FAILED = 'FETCH_SAMPLE_FAILED'
+
+export const EDIT_IDEA_SAMPLE = 'EDIT_IDEA_SAMPLE'
+export const EDIT_IDEA_SAMPLE_SUCCESS = 'EDIT_IDEA_SAMPLE_SUCCESS'
+export const EDIT_IDEA_SAMPLE_FAILED = 'EDIT_IDEA_SAMPLE_FAILED'
+
+export const SAVE_IDEA_SAMPLE = 'SAVE_IDEA_SAMPLE'
+export const SAVE_IDEA_SAMPLE_SUCCESS = 'SAVE_IDEA_SAMPLE_SUCCESS'
+export const SAVE_IDEA_SAMPLE_FAILED = 'SAVE_IDEA_SAMPLE_FAILED'
+
+export const DELETE_IDEA_SAMPLE = 'DELETE_IDEA_SAMPLE'
+export const DELETE_IDEA_SAMPLE_SUCCESS = 'DELETE_IDEA_SAMPLE_SUCCESS'
+export const DELETE_IDEA_SAMPLE_FAILED = 'DELETE_IDEA_SAMPLE_FAILED'
+
+export const APPROVE_IDEA_SAMPLE = 'APPROVE_IDEA_SAMPLE'
+export const APPROVE_IDEA_SAMPLE_SUCCESS = 'APPROVE_IDEA_SAMPLE_SUCCESS'
+export const APPROVE_IDEA_SAMPLE_FAILED = 'APPROVE_IDEA_SAMPLE_FAILED'
+
 export const {
   fetchSamples,
   fetchSamplesSuccess,
@@ -26,83 +50,83 @@ export const {
   approveIdeaSampleSuccess,
   approveIdeaSampleFailed,
 } = createActions({
-  FETCH_SAMPLES: ideaId => ({
+  [FETCH_SAMPLES]: ideaId => ({
     ideaId,
   }),
-  FETCH_SAMPLES_SUCCESS: samples => ({
+  [FETCH_SAMPLES_SUCCESS]: samples => ({
     samples,
   }),
-  FETCH_SAMPLES_FAILED: errorMessage => ({
+  [FETCH_SAMPLES_FAILED]: errorMessage => ({
     errorMessage,
   }),
 
-  FETCH_SAMPLE: sampleId => ({
+  [FETCH_SAMPLE]: sampleId => ({
     sampleId,
   }),
 
-  FETCH_SAMPLE_SUCCESS: sample => ({
+  [FETCH_SAMPLE_SUCCESS]: sample => ({
     sample,
   }),
 
-  FETCH_SAMPLE_FAILED: errorMessage => ({
+  [FETCH_SAMPLE_FAILED]: errorMessage => ({
     errorMessage,
   }),
 
   /**
    * @param {Object} ideaSample
    */
-  EDIT_IDEA_SAMPLE: ideaSample => ({
+  [EDIT_IDEA_SAMPLE]: ideaSample => ({
     ideaSample,
   }),
 
   /**
    * @param {Object} ideaSample
    */
-  EDIT_IDEA_SAMPLE_SUCCESS: ideaSample => ({
+  [EDIT_IDEA_SAMPLE_SUCCESS]: ideaSample => ({
     ideaSample,
   }),
 
   /**
    * @param {String} errorMessage
    */
-  EDIT_IDEA_SAMPLE_FAILED: errorMessage => ({
+  [EDIT_IDEA_SAMPLE_FAILED]: errorMessage => ({
     errorMessage,
   }),
 
   /**
    * @param {Object} ideaSample
    */
-  SAVE_IDEA_SAMPLE: ideaSample => ({
+  [SAVE_IDEA_SAMPLE]: ideaSample => ({
     ideaSample,
   }),
-  SAVE_IDEA_SAMPLE_SUCCESS: ideaSample => ({
+  [SAVE_IDEA_SAMPLE_SUCCESS]: ideaSample => ({
     ideaSample,
   }),
-  SAVE_IDEA_SAMPLE_FAILED: errorMessage => ({
+  [SAVE_IDEA_SAMPLE_FAILED]: errorMessage => ({
     errorMessage,
   }),
 
-  DELETE_IDEA_SAMPLE: sampleId => ({
+  [DELETE_IDEA_SAMPLE]: sampleId => ({
     sampleId,
   }),
 
-  DELETE_IDEA_SAMPLE_SUCCESS: sampleId => ({
+  [DELETE_IDEA_SAMPLE_SUCCESS]: sampleId => ({
     sampleId,
   }),
 
-  DELETE_IDEA_SAMPLE_FAILED: errorMessage => ({
+  [DELETE_IDEA_SAMPLE_FAILED]: errorMessage => ({
     errorMessage,
   }),
 
-  APPROVE_IDEA_SAMPLE: id => ({
+  [APPROVE_IDEA_SAMPLE]: id => ({
     id,
   }),
 
-  APPROVE_IDEA_SAMPLE_SUCCESS: id => ({
+  [APPROVE_IDEA_SAMPLE_SUCCESS]: id => ({
     id,
   }),
 
-  APPROVE_IDEA_SAMPLE_FAILED: errorMessage => ({
+  [APPROVE_IDEA_SAMPLE_FAILED]: errorMessage => ({
     errorMessage,
   }),
 })
