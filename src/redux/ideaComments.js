@@ -5,6 +5,14 @@ import {
 
 import * as loadingStatus from '../constants/loadingState'
 
+export const FETCH_IDEA_COMMENT = 'FETCH_IDEA_COMMENT'
+export const FETCH_IDEA_COMMENT_SUCCESS = 'FETCH_IDEA_COMMENT_SUCCESS'
+export const FETCH_IDEA_COMMENT_FAILED = 'FETCH_IDEA_COMMENT_FAILED'
+
+export const REWORK_IDEA = 'REWORK_IDEA'
+export const REWORK_IDEA_SUCCESS = 'REWORK_IDEA_SUCCESS'
+export const REWORK_IDEA_FAILED = 'REWORK_IDEA_FAILED'
+
 export const {
   fetchIdeaComment,
   fetchIdeaCommentSuccess,
@@ -13,24 +21,24 @@ export const {
   reworkIdeaSuccess,
   reworkIdeaFailed,
 } = createActions({
-  FETCH_IDEA_COMMENT: ideaId => ({
+  [FETCH_IDEA_COMMENT]: ideaId => ({
     ideaId,
   }),
-  FETCH_IDEA_COMMENT_SUCCESS: (ideaId, comment) => ({
+  [FETCH_IDEA_COMMENT_SUCCESS]: (ideaId, comment) => ({
     ideaId,
     comment,
   }),
-  FETCH_IDEA_COMMENT_FAILED: errorMessage => ({
+  [FETCH_IDEA_COMMENT_FAILED]: errorMessage => ({
     errorMessage,
   }),
-  REWORK_IDEA: (id, content) => ({
+  [REWORK_IDEA]: (id, content) => ({
     id,
     content,
   }),
-  REWORK_IDEA_SUCCESS: comment => ({
+  [REWORK_IDEA_SUCCESS]: comment => ({
     comment,
   }),
-  REWORK_IDEA_FAILED: errorMessage => ({
+  [REWORK_IDEA_FAILED]: errorMessage => ({
     errorMessage,
   }),
 })
