@@ -5,6 +5,16 @@ import {
 
 import * as loadingStatus from '../constants/loadingState'
 
+export const CREATE_SUPPLIER = 'CREATE_SUPPLIER'
+export const CREATE_SUPPLIER_SUCCESS = 'CREATE_SUPPLIER_SUCCESS'
+export const CREATE_SUPPLIER_FAILED = 'CREATE_SUPPLIER_FAILED'
+
+export const SEARCH_SUPPLIERS = 'SEARCH_SUPPLIERS'
+export const SEARCH_SUPPLIERS_SUCCESS = 'SEARCH_SUPPLIERS_SUCCESS'
+export const SEARCH_SUPPLIERS_FAILED = 'SEARCH_SUPPLIERS_FAILED'
+
+export const APPEND_SUPPLIER_SEARCH_RESULTS = 'APPEND_SUPPLIER_SEARCH_RESULTS'
+
 /**
  * searchSuppliers ---> used for auto completion
  * fetchSuppliers ---> used for rendering, data manipulation
@@ -18,22 +28,22 @@ export const {
   searchSuppliersFailed,
   appendSupplierSearchResults,
 } = createActions({
-  CREATE_SUPPLIER: data => ({
+  [CREATE_SUPPLIER]: data => ({
     data,
   }),
-  CREATE_SUPPLIER_SUCCESS: data => ({
+  [CREATE_SUPPLIER_SUCCESS]: data => ({
     data,
   }),
-  CREATE_SUPPLIER_FAILED: errorMessage => ({
+  [CREATE_SUPPLIER_FAILED]: errorMessage => ({
     errorMessage,
   }),
-  SEARCH_SUPPLIERS: name => ({
+  [SEARCH_SUPPLIERS]: name => ({
     name,
   }),
-  SEARCH_SUPPLIERS_SUCCESS: searchResult => ({
+  [SEARCH_SUPPLIERS_SUCCESS]: searchResult => ({
     searchResult,
   }),
-  SEARCH_SUPPLIERS_FAILED: errorMessage => ({
+  [SEARCH_SUPPLIERS_FAILED]: errorMessage => ({
     errorMessage,
   }),
 

@@ -37,7 +37,7 @@ export function * searchSuppliers (action) {
 
 export default function * suppliersFlow () {
   yield all([
-    takeLatest(actions.searchSuppliers().type, searchSuppliers),
-    takeLatest(actions.createSupplier().type, createSupplier),
+    takeLatest(actions.CREATE_SUPPLIER, searchSuppliers),
+    takeLatest(actions.SEARCH_SUPPLIERS, createSupplier),
   ])
 }

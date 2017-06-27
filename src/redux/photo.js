@@ -5,6 +5,13 @@ import {
 
 import * as loadingStatus from '../constants/loadingState'
 
+export const UPLOAD_PHOTO = 'UPLOAD_PHOTO'
+export const UPLOAD_PHOTO_SUCCESS = 'UPLOAD_PHOTO_SUCCESS'
+export const UPLOAD_PHOTO_FAILED = 'UPLOAD_PHOTO_FAILED'
+
+export const STORE_IMAGE = 'STORE_IMAGE'
+export const CLEAR_UPLOADED_PHOTO = 'CLEAR_UPLOADED_PHOTO'
+
 export const {
   uploadPhoto,
   uploadPhotoSuccess,
@@ -17,13 +24,13 @@ export const {
    * @param {File} file
    * @returns {Object}
    */
-  UPLOAD_PHOTO: file => ({
+  [UPLOAD_PHOTO]: file => ({
     file,
   }),
-  UPLOAD_PHOTO_SUCCESS: image => ({
+  [UPLOAD_PHOTO_SUCCESS]: image => ({
     image,
   }),
-  UPLOAD_PHOTO_FAILED: errorMessage => ({
+  [UPLOAD_PHOTO_FAILED]: errorMessage => ({
     errorMessage,
   }),
 
@@ -32,10 +39,10 @@ export const {
    *
    * @param {String} image
    */
-  STORE_IMAGE: image => ({
+  [STORE_IMAGE]: image => ({
     image,
   }),
-  CLEAR_UPLOADED_PHOTO: () => ({}),
+  [CLEAR_UPLOADED_PHOTO]: () => ({}),
 })
 
 /**
